@@ -1,0 +1,15 @@
+{
+  "name": "razorfish-slides",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "slidev slides.md",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "devDependencies": {
+    "@slidev/cli": "^52.11.0",
+    "@slidev/theme-default": "^0.25.0"
+  }
+}

@@ -1,0 +1,9 @@
+node_modules/
+dist/
+*.pdf
+*.pptx
+*.png
+*.webm
+.DS_Store
+.env*
+!.env.example
