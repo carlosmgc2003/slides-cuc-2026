@@ -4,8 +4,15 @@
   "type": "module",
   "scripts": {
     "dev": "slidev slides.md",
-    "build": "slidev build slides.md",
-    "export": "slidev export slides.md",
+    "dev:clase-1": "slidev slides-clase-1.md",
+    "dev:clase-2": "slidev slides-clase-2.md",
+    "start": "slidev slides-clase-1.md --host 0.0.0.0",
+    "start:clase-2": "slidev slides-clase-2.md --host 0.0.0.0",
+    "build": "slidev build slides-clase-1.md && slidev build slides-clase-2.md",
+    "build:clase-1": "slidev build slides-clase-1.md",
+    "build:clase-2": "slidev build slides-clase-2.md",
+    "export:clase-1": "slidev export slides-clase-1.md",
+    "export:clase-2": "slidev export slides-clase-2.md",
     "preview": "vite preview --host 0.0.0.0"
   },
   "devDependencies": {

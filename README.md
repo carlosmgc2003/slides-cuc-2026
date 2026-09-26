@@ -1,27 +1,30 @@
-# Razorfish slides
+# Software Seguro · CUC 2026
 
-Slidev presentation project. The source of truth for the deck is [`slides.md`](./slides.md).
+Dos clases introductorias de Software Seguro, para una audiencia heterogénea con conocimientos generales de informática. La progresión prioriza conceptos intuitivos antes de la terminología especializada.
 
-## Requirements
+## Decks
 
-- Node.js 20+
-- npm 10+
+- [`slides-clase-1.md`](./slides-clase-1.md) — **Software seguro desde el diseño**: entender → modelar → pensar amenazas → diseñar.
+- [`slides-clase-2.md`](./slides-clase-2.md) — **Shift Left or Get Hacked**: construir → verificar → automatizar → operar.
 
-## Development lifecycle
+Los decks están hechos con Slidev. Para mantener la compatibilidad con el proyecto original, `slides.md` sigue siendo la presentación de inicio del comando `npm run dev`.
+
+## Desarrollo
 
 ```sh
-npm install          # install dependencies
-npm run dev          # live preview at http://localhost:3030
-npm run build        # build the static deck into dist/
-npm run export       # export slides.md to PDF
+npm install
+npm run dev:clase-1
+npm run dev:clase-2
 ```
 
-Commit `package-lock.json` after installing to keep installs reproducible. Review the deck in the browser before merging; the CI workflow verifies that it builds. PDF export requires the browser dependencies used by Playwright/Slidev.
+## Build y exportación
 
-## Project conventions
+```sh
+npm run build                 # compila ambas clases
+npm run build:clase-1
+npm run build:clase-2
+npm run export:clase-1        # genera PDF
+npm run export:clase-2
+```
 
-- Keep slide content in `slides.md`; separate slides with `---`.
-- Add presenter notes in HTML comments within the relevant slide.
-- Put reusable Vue components in `components/`, global styles in `style.css`, and static media in `public/`.
-- Reference public files with root-relative paths (for example `/logo.svg`).
-- Keep generated output (`dist/`, PDF files) out of version control.
+Cada slide está separado por `---`. Las notas para quien presenta pueden agregarse como comentarios HTML dentro del slide. El detalle de estándares y conceptos avanzados se mantiene fuera del recorrido principal para no sobrecargar el nivel introductorio.
