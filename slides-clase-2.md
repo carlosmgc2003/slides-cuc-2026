@@ -2,8 +2,14 @@
 theme: default
 title: Shift Left or Get Hacked
 info: CUC · Software Seguro · Clase 2
+colorSchema: dark
 transition: slide
 mdc: true
+fonts:
+  sans: IBM Plex Sans
+  mono: JetBrains Mono
+  weights: '400,500,600,700'
+  provider: google
 ---
 
 # Shift Left or Get Hacked
