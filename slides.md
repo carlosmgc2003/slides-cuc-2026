@@ -1,44 +1,63 @@
 ---
 theme: default
-title: Razorfish
-info: |
-  Presentation source for the Razorfish project.
-  Edit slides.md and run `npm run dev` to get started.
-highlight: shiki
-transition: slide
+title: Ciberseguridad Institucional y Ciberdefensa
+info: Facultad de Ingeniería del Ejército · UNDEF
+author: FIE-UNDEF
+colorSchema: dark
+highlighter: shiki
 mdc: true
+transition: fade
+layout: default
+fonts:
+  sans: IBM Plex Sans
+  mono: JetBrains Mono
+  weights: '400,500,600,700'
+  provider: google
+themeConfig:
+  primary: '#3EC8D8'
+  background: '#0B100E'
+  secondary: '#151E1A'
+  success: '#5CFF8A'
+  alert: '#FF5A3A'
+  foreground: '#E7E9E6'
+  muted: '#9AA39C'
+htmlAttrs:
+  lang: es
 ---
 
-# Razorfish
+<header>FIE · UNDEF · CUC 2026</header>
 
-A new deck starts here.
+# Ciberdefensa
+## Protección de la misión en el ciberespacio
 
-<!--
-Presenter notes: Add context for the opening slide here.
--->
+<div class="grid grid-cols-2 gap-4 mt-8">
 
----
+<div class="cyber-card">
 
-# The story
+### Postura
 
-- **Context:** What does the audience need to know?
-- **Challenge:** What problem are we solving?
-- **Approach:** What is our proposal?
-- **Outcome:** What should happen next?
+La misión exige **confidencialidad**, **integridad** y **disponibilidad** como requisitos operativos, no como capas posteriores.
 
----
-
-# A visual or example
-
-Use Markdown, Vue components, code snippets, and diagrams to make the story concrete.
-
-```mermaid
-flowchart LR
-  A[Context] --> B[Challenge] --> C[Approach] --> D[Outcome]
+```bash
+$ posture --check cia
+[ok] confidencialidad
+[ok] integridad
+[ok] disponibilidad
 ```
 
----
+</div>
 
-# Questions?
+<div class="cyber-card-alert">
 
-Thank you.
+### Alerta
+
+Una vulnerabilidad conocida sin mitigar expone la operación. El perímetro digital es parte del teatro de operaciones.
+
+`status: VULN-OPEN` · superficie de ataque en expansión
+
+</div>
+
+</div>
+
+<footer class="absolute bottom-3 left-10">Facultad de Ingeniería del Ejército</footer>
+<footer class="absolute bottom-3 right-10">Ciberdefensa · UNDEF</footer>
