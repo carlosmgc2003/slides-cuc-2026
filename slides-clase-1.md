@@ -1012,15 +1012,78 @@ Retomá lo que ya construimos: delimitamos el sistema, identificamos actores y d
 
 Recorré las tres etapas de izquierda a derecha. «Entender» evita analizar un sistema abstracto; «analizar» busca escenarios posibles de abuso o fallo; «responder» traduce hallazgos en requisitos, controles y pruebas. No es necesario adoptar una herramienta para empezar, y conviene revisar el análisis si cambian componentes, datos o dependencias.
 
-En la próxima diapositiva vamos a usar STRIDE como ayuda para explorar amenazas, no como una lista que haya que memorizar.
+Antes de presentar STRIDE, hagamos nosotros la etapa de análisis: en la próxima diapositiva volvemos al sistema del caso y preguntamos qué podría salir mal. STRIDE aparece después, como ayuda para encontrar lo que nos falte, no como una lista que haya que memorizar.
 
 Pregunta para el intercambio: «¿En cuál de estas etapas ya tenemos información suficiente y cuál necesitamos completar?»
 
-Transición: «STRIDE nos da seis lentes para la etapa de análisis; veamos qué tipos de amenaza ayuda a explorar».
+Transición: «Antes de presentar STRIDE, hagamos el trabajo nosotros: volvamos al sistema y pensemos como atacantes».
 
 Fuentes: OWASP Threat Modeling Cheat Sheet; NIST SP 800-218, Secure Software Development Framework.
 https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
 https://csrc.nist.gov/pubs/sp/800/218/final
+-->
+
+---
+layout: two-cols-header
+---
+
+# ¿Qué podría salir mal?
+
+::left::
+
+```mermaid {class: 'w-full flex justify-center', scale: 0.8}
+flowchart TB
+  C["Cliente"]
+  subgraph Scope["Home banking · frontera de confianza"]
+    direction TB
+    A["App web"] -->|consulta| S["Servicio de cuentas"]
+    S -->|lee| D[("Cuentas y saldos")]
+  end
+  I["Proveedor de identidad"]
+  C -->|credenciales| A
+  S <--> I
+  %% Indices de arista en orden de definicion (numeradas desde 0):
+  %% 2 = cliente hacia app; 3 = servicio con proveedor de identidad.
+  %% Ambas cruzan la frontera de confianza; verificar si se reordenan nodos o aristas.
+  linkStyle 2 stroke:#3EC8D8,stroke-width:3px
+  linkStyle 3 stroke:#3EC8D8,stroke-width:3px
+```
+
+<p class="mt-2 text-center text-sm opacity-70">Cada flecha que cruza el recuadro atraviesa la frontera: ahí empieza a preguntar un atacante.</p>
+
+::right::
+
+### Preguntar como atacante
+
+<div class="mt-4 grid grid-cols-[7rem_1fr] gap-x-3 gap-y-3 text-sm">
+  <strong>Actor</strong><span>¿quién intenta algo?</span>
+  <strong>Acción</strong><span>¿qué intenta hacer?</span>
+  <strong>Objetivo</strong><span>¿qué gana si logra?</span>
+</div>
+
+<div class="mt-4 card px-3 py-3 text-sm"><strong>En juego</strong><br />Credenciales, saldos y movimientos, disponibilidad del servicio.</div>
+
+<p class="mt-3 text-sm">El sistema es el mismo: cambia quién lo mira y con qué intención.</p>
+
+<!--
+Notas para presentar:
+
+Actividad, fases 1 a 3 (entre 5 y 7 minutos con trabajo en parejas; versión corta al final de estas notas).
+
+Fase 1 — mostrar el sistema (1 minuto): volvé al mismo diagrama de siempre, ahora con nombres concretos del caso bancario. El cliente ingresa sus credenciales en la app web; la app consulta al servicio de cuentas; el servicio lee las cuentas y los saldos y valida la identidad con el proveedor de identidad. Señalá las dos flechas cian: son los cruces de la frontera de confianza. Nombrá lo que está en juego: credenciales, saldos y movimientos, disponibilidad del servicio.
+
+Fase 2 — preguntar (2 minutos): consigna para parejas o grupos de tres: «Como atacante, ¿qué intentarías con este sistema? Nombrá actor, acción y objetivo». No hace falta anotar nada: alcanza con pensar y preparar una respuesta para compartir. Si preferís participación de toda la clase, salteá las parejas y pedí respuestas directamente con las manos levantadas.
+
+Fase 3 — recolectar (2 a 3 minutos): anotá en el pizarrón entre 4 y 8 amenazas, sin corregir ni filtrar; agrupá las repetidas y dejá la lista a la vista. Respuestas probables: usar credenciales robadas para entrar como otro cliente; modificar el identificador de cuenta para ver saldos ajenos; leer movimientos de otra persona; alterar una transferencia en curso; dejar el home banking sin servicio; hacerse pasar por el proveedor de identidad. Lo habitual es que falten dos: negar una acción realizada (repudio) y obtener permisos de más (elevación). No lo digas todavía: dejalo para STRIDE.
+
+Versión corta (si falta tiempo): contá el sistema en 30 segundos, pedí 3 o 4 amenazas a viva voz de toda la clase, anotalas en el pizarrón y saltá directo a comparar con STRIDE.
+
+Pregunta para el intercambio: «¿Cuál de estas amenazas les parece más posible en la vida real, y qué condición del sistema la permitiría?"
+
+Transición: «Nuestra lista salió de la intuición. Hay lentes que ayudan a encontrar lo que la intuición no vio: veamos STRIDE».
+
+Fuente: OWASP Threat Modeling Cheat Sheet. Recomienda identificar amenazas a partir del sistema, sus actores y sus límites de confianza.
+https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
 -->
 
 ---
@@ -1043,15 +1106,53 @@ class: flex flex-col justify-center
 <!--
 Notas para presentar:
 
-Retomá el sistema que venimos dibujando y presentá STRIDE como una ayuda para formular escenarios, no como una lista que haya que memorizar ni como una escala de prioridad. Las categorías pueden solaparse; después hay que valorar cada escenario según el contexto y sus consecuencias.
+Con la lista de amenazas del pizarrón a la vista, presentá STRIDE como una ayuda para formular escenarios, no como una lista que haya que memorizar ni como una escala de prioridad. Las categorías pueden solaparse; después hay que valorar cada escenario según el contexto y sus consecuencias.
 
 Recorré las letras con ejemplos del sistema: S, alguien usa una identidad ajena; T, altera una solicitud; R, niega haber realizado una acción y no hay evidencia suficiente para atribuirla; I, accede a transacciones de otra cuenta; D, impide que personas legítimas consulten el servicio; E, una cuenta de servicio obtiene permisos administrativos que no necesita.
 
 Pregunta para el intercambio: «¿Cuál de estas amenazas podría afectar la confidencialidad, integridad o disponibilidad del flujo que dibujamos?»
 
-Transición: «Identificar una amenaza es apenas el comienzo; ahora hay que decidir qué hacer con ella».
+Transición: «Ahora comparemos STRIDE con la lista que armamos: ¿qué lente no usamos?».
 
 Fuente: OWASP Threat Modeling Cheat Sheet. Incluye STRIDE como una de las técnicas para identificar amenazas.
+https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
+-->
+
+---
+class: flex flex-col justify-center
+---
+
+# ¿Qué lente nos faltó?
+
+<p class="mt-3 text-center text-lg">Cada letra es una pregunta para revisar la lista de amenazas, no un orden de gravedad.</p>
+
+<div class="mt-7 grid grid-cols-3 gap-3 text-sm" role="img" aria-label="STRIDE como preguntas de revisión sobre la lista de amenazas">
+  <section class="card-strong px-4 py-5"><strong class="text-lg text-cyber-cyan">S</strong><p class="mt-2">¿Alguien puede actuar con una identidad ajena?</p></section>
+  <section class="card-strong px-4 py-5"><strong class="text-lg text-cyber-cyan">T</strong><p class="mt-2">¿Alguien puede alterar una solicitud o un registro?</p></section>
+  <section class="card-strong px-4 py-5"><strong class="text-lg text-cyber-cyan">R</strong><p class="mt-2">¿Alguien puede negar una acción sin evidencia?</p></section>
+  <section class="card-strong px-4 py-5"><strong class="text-lg text-cyber-cyan">I</strong><p class="mt-2">¿Alguien puede leer datos de otra cuenta?</p></section>
+  <section class="card-strong px-4 py-5"><strong class="text-lg text-cyber-cyan">D</strong><p class="mt-2">¿Alguien puede impedir el servicio legítimo?</p></section>
+  <section class="card-strong px-4 py-5"><strong class="text-lg text-cyber-cyan">E</strong><p class="mt-2">¿Alguien puede obtener permisos de más?</p></section>
+</div>
+
+<p class="mt-7 text-center">La letra que no aparece en la lista señala una amenaza que nadie vio.</p>
+
+<!--
+Notas para presentar:
+
+Actividad, fase 5 (1 a 2 minutos): con la lista de amenazas del pizarrón a la vista, recorré las seis preguntas de izquierda a derecha y pedí a la clase que diga, letra por letra, si alguna amenaza anotada la cubre. Marcá las cubiertas y dejá visibles las que no; conviene apuntar la letra junto a cada amenaza de la lista.
+
+Lo más frecuente: S, T, I y D aparecen en la lista; R y E suelen faltar. Señalá justo eso: STRIDE funcionó como detector de vacíos, no como taxonomía para memorizar. Si la clase cubrió las seis letras, celebralo: su intuición fue completa y STRIDE lo confirmó.
+
+Aclará que las letras no ordenan la prioridad: son lentes de búsqueda. La gravedad se decide después, según el activo afectado y las consecuencias.
+
+Versión corta: preguntá solo «¿cuál letra no apareció en la lista?» y pasá directamente a la amenaza elegida.
+
+Pregunta para el intercambio: «¿Qué amenaza nueva aparece con la letra que faltó, y qué evidencia dejaría?»
+
+Transición: «Ya tenemos amenazas, incluso algunas que la intuición no veía. Ahora hay que decidir qué hacemos con ellas».
+
+Fuente: OWASP Threat Modeling Cheat Sheet. Presenta STRIDE como una técnica para identificar amenazas durante el modelado.
 https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
 -->
 
@@ -1081,11 +1182,50 @@ Recorré las tres respuestas como opciones de diseño, no como una escala fija: 
 
 Pregunta para el intercambio: «¿Qué información necesitaríamos para decidir entre cambiar el diseño, agregar un control o aceptar este riesgo?»
 
-Transición: «Construyamos ahora un escenario concreto, pasando del uso esperado a una posible forma de abuso».
+Transición: «Elijamos ahora una de las amenazas que encontramos y sigámosla hasta la prueba».
 
 Fuentes: NIST SP 800-30 Rev. 1, Guide for Conducting Risk Assessments; OWASP Threat Modeling Cheat Sheet.
 https://csrc.nist.gov/pubs/sp/800/30/r1/final
 https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
+-->
+
+---
+class: flex flex-col justify-center
+---
+
+# Elijamos una amenaza
+
+<p class="mt-3 text-center text-lg">Una sola amenaza de la lista, seguida hasta su comprobación.</p>
+
+<div class="mt-7 grid grid-cols-4 gap-3 text-center text-sm" role="img" aria-label="Cadena guía: amenaza, requisito, control y prueba, con una pregunta cada una">
+  <section class="card-strong px-3 py-6"><strong class="text-lg">Amenaza</strong><p class="mt-3">¿Quién hace qué y para qué?</p></section>
+  <section class="card-strong px-3 py-6"><strong class="text-lg">Requisito</strong><p class="mt-3">¿Qué debe garantizar siempre el sistema?</p></section>
+  <section class="card-strong px-3 py-6"><strong class="text-lg">Control</strong><p class="mt-3">¿Dónde y quién lo verifica?</p></section>
+  <section class="card-strong px-3 py-6"><strong class="text-lg">Prueba</strong><p class="mt-3">¿Qué resultado demuestra que funciona?</p></section>
+</div>
+
+<p class="mt-7 text-center">Cada paso se responde con una sola oración.</p>
+
+<!--
+Notas para presentar:
+
+Actividad, fase 6 (2 minutos): pedí a la clase que elija una amenaza de la lista del pizarrón —preferí una concreta, como consultar el saldo de otra cuenta— y completá la cadena en voz alta con participación del público, escribiendo cada respuesta junto a su paso.
+
+Recorré las preguntas: la amenaza se escribe como actor, acción y objetivo; el requisito dice qué debe garantizar siempre el sistema, sin elegir todavía una tecnología; el control dice dónde y quién verifica —en el servidor, en cada solicitud—; la prueba describe el resultado esperado cuando alguien sin permiso lo intenta.
+
+Ejemplo completo ya armado, por si la clase no avanza: amenaza «como atacante, quiero consultar el saldo de otra cuenta para obtener información ajena»; requisito «en cada consulta, el sistema verifica que la identidad autenticada esté autorizada para esa cuenta»; control «el servidor valida el permiso sobre la cuenta solicitada en cada solicitud»; prueba «una identidad autenticada pide el saldo de una cuenta ajena y recibe un rechazo, sin datos».
+
+Las próximas diapositivas muestran esta misma cadena en su versión formal: la historia de abuso, el requisito y, más adelante, la prueba con el ejemplo del saldo.
+
+Versión corta: elegí vos la amenaza del saldo y completá la cadena en un minuto, pidiendo al público solo la respuesta del requisito.
+
+Pregunta para el intercambio: «¿Qué prueba agregarían para saber que el rechazo salió del servidor y no solo de la app?»
+
+Transición: «Escribamos ahora esa amenaza como una historia de abuso, con la misma estructura de las historias de usuario».
+
+Fuentes: OWASP Threat Modeling Cheat Sheet; NIST SP 800-218, Secure Software Development Framework.
+https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
+https://csrc.nist.gov/pubs/sp/800/218/final
 -->
 
 ---
@@ -1196,7 +1336,7 @@ class: flex flex-col justify-center
 <!--
 Notas para presentar:
 
-Recorré la cadena usando el mismo ejemplo de autorización. La amenaza describe el intento; el requisito define qué debe garantizarse; el control implementa la verificación en el servidor; la prueba comprueba que una identidad sin permiso no obtiene el saldo.
+Recorré la cadena usando el mismo ejemplo de autorización: es la versión formal y completa de la derivación que hicimos con la actividad a partir de la amenaza elegida. La amenaza describe el intento; el requisito define qué debe garantizarse; el control implementa la verificación en el servidor; la prueba comprueba que una identidad sin permiso no obtiene el saldo.
 
 Señalá que la trazabilidad ayuda a detectar vacíos: un requisito sin prueba puede quedar sin verificar; una prueba sin requisito quizá no responda a una necesidad identificada. La implementación concreta puede variar, pero el escenario debe seguir conectado con la comprobación.
 
