@@ -17,92 +17,13 @@ fonts:
 
 ---
 
-# Shift Left or Get Hacked
-## Seguridad desde el primer commit
+# Recorrido
 
-Carlos Alberto Maceira García Coni · Consultor Senior, Cutter Consortium México  
-25 de junio de 2025
-
-<!--
-PowerPoint original · diapositiva 1
-
-Shift Left or get hacked
-Seguridad desde el primer commit
-Por Carlos Alberto Maceira García Coni, Consultor Senior de Cutter Consortium México
-25 de junio, 2025
--->
-
----
-
-# ¿Qué buscamos lograr?
-
-- Detectar vulnerabilidades desde el desarrollo y reducir el riesgo de ciberataques.
-- Evitar remediaciones costosas después del despliegue.
-- Integrar escaneos en CI/CD sin frenar la entrega.
-- Facilitar cumplimiento de PCI DSS e ISO 27001 con evidencia del pipeline.
-- Unir desarrollo, QA, seguridad y operaciones para proteger canales digitales críticos.
-- Reducir superficie de ataque y vectores explotables en producción.
-
-<!--
-PowerPoint original · diapositiva 2
-
-Durante la conferencia se abordará cómo contribuir para el logro de los siguientes aspectos:
-Reducir el riesgo de ciberataques detectando vulnerabilidades desde la etapa de desarrollo.
-Evitar costos elevados de remediación al detectar errores de seguridad antes del despliegue.
-Integrar escaneos de seguridad automatizados en CI/CD sin frenar la entrega de software.
-Cumplir normativas de ciberseguridad financiera (PCI-DSS, ISO 27001) desde el pipeline.
-Fortalecer la colaboración entre desarrolladores, QA y equipos de seguridad (DevSecOps).
-Proteger canales digitales críticos (home banking, onboarding, pagos, etc.) desde el código.
-Reducir la superficie de ataque y minimizar vectores explotables en producción.
--->
-
----
-
-# Sobre el expositor
-
-<div class="grid grid-cols-[1fr_3fr] gap-8 items-center">
-<img src="/pptx-images/image4.jpg" alt="Retrato de Carlos Alberto Maceira García Coni" class="w-full rounded" />
-<div>
-
-**Carlos Alberto Maceira García Coni**  
-Ingeniero en Informática (FIE–UNDEF), docente y consultor senior.
-
-Experiencia en backend, microservicios, DevOps, Azure, networking, infraestructura cloud y gestión de TI; trabajo con PCI DSS, Linux, Python y liderazgo de equipos técnicos.
-
-</div>
-</div>
-
-<!--
-PowerPoint original · diapositiva 3
-
-Acerca de Carlos Alberto Maceira García Coni, Consultor Senior de Cutter Consortium México
-Ingeniero en Informática egresado de la Facultad de Ingeniería del Ejército de la Universidad de la Defensa Nacional Argentina (FIE - UNDEF), con una robusta trayectoria profesional combinando experiencia en desarrollo backend, DevOps,infraestructura cloud y gestión de TI, con una sólida vocación y experiencia como docente en destacadas universidades argentinas. Cuenta con experiencia específica en el diseño, implementación y mantenimiento de microservicios, gestión de infraestructura cloud (Azure) y networking, asegurando el cumplimiento de estándares como PCI-DSS y aplicando metodologías DevOps. Posee habilidades en Linux y Python, además de experiencia en liderazgo de equipos técnicos.
--->
-
----
-
-# Temario
-
-1. Panorama de amenazas
+1. Por qué integrar seguridad durante el desarrollo
 2. Principios y beneficios de Shift Left
-3. Seguridad en el pipeline de CI/CD
-4. Cumplimiento normativo
-5. Cultura DevSecOps
-6. Hoja de ruta y conclusiones
-
-<!--
-PowerPoint original · diapositiva 4
-
-Temario
-Panorama de amenazas
-Principios Claves de Shift Left Security
-Beneficios Estratégicos de Shift Left
-Integración de la Seguridad en el Pipeline de CI/CD
-Cumplimiento Normativo
-Cultura DevSecOps
-Hoja de Ruta hacia Shift Left
-Conclusion
--->
+3. Controles en el pipeline de CI/CD
+4. Colaboración y mejora continua
+5. Evidencia, cumplimiento y hoja de ruta
 
 ---
 
@@ -126,17 +47,25 @@ Cada cambio puede modificar lo que el sistema permite hacer.
 
 # Cada cambio puede introducir un problema
 
-Un cambio pequeño puede sumar una vulnerabilidad, una dependencia vulnerable o una configuración insegura.
+Un cambio puede sumar una vulnerabilidad, incorporar una dependencia vulnerable o alterar una configuración.
 
-La seguridad necesita acompañar la evolución del software.
+Por eso, la seguridad necesita acompañar la evolución del software.
+
+<!--
+Usá un ejemplo cercano —por ejemplo, actualizar una librería o cambiar un permiso— para mostrar que el riesgo puede aparecer en distintos tipos de cambio. No implica que todo cambio introduzca una vulnerabilidad.
+Transición: si el riesgo evoluciona con el sistema, ¿cuándo conviene buscar señales de problema?
+-->
 
 ---
 
 # ¿Esperamos hasta producción para comprobarlo?
 
-Cuanto más tarde encontramos un problema, más personas y procesos dependen de él.
+Cuanto más tarde se descubre un problema, más componentes y procesos pueden depender de él. El costo de corregirlo varía según el contexto.
 
-¿En qué momento sería más sencillo corregirlo?
+<!--
+Hacé una pausa tras la pregunta y escuchá dos o tres respuestas. Pedí que expliquen qué información o dependencias cambian entre corregir un commit y corregir un sistema desplegado.
+Transición: Shift Left propone acortar esa distancia, sin prometer que todo problema se detectará antes.
+-->
 
 ---
 
@@ -148,21 +77,27 @@ Encontrar problemas cerca del momento en que se introducen permite corregirlos c
 
 # Shift Left
 
-**Shift Left** significa obtener feedback de seguridad lo antes posible dentro del proceso de desarrollo.
+**Shift Left** significa obtener feedback de seguridad temprano dentro del proceso de desarrollo.
 
-No es una fecha exacta: es una manera de distribuir las comprobaciones.
+No marca una fecha exacta ni reemplaza controles posteriores: distribuye las comprobaciones a lo largo del ciclo.
+
+<!--
+Señalá el eje temporal del material visual si está disponible. Aclaración: “temprano” es relativo al flujo y al tipo de control; no existe un único punto que sirva para todas las comprobaciones.
+-->
 
 ---
 
-# Shift Left: una estrategia proactiva
+# ¿Qué cambia con Shift Left?
 
-Trasladar al comienzo del ciclo actividades que antes se hacían al final: **prevenir y detectar temprano**.
+No alcanza con adelantar una prueba: cambia **cuándo**, **cómo** y **quiénes** participan de la seguridad.
 
-- Integrar pruebas y seguridad en cada fase del SDLC.
-- Cambiar mentalidad, procesos y herramientas.
-- Compartir responsabilidad entre Dev, Sec y Ops.
+| Dimensión | En la práctica |
+|---|---|
+| Momento | Feedback durante el desarrollo, no solo al final |
+| Forma de trabajo | Controles integrados al flujo habitual |
+| Responsabilidad | Desarrollo, seguridad y operaciones colaboran |
 
-El concepto nació en testing y se extendió a seguridad con DevSecOps.
+Shift Left extiende a seguridad una idea usada antes en testing: detectar y corregir cerca del origen del problema.
 
 <!--
 PowerPoint original · diapositiva 9
@@ -230,37 +165,47 @@ Se trata de incorporar seguridad al trabajo normal: decisiones, código, pruebas
 layout: section
 ---
 
-# Principios clave de Shift Left Security
+# Principios de Shift Left
 
 <!--
-PowerPoint original · diapositiva 11
+Abrí esta sección retomando la idea anterior: no se trata de mover una prueba aislada, sino de cambiar el flujo de trabajo. Anticipá que vamos a ver tres decisiones: feedback temprano, controles proporcionales al riesgo y responsabilidad compartida.
+-->
 
-Principios claves de Shift Left security
+---
+
+# Tres principios para llevarlo a la práctica
+
+- **Feedback temprano:** detectar cerca del cambio, cuando todavía hay contexto.
+- **Controles proporcionales:** elegir qué verificar según el riesgo y la etapa.
+- **Responsabilidad compartida:** hacer que los hallazgos lleguen a quienes pueden resolverlos.
+
+La automatización ayuda a sostener el ciclo; el criterio humano define prioridades y excepciones.
+
+<!--
+Señalá la progresión de los tres principios. Preguntá qué problema aparece si falta cada uno; pedí que justifiquen la respuesta con un ejemplo del ciclo de desarrollo.
+Transición: estos principios buscan beneficios concretos, pero no garantizan por sí solos que todo problema se detecte.
 -->
 
 ---
 layout: section
 ---
 
-# Beneficios estratégicos
+# ¿Qué beneficios buscamos?
 
 <!--
-PowerPoint original · diapositiva 17
-
-Beneficios estrategicos de Shift Left
+Presentá los beneficios como resultados esperados, no como garantías. En el bloque siguiente, vinculá cada uno con el mecanismo que podría producirlo y con sus límites.
 -->
 
 ---
 
-# Menor riesgo de ciberataques
+# Reducir debilidades que llegan a producción
 
 <div class="grid grid-cols-[3fr_2fr] gap-6 items-center">
 <div>
 
-- Detección y remediación antes de producción.
-- Menos debilidades desplegadas y menor superficie de ataque.
-- Cobertura continua durante el SDLC.
-- Postura de seguridad más resiliente.
+- Detectar y remediar problemas antes del despliegue puede reducir exposiciones evitables.
+- La cobertura continua permite encontrar problemas en más de una etapa.
+- La reducción efectiva del riesgo depende de la priorización, la corrección y los controles restantes.
 
 </div>
 <img src="/pptx-images/image14.png" alt="Ilustración de personas protegiendo una computadora con un candado" class="w-full" />
@@ -278,13 +223,17 @@ Reducción significativa del Riesgo de Ciberataques
 
 ---
 
-# Optimizar costos
+# Detectar antes puede evitar retrabajo
 
-La remediación tardía también cuesta tiempo de desarrollo, nuevas pruebas, retrasos, operaciones, atención al cliente y reputación.
+Una corrección tardía puede involucrar desarrollo, nuevas pruebas, operaciones y coordinación con otros equipos.
 
-**Detectar temprano libera tiempo, presupuesto y talento** para innovación y crecimiento.
+Encontrar el problema temprano **puede reducir parte de ese retrabajo**; el efecto depende del tipo de cambio y del contexto.
 
 <img src="/pptx-images/image13.png" alt="Diagrama comparativo del costo de corregir defectos en distintas fases del desarrollo" class="w-3/4 mx-auto mt-4" />
+
+<!--
+Presentá el gráfico como una heurística para conversar, no como una ley ni como una relación numérica universal. Si no se conoce su fuente y contexto, evitá atribuirle cifras precisas.
+-->
 
 <!--
 PowerPoint original · diapositiva 19
@@ -391,25 +340,29 @@ Principios de Seguridad en Pipelines CI/CD
 
 ---
 
-# ¿Dónde podemos verificar seguridad?
+# ¿En qué etapas podemos verificar seguridad?
 
-En prácticamente todas las etapas: código, construcción, pruebas, despliegue y operación.
+A lo largo del ciclo: código, construcción, pruebas, despliegue y operación.
 
-La comprobación adecuada depende del riesgo y del momento.
+El control adecuado depende del riesgo, del momento y de lo que se busca comprobar.
 
 ---
 
 # Mapa de controles
 
-| Etapa | Ejemplos |
+| Etapa | Ejemplos de comprobación |
 |---|---|
-| Code | Secret scanning, code review |
-| Build | Análisis de cadena de suministro, escaneo de imágenes |
-| Test | SAST, DAST |
-| Deploy | Configuración segura, blue-green |
-| Production | WAF, monitoreo |
+| Código | Escaneo de secretos, revisión de cambios |
+| Build | Dependencias, infraestructura e imágenes |
+| Test | Análisis estático y dinámico |
+| Deploy | Configuración y permisos |
+| Producción | WAF, monitoreo y respuesta |
 
-**Shift Left** no elimina la seguridad en producción.
+Los controles se distribuyen en el ciclo: **Shift Left suma verificaciones tempranas, no elimina las posteriores.**
+
+<!--
+Recorré las etapas de izquierda a derecha y señalá que cada control responde a una pregunta distinta. Aclaración: blue-green es una estrategia de despliegue, no por sí misma un control de seguridad.
+-->
 
 <!--
 PowerPoint original · diapositiva 24
@@ -565,7 +518,6 @@ Riesgo: Aplicaciones modernas dependen masivamente de bibliotecas open source y 
 Mejores Prácticas:
 Mantener un Inventario de Dependencias (SBOM - Software Bill of Materials):
 Lista formal y estructurada de componentes.
-Requisito PCI DSS 4.0
 Actualización regular de dependencias.
 Políticas de uso de dependencias (licencias aceptables, riesgo tolerable).
 Validación de la fuente de las dependencias (evitar dependency confusion).
@@ -745,13 +697,20 @@ Un **security gate** es una condición automatizada para decidir si un cambio pu
 
 ---
 
-# Security gates en cada etapa
+# El pipeline también necesita controles propios
 
-Un **security gate** es un punto de control automatizado: según una política, un hallazgo detiene el pipeline o genera una alerta.
+Proteger el software que producimos no alcanza: hay que proteger el proceso que lo construye y publica.
 
-Los riesgos del pipeline incluyen permisos inadecuados, abuso de dependencias, ejecución contaminada, higiene deficiente de credenciales, falta de validación de artefactos y escasa visibilidad.
+- Identidades y permisos con mínimo privilegio.
+- Secretos protegidos y dependencias verificadas.
+- Integridad de artefactos, configuración y registros.
 
 [OWASP Top 10 CI/CD Security Risks](https://owasp.org/www-project-top-10-ci-cd-security-risks/)
+
+<!--
+Diferenciá dos objetivos: controlar vulnerabilidades del producto y proteger la cadena de CI/CD. Usá como ejemplo una credencial de despliegue expuesta: puede comprometer el proceso aunque el código de la aplicación esté revisado.
+Fuente: OWASP, Top 10 CI/CD Security Risks. Presentalo como catálogo de riesgos, no como una lista exhaustiva de controles.
+-->
 
 <!--
 PowerPoint original · diapositiva 23
@@ -1024,11 +983,16 @@ El rol del Security Champion
 
 ---
 
-# Una seguridad que molesta termina siendo evitada
+# Un control útil tiene que poder usarse
 
-Demasiadas alertas irrelevantes generan fatiga; pasos confusos incentivan atajos.
+Alertas irrelevantes generan fatiga; pasos confusos incentivan atajos.
 
-Diseñemos controles comprensibles, oportunos y accionables.
+Diseñemos controles **comprensibles, oportunos y accionables**, con una vía clara para resolver o escalar cada hallazgo.
+
+<!--
+Preguntá qué haría que una alerta fuera accionable. Llevá la conversación a incluir contexto, prioridad, responsable y una recomendación de remediación; evitá asumir que más alertas equivalen a más seguridad.
+Transición: estos criterios también sirven para evaluar las herramientas y los security gates.
+-->
 
 ---
 
@@ -1042,95 +1006,19 @@ El objetivo es integrar verificaciones útiles en el flujo cotidiano, no agregar
 
 ---
 
-# Compliance como consecuencia
+# Evidencia y cumplimiento
 
-Marcos como PCI DSS e ISO 27001 establecen requisitos y evidencias.
+Los procesos de desarrollo pueden generar evidencia útil: revisiones, resultados de pruebas, aprobaciones y decisiones sobre hallazgos.
 
-Un proceso de desarrollo bien diseñado facilita demostrar controles; el detalle normativo queda como material complementario.
-
----
-layout: section
----
-
-# Cumplimiento normativo ágil
-## PCI DSS e ISO 27001 desde el diseño
-
-<!--
-PowerPoint original · diapositiva 33
-
-Cumplimiento Normativo Ágil: PCI-DSS e ISO 27001 desde el diseño
--->
+La evidencia debe ser trazable y responder a controles aplicables; automatizar el pipeline, por sí solo, no demuestra cumplimiento.
 
 ---
 
-# Cumplimiento como resultado del proceso
+# ISO/IEC 27001:2022 y DevSecOps
 
-En un entorno regulado, integrar controles en diseño, desarrollo y CI/CD facilita demostrar conformidad.
+ISO/IEC 27001 define requisitos para establecer, mantener y mejorar un sistema de gestión de seguridad de la información. Su Anexo A incluye controles organizados en cuatro temas: organizacionales, personas, físicos y tecnológicos.
 
-**Mejor que parchear para una auditoría final:** generar evidencia verificable a medida que se construye y opera el software.
-
-<!--
-PowerPoint original · diapositiva 34
-
-Entorno altamente regulado: PCI DSS, ISO 27001, etc.
-Shift Left facilita el cumplimiento.
-Controles de seguridad y cumplimeinto integrados desde el diseño y desarrollo.
-No es una auditoría estresante al final para parchear aplicaciones.
-Resultado: Cumplimiento como consecuencia natural de un proceso inherentemente seguro. Simplifica la demostración de conformidad.
-Fortalecimiento de la postura de cumplimiento normativo
--->
-
----
-
-# PCI DSS y desarrollo seguro
-
-PCI DSS aplica a organizaciones que almacenan, procesan o transmiten datos de tarjetas de pago.
-
-Su versión 4.0 enfatiza un enfoque basado en riesgos, un ciclo de vida de desarrollo seguro (SSDLC) y pruebas de seguridad continuas: **seguridad en cada fase, no solo al final**.
-
-<!--
-PowerPoint original · diapositiva 35
-
-PCI DSS: Requisitos obligatorios para quienes almacenan, Procesan o transmiten datos de tarjetas.
-En su versión 4.0 se hace énfasis en enfoque basado en riesgos e integración de seguridad en el SDLC.
-Promueve explícitamente un Ciclo de Vida de Desarrollo de Software Seguro (SSDLC)
-Seguridad embebida en cada fase, no al final.
-Pruebas tempranas y continuas.
-Alineacion de Prácticas Shift Left con PCI DSS 4.0
--->
-
----
-
-# PCI DSS 4.0: ejemplos de alineación
-
-- **Requisito 6:** desarrollar y mantener sistemas y software seguros.
-- Capacitación en codificación segura y revisión del software.
-- Gestión de vulnerabilidades comunes y pruebas durante el desarrollo.
-- Inventario de software y APIs para evaluar riesgos.
-- Protección de aplicaciones web públicas.
-
-Las evidencias de revisiones, escaneos y decisiones del pipeline apoyan un cumplimiento proactivo. Verificar siempre el texto vigente de los requisitos aplicables.
-
-<!--
-PowerPoint original · diapositiva 36
-
-Requisito 6: Desarrollar y mantener software y sistemas seguros.
-6.2.2: Capacitación anual para desarrolladores en codificación segura, Identificación de vulnerabilidades. (Alineado con Developer Enablement).
-6.2.3: Revisión de software antes del lanzamiento para corregir vulnerabilidades.
-6.2.3: Abordar vulnerabilidades comunes. (OWASP Top 10) en procesos de desarrollo: SAST/DAST en pipelines.
-6.3.2: Mantener inventario de software incluyendo APIs. Base para la evaluación de riesgos, pruebas, respuesta a incidentes.
-6.4.2: Implementar soluciones técnicas automatizadas para todas las apps web públicas para detectar y prevenir ataques.
-CUMPLIMIENTO PROACTIVO Y CON EVIDENCIAS
-PCI DSS 4.0: Requisitos Clave y Shift Left
--->
-
----
-
-# ISO 27001:2022 y DevSecOps
-
-ISO 27001 establece un sistema de gestión de seguridad de la información. La edición 2022 organiza **93 controles** en cuatro temas: organizacionales, personas, físicos y tecnológicos.
-
-Shift Left y DevSecOps ayudan a implementar y demostrar controles, especialmente los tecnológicos.
+Shift Left y DevSecOps pueden apoyar la implementación de controles pertinentes; la selección depende del contexto, los riesgos y la declaración de aplicabilidad.
 
 <!--
 PowerPoint original · diapositiva 37
@@ -1143,16 +1031,20 @@ ISO 27001:2022 en DevSecOps
 
 ---
 
-# Controles ISO relevantes
+# Controles ISO relacionados con el desarrollo
 
 - **A.8.9:** gestión de la configuración.
 - **A.8.25:** ciclo de vida de desarrollo seguro.
 - **A.8.28:** codificación segura.
 - **A.8.29:** pruebas de seguridad en desarrollo y aceptación.
 - **A.5.15 / A.5.17:** control de acceso e información de autenticación.
-- **A.5.23:** seguridad al usar servicios en la nube.
+- **A.5.23:** seguridad de la información en el uso de servicios en la nube.
 
-Logs y resultados de CI/CD pueden aportar evidencia para auditorías. Consultar el estándar para alcance y numeración exactos.
+Los registros del proceso pueden aportar evidencia; no reemplazan la evaluación ni la documentación del sistema de gestión.
+
+<!--
+Aclaración para la exposición: los controles enumerados son ejemplos, no una lista completa ni una prescripción automática. Fuente: ISO/IEC 27001:2022, Anexo A; la organización debe verificar el texto vigente y su declaración de aplicabilidad.
+-->
 
 <!--
 PowerPoint original · diapositiva 38
@@ -1337,31 +1229,20 @@ layout: section
 # Un futuro digital seguro por diseño
 
 <!--
-PowerPoint original · diapositiva 51
-
-Conclusión: Construyendo un Futuro Digital Bancario Seguro por Diseño
+Retomá el hilo de la clase: incorporar seguridad al diseño es el punto de partida; Shift Left permite sostener esa intención durante los cambios y la operación.
 -->
 
 ---
 
 # Beneficios de Shift Left
 
-- Menor riesgo de ciberataques y costos de remediación.
-- Entrega segura más predecible y rápida.
-- Mejor evidencia para PCI DSS e ISO 27001.
-- Más confianza de clientes y mejor reputación.
-- Cultura de colaboración y calidad mediante DevSecOps.
+- Puede ayudar a detectar y corregir problemas antes del despliegue.
+- Hace más predecible la integración de verificaciones de seguridad.
+- Facilita la trazabilidad de decisiones y resultados.
+- Promueve colaboración y aprendizaje entre equipos.
 
 <!--
-PowerPoint original · diapositiva 52
-
-Reducción Significativa del Riesgo de Ciberataques.
-Optimización de Costos (remediación temprana).
-Aceleración en la Entrega Segura de Software (mejor time-to-market).
-Fortalecimiento del Cumplimiento Normativo (PCI DSS, ISO 27001).
-Mejora de la Confianza del Cliente y Reputación de Marca.
-Fomento de una Cultura de Colaboración y Calidad (DevSecOps).
-Recapitulación de los Beneficios Transformadores de Shift Left
+Presentá estos puntos como beneficios posibles, no garantías. Su efecto depende de que los hallazgos se prioricen y se corrijan.
 -->
 
 ---
@@ -1376,19 +1257,7 @@ Recapitulación de los Beneficios Transformadores de Shift Left
 - Aprender continuamente y tratar la seguridad como habilitador del negocio.
 
 <!--
-PowerPoint original · diapositiva 53
-
-El Mensaje Central: En el negocio digital bancario actual, la elección es:
-Shift Left or get Hacked!
-Esperar a que las vulnerabilidades se manifiesten en producción es reactivo, costoso e insostenible.
-Para el Personal Técnico:
-Integrar la seguridad en cada pensamiento y acción.
-Buscar proactivamente oportunidades para automatizar verificaciones.
-Colaborar estrechamente con Dev, Sec y Ops.
-Capacitarse continuamente en desarrollo seguro.
-Defender la seguridad como un habilitador del negocio.
-Shift Left: No solo buena práctica, sino pilar estratégico para innovación, competitividad y confianza.
-Llamada a la Acción: Adoptar la Seguridad desde el Primer Commit
+Cerrá con una invitación concreta: elegir una verificación útil que el equipo pueda integrar y mejorar. Evitá presentar Shift Left como garantía de ausencia de vulnerabilidades.
 -->
 
 ---
@@ -1422,43 +1291,4 @@ PowerPoint original · diapositiva 54
 
 Muchas Gracias!
 ¿Preguntas?
--->
-
----
-
-# Sobre Cutter Consortium México
-
-Firma de consultoría y conocimiento integrada por una red internacional de especialistas en tecnología y negocios.
-
-Su misión es ayudar a las organizaciones a cumplir sus objetivos mediante el uso eficaz de TI, con asesoramiento y herramientas prácticas para mejorar la gestión y los resultados.
-
-<!--
-PowerPoint original · diapositiva 55
-
-Acerca de Cutter Consortium México
-Cutter Consortium México es una firma de consultoría y conocimiento integrada por una red internacional de expertos practicantes en el ámbito de las Tecnologías de la Información y Negocios, que colaboran comprometidos para la generación de consejos críticos, objetivos y de alto nivel.
-Nuestra misión es ayudar a las organizaciones en el cumplimiento de su estrategia y objetivos de negocio a través del uso de las Tecnologías de Información logrando un óptimo desempeño en su gestión y aprovechamiento.
-La propuesta de valor de Cutter Consortium México consiste en dar acceso a nuestros clientes al conocimiento, talento  y capacidades de nuestros expertos, para contribuir con el logro de sus objetivos de negocio, así como a herramientas prácticas, para evaluar y mejorar el desempeño y resultados de las áreas de Tecnologías de la Información
--->
-
----
-
-# Contacto del material original
-
-**Cutter Consortium México**  
-Retorno 30 No. 2, Col. Avante, Coyoacán  
-CDMX, C.P. 04460
-
-Tel. 55-5336-0418 · contacto@cutter.com.mx  
-www.cutter.com.mx · @cuttermexico
-
-<div class="flex gap-4 mt-4 items-center">
-<img src="/pptx-images/image22.png" alt="Twitter" class="h-7" />
-<img src="/pptx-images/image23.png" alt="Facebook" class="h-7" />
-</div>
-
-<!--
-PowerPoint original · diapositiva 56
-
-Cutter Consortium MéxicoRetorno 30 No. 2 Col. Avante, CoyoacánCDMX, C.P. 04460 			Tel. 55-5336-0418contacto@cutter.com.mxwww.cutter.com.mx@cuttermexicocuttermexico
 -->
