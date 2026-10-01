@@ -26,6 +26,7 @@ Guía viva para escribir y revisar las notas de exposición de la clase. Se ajus
 - Hablar de software «sin vulnerabilidades conocidas» en un alcance y momento determinados; nuevos hallazgos pueden cambiar lo que sabemos aunque el código no haya cambiado.
 - No inferir el nivel de riesgo a partir del origen. Priorizar según el escenario, la probabilidad y el impacto.
 - Para distinguir vulnerabilidad, amenaza y riesgo, usar un único escenario compartido; expresar el riesgo como un escenario posible valorado según su probabilidad y sus consecuencias, y separar el impacto real ocurrido.
+- Sostener la clase 1 sobre un único caso: la app de banca digital. Reusar su vocabulario canónico (cliente, app, servicios de autenticación/extractos/pagos, cuentas y movimientos, proveedor de notificaciones) en lugar de introducir ejemplos nuevos; la banca es el vehículo, no el tema.
 - Usar los casos reales como apoyo didáctico; mantener el concepto y sus relaciones generales como eje de la diapositiva.
 - Al contrastar niveles de amenaza y riesgo, presentarlos como valoraciones cualitativas independientes; explicar cómo exposición, vulnerabilidades, controles, impacto y recuperación modifican el riesgo.
 - Antes de analizar amenazas, delimitar el servicio de interés e incluir actores, datos, componentes e interdependencias, también cuando queden fuera del control directo.
