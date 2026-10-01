@@ -4,7 +4,7 @@ Dos clases introductorias de Software Seguro, para una audiencia heterogénea co
 
 ## Decks
 
-- [`slides-clase-1.md`](./slides-clase-1.md) — **Software seguro desde el diseño**: entender → modelar → pensar amenazas → diseñar.
+- [`slides-clase-1.md`](./slides-clase-1.md) — **Software seguro desde el diseño**: entender → modelar → pensar amenazas → diseñar. Toda la clase se organiza alrededor de un único caso de estudio: una app de banca digital.
 - [`slides-clase-2.md`](./slides-clase-2.md) — **Shift Left or Get Hacked**: construir → verificar → automatizar → operar.
 
 Las 56 diapositivas de `tmp/Shift left or get hacked.pptx` (archivo local no versionado) se descompusieron e intercalaron por tema en ambos decks: 6 en la clase 1 y 50 en la clase 2, sin cambiar el orden ni el contenido de las diapositivas que ya existían. Cada diapositiva incorporada tiene en sus notas el número y el texto íntegro del PowerPoint original. Se reutilizaron las imágenes pertinentes en [`public/pptx-images/`](./public/pptx-images/), sin copiar el tema ni sus elementos decorativos.
