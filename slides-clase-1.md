@@ -135,14 +135,42 @@ Notas para presentar:
 
 Presentá «activo» como algo que tiene valor para alguien y que el sistema debe proteger. Puede ser tangible o intangible; no se limita a servidores o bases de datos.
 
-Usá las tres tarjetas como ejemplos, no como una lista exhaustiva. En un servicio financiero, el activo puede ser la persona y sus datos, una transferencia correcta, la continuidad del servicio o la confianza para usarlo.
+Usá las tres tarjetas como ejemplos, no como una lista exhaustiva. En una app de banca, el activo puede ser la persona y sus datos, una transferencia correcta, la continuidad del servicio o la confianza para usarla.
 
 El valor depende de quién necesita el sistema y qué perdería si una parte deja de funcionar, queda expuesta o se modifica sin autorización. Por eso conviene identificar activos antes de elegir controles.
 
-Transición: «Esos activos no viven aislados: el software conecta personas, aplicaciones, servicios y datos».
+Transición: «Para no hablar en abstracto, elijamos un sistema concreto que nos acompañe toda la clase».
 
 Fuente de la definición: NIST CSRC Glossary, “Asset”; incluye entidades tangibles e intangibles cuyo valor determinan las partes interesadas.
 https://csrc.nist.gov/glossary/term/asset
+-->
+
+---
+
+# Nuestro caso: una app de banca digital
+
+<p class="mt-4 text-lg">Un mismo sistema nos acompañará toda la clase: autenticarse, consultar y transferir.</p>
+
+<div class="mt-6 grid grid-cols-3 gap-4 text-center" role="img" aria-label="Tres viajes del cliente en la app de banca: autenticarse, consultar saldo y movimientos, iniciar una transferencia">
+  <section class="card px-4 py-6"><strong>Autenticarse</strong><p class="mt-2 text-sm">El cliente ingresa con su cuenta y verifica su identidad.</p></section>
+  <section class="card px-4 py-6"><strong>Consultar</strong><p class="mt-2 text-sm">Mira el saldo y los movimientos de su cuenta.</p></section>
+  <section class="card px-4 py-6"><strong>Transferir</strong><p class="mt-2 text-sm">Inicia una transferencia a otra cuenta.</p></section>
+</div>
+
+<p class="mt-5 text-center text-sm opacity-70">Detrás de la app hay servicios, una base de datos y un proveedor externo de notificaciones.</p>
+
+<!--
+Notas para presentar:
+
+Presentá el caso que vamos a usar durante toda la clase: una app de banca digital. La elegimos porque es fácil de imaginar y concentra lo que aparece en casi cualquier sistema: personas, una aplicación, servicios que procesan, datos que se guardan y un proveedor externo.
+
+Recorré los tres viajes del cliente: se autentica, consulta el saldo y los movimientos de su cuenta, inicia una transferencia a otra cuenta. Estos mismos viajes reaparecen en cada concepto de la clase: activos, flujos, fronteras de confianza, abusos y requisitos.
+
+Aclará que la clase no trata de banca: el sistema es el vehículo para aprender decisiones de diseño seguro que aplican a cualquier software.
+
+Pregunta para el intercambio: «¿Qué otro viaje harían con una app así?» Las respuestas —por ejemplo, descargar un extracto o cambiar el alias— sirven después cuando hablemos de superficie de ataque.
+
+Transición: «Empecemos por mirar cómo se conectan las piezas de este sistema».
 -->
 
 ---
@@ -151,10 +179,10 @@ https://csrc.nist.gov/glossary/term/asset
 
 ```mermaid
 flowchart LR
-  U[Personas] -->|usan| A[Aplicación]
+  U[Cliente] -->|usa| A[App de banca]
   A -->|invoca| S[Servicios]
-  S -->|consulta o modifica| D[(Datos)]
-  A -->|integra| X[Proveedor externo]
+  S -->|consulta o registra| D[(Cuentas y movimientos)]
+  S -->|integra| X[Proveedor de notificaciones]
   S -->|se aloja en| C[Nube]
 ```
 
@@ -163,9 +191,9 @@ Cada vínculo requiere definir qué se intercambia, quién participa y qué perm
 <!--
 Notas para presentar:
 
-Presentá el dibujo como un mapa simplificado de relaciones, no como una arquitectura única. Las flechas muestran que una operación puede pasar por varios componentes y llegar también a proveedores externos. La nube representa dónde pueden ejecutarse los servicios.
+Presentá el dibujo como el mapa simplificado de nuestro caso: la app de banca, sus servicios, la base de cuentas y movimientos y el proveedor de notificaciones. Las flechas muestran que una misma operación pasa por varios componentes y llega también a un proveedor externo. La nube representa dónde pueden ejecutarse los servicios.
 
-Recorré un ejemplo de compra en línea: una persona confirma el pedido desde la aplicación, un servicio consulta o registra datos y la aplicación integra un proveedor de pago. Preguntá: «¿Qué información necesita cada componente para completar la operación?». Usá las respuestas para señalar que cada vínculo requiere definir los datos que circulan y los permisos necesarios.
+Recorré una transferencia del caso: el cliente confirma la operación desde la app, el servicio de pagos consulta o registra datos en la base y el sistema integra el proveedor de notificaciones para avisar que la transferencia se realizó. Preguntá: «¿Qué información necesita cada componente para completar la transferencia?». Usá las respuestas para señalar que cada vínculo requiere definir los datos que circulan y los permisos necesarios.
 
 La ubicación de red por sí sola no determina si un componente es confiable. NIST recomienda centrar la protección en usuarios, dispositivos, activos y recursos, incluidas aplicaciones y servicios, sin conceder confianza implícita por estar dentro de una red.
 
@@ -183,12 +211,12 @@ El control de entrada no vuelve confiables a todos los componentes internos.
 
 ```mermaid
 flowchart LR
-  U[Usuario con acceso] --> F[Control perimetral]
+  U[Cliente con acceso] --> F[Control perimetral]
   subgraph R[Red interna]
-    A[Aplicación] --> S[Servicio] --> D[(Datos)]
+    A[App de banca] --> S[Servicios] --> D[(Cuentas y movimientos)]
   end
   F --> A
-  A --> X[Servicio externo]
+  S --> X[Proveedor de notificaciones]
 ```
 
 <div class="mt-4 grid grid-cols-3 gap-3 text-center text-sm">
@@ -315,12 +343,12 @@ https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
 
 # ¿Qué queremos proteger?
 
-**En un servicio de pagos:** datos de clientes, registros de transferencias y el servicio mismo.
+**En la app de banca:** los datos de clientes, el registro de movimientos y la disponibilidad del servicio.
 
 <div class="mt-5 grid grid-cols-3 gap-3 text-center text-sm">
   <section class="card px-4 py-4" aria-label="Confidencialidad">
     <strong>Confidencialidad</strong>
-    <p class="mt-2">Los datos de clientes solo son visibles para personas autorizadas.</p>
+    <p class="mt-2">El saldo y los movimientos solo son visibles para el titular de la cuenta.</p>
   </section>
   <section class="card px-4 py-4" aria-label="Integridad">
     <strong>Integridad</strong>
@@ -328,18 +356,18 @@ https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
   </section>
   <section class="card px-4 py-4" aria-label="Disponibilidad">
     <strong>Disponibilidad</strong>
-    <p class="mt-2">El servicio responde cuando se necesita realizar una operación.</p>
+    <p class="mt-2">La app responde cuando el cliente necesita hacer una transferencia.</p>
   </section>
 </div>
 
 <!--
 Notas para presentar:
 
-Retomá la definición de activo de la diapositiva anterior. Para concretarla, usá un servicio de pagos: protege datos de clientes, registros de transferencias y la capacidad de completar operaciones.
+Retomá la definición de activo de la diapositiva anterior. Para concretarla, volvé al caso: la app de banca protege los datos de clientes, el registro de movimientos y la capacidad de completar transferencias.
 
 Presentá confidencialidad, integridad y disponibilidad como tres objetivos clásicos de seguridad de la información. Confidencialidad limita quién puede conocer los datos; integridad protege contra modificaciones o destrucciones impropias; disponibilidad busca que la información y los sistemas se puedan usar de manera oportuna y confiable.
 
-Recorré el ejemplo en las tres tarjetas: una consulta no autorizada afecta la confidencialidad; cambiar el importe o el destinatario sin autorización afecta la integridad; interrumpir el servicio cuando se necesita procesar un pago afecta la disponibilidad.
+Recorré el ejemplo en las tres tarjetas: una consulta no autorizada afecta la confidencialidad; cambiar el importe o el destinatario sin autorización afecta la integridad; interrumpir la app cuando se necesita procesar una transferencia afecta la disponibilidad.
 
 Las tres propiedades ayudan a analizar impactos, pero no agotan todos los atributos que pueden importar en un sistema; el contexto puede exigir otros, como autenticidad o trazabilidad de las acciones.
 
@@ -360,7 +388,7 @@ Una amenaza es una circunstancia o evento con potencial de afectar activos, pers
 <div class="mt-5 grid grid-cols-3 gap-3 text-center text-sm">
   <section class="card px-4 py-4" aria-label="Amenaza a la confidencialidad">
     <strong>Confidencialidad</strong>
-    <p class="mt-2">Alguien consulta datos de clientes sin autorización.</p>
+    <p class="mt-2">Alguien consulta el saldo o los movimientos de otra cuenta.</p>
   </section>
   <section class="card px-4 py-4" aria-label="Amenaza a la integridad">
     <strong>Integridad</strong>
@@ -368,7 +396,7 @@ Una amenaza es una circunstancia o evento con potencial de afectar activos, pers
   </section>
   <section class="card px-4 py-4" aria-label="Amenaza a la disponibilidad">
     <strong>Disponibilidad</strong>
-    <p class="mt-2">Una falla o un ataque impide realizar pagos.</p>
+    <p class="mt-2">Una falla o un ataque impide realizar transferencias.</p>
   </section>
 </div>
 
@@ -383,7 +411,7 @@ Amenaza y vulnerabilidad no son sinónimos. Una vulnerabilidad es una debilidad 
 
 Preguntá: «¿Hace falta que exista un atacante para que ocurra una amenaza?». Retomá errores de configuración o fallas como ejemplos de eventos no deliberados.
 
-Transición: «Ahora que identificamos los efectos posibles, miremos tácticas concretas que aparecen en el sector financiero».
+Transición: «Ahora que identificamos los efectos posibles sobre el caso, miremos qué patrones se observan en brechas reales».
 
 Fuentes: NIST CSRC Glossary, Threat; NIST SP 800-30 Rev. 1, Guide for Conducting Risk Assessments.
 https://csrc.nist.gov/glossary/term/threat
@@ -527,11 +555,11 @@ https://csrc.nist.gov/pubs/sp/800/30/r1/final
 flowchart BT
   subgraph Scope["Sistema bajo análisis"]
     direction LR
-    S["Servicio protegido"]
-    D["Datos y funciones"] --> S
-    A["Actores y componentes"] --> S
+    S["App de banca y sus servicios"]
+    D["Cuentas y movimientos"] --> S
+    A["Clientes, app y servicios"] --> S
   end
-  X["Dependencia externa"] -. "puede afectar" .-> S
+  X["Proveedor de notificaciones"] -. "puede afectar" .-> S
 ```
 
 **Fuera de nuestro control no significa fuera del análisis.**
@@ -539,15 +567,15 @@ flowchart BT
 <!--
 Notas para presentar:
 
-Presentá el alcance como el objeto concreto que vamos a analizar. Señalá el servicio protegido y después los datos, funciones, actores y componentes que lo sostienen. No alcanza con nombrar la aplicación: hay que entender qué servicio presta y de qué depende.
+Presentá el alcance como el objeto concreto que vamos a analizar: en nuestro caso, la app de banca y todo lo que la sostiene. Señalá el sistema protegido y después los datos, actores y componentes que lo sostienen. No alcanza con nombrar la aplicación: hay que entender qué servicio presta y de qué depende.
 
 Señalá la dependencia externa. Aunque quede fuera del control directo de la organización, puede afectar la disponibilidad, integridad o confidencialidad del servicio.
 
 NIST recomienda caracterizar el sistema y su contexto antes de evaluar el riesgo. OWASP propone entender la aplicación, sus flujos de datos y límites de confianza antes de identificar amenazas.
 
-Pregunta para el intercambio: «¿Qué servicio externo podría dejar fuera de funcionamiento una parte importante de este sistema?»
+Pregunta para el intercambio: «Si el proveedor de notificaciones deja de responder, ¿qué parte del caso se ve afectada y cuál sigue funcionando?»
 
-Transición: «Dibujemos un sistema pequeño y hagamos visibles sus componentes y dependencias».
+Transición: «Dibujemos el caso y hagamos visibles sus componentes y dependencias».
 
 Fuentes: NIST SP 800-30 Rev. 1, Guide for Conducting Risk Assessments; OWASP Threat Modeling Cheat Sheet.
 https://csrc.nist.gov/pubs/sp/800/30/r1/final
@@ -564,12 +592,12 @@ layout: two-cols-header
 
 ```mermaid {class: 'w-full flex justify-center'}
 flowchart TB
-  P["Persona"]
+  P["Cliente"]
   subgraph Scope["Sistema bajo análisis"]
     direction TB
-    A["Aplicación"] --> S["Servicio"] --> D[("Datos")]
+    A["App de banca"] --> S["Servicios"] --> D[("Cuentas y movimientos")]
   end
-  E["Sistema externo"]
+  E["Proveedor de notificaciones"]
   P --> A
   S -.-> E
 ```
@@ -578,24 +606,24 @@ flowchart TB
 
 ::right::
 
-### Componentes y ejemplos
+### Componentes, en nuestro caso
 
 <div class="mt-4 grid grid-cols-[7rem_1fr] gap-x-3 gap-y-3 text-sm">
-  <strong>Persona</strong><span>usuaria, operadora</span>
-  <strong>Aplicación</strong><span>portal web, app móvil</span>
-  <strong>Servicio</strong><span>autenticación, búsqueda</span>
-  <strong>Datos</strong><span>perfiles, registros</span>
-  <strong>Sistema externo</strong><span>proveedor de identidad, correo</span>
+  <strong>Cliente</strong><span>persona con una cuenta</span>
+  <strong>App de banca</strong><span>app móvil o web</span>
+  <strong>Servicios</strong><span>autenticación, extractos, pagos</span>
+  <strong>Cuentas y movimientos</strong><span>saldos e historial</span>
+  <strong>Proveedor de notificaciones</strong><span>confirmaciones por SMS o correo</span>
 </div>
 
 <!--
 Notas para presentar:
 
-Leé el dibujo de arriba hacia abajo. La persona inicia una interacción con la aplicación; el servicio procesa la solicitud y consulta datos. La aplicación, el servicio y los datos están dentro del alcance representado. La persona y el sistema externo interactúan desde fuera de ese límite. Usá la columna derecha para traducir cada etiqueta a ejemplos concretos; son posibilidades generales, no componentes obligatorios de toda organización.
+Leé el dibujo de arriba hacia abajo. El cliente inicia una interacción con la app; los servicios procesan la solicitud y consultan la base de datos. La app, los servicios y los datos están dentro del alcance representado. El cliente y el proveedor de notificaciones interactúan desde fuera de ese límite. Usá la columna derecha para aterrizar cada etiqueta en el caso; la misma estructura sirve para otros sistemas: cambian los nombres, no la forma de mirar.
 
-La línea punteada representa una dependencia externa. El esquema es un modelo inicial para conversar, no una arquitectura completa: alcanza para hacer visibles los componentes, las interacciones y los elementos que quedan fuera del control directo.
+La línea punteada representa una dependencia externa: el proveedor que envía las notificaciones del caso. El esquema es un modelo inicial para conversar, no una arquitectura completa: alcanza para hacer visibles los componentes, las interacciones y los elementos que quedan fuera del control directo.
 
-Pregunta para el intercambio: «Si el sistema externo deja de responder, ¿qué función del servicio podría verse afectada?»
+Pregunta para el intercambio: «Si el proveedor de notificaciones deja de responder, ¿qué funciones del caso siguen operando?»
 
 Transición: «Ahora sigamos las conexiones y veamos qué información circula, quién la recibe y quién puede modificarla».
 
@@ -613,18 +641,18 @@ layout: two-cols-header
 
 ```mermaid {class: 'w-full flex justify-center', scale: 0.8}
 flowchart TB
-  P["Persona"]
+  P["Cliente"]
   subgraph Scope["Sistema bajo análisis"]
     direction TB
-    A["Aplicación"] -->|solicita| S["Servicio"]
-    S -->|lee o guarda| D[("Datos")]
+    A["App de banca"] -->|solicita| S["Servicios"]
+    S -->|lee o guarda| D[("Cuentas y movimientos")]
   end
-  E["Sistema externo"]
+  E["Proveedor de notificaciones"]
   P -->|envía datos| A
-  S <--> E
+  S <-->|notificaciones| E
 ```
 
-<p class="mt-2 text-center text-sm opacity-70">El intercambio con el sistema externo se dibuja aparte del recorrido interno.</p>
+<p class="mt-2 text-center text-sm opacity-70">El intercambio con el proveedor externo se dibuja aparte del recorrido interno.</p>
 
 ::right::
 
@@ -639,11 +667,11 @@ flowchart TB
 <!--
 Notas para presentar:
 
-Recorré el flujo: la persona envía datos; la aplicación solicita una operación; el servicio consulta o guarda datos y puede intercambiar información con un sistema externo. El diagrama separa ese intercambio externo del recorrido interno: los datos no pasan necesariamente primero por el almacén y después al sistema externo.
+Recorré el flujo en el caso: el cliente envía credenciales o confirma una transferencia; la app solicita la operación; los servicios leen o guardan datos y pueden intercambiar información con el proveedor de notificaciones. El diagrama separa ese intercambio externo del recorrido interno: los datos no pasan necesariamente primero por el almacén y después al proveedor externo.
 
 Usá las tres tarjetas para organizar el análisis: identificar quién origina el dato, dónde llega o queda almacenado y qué identidades tienen permiso para leerlo o modificarlo. El permiso de acceso es una propiedad de seguridad que analizamos junto con el flujo.
 
-Pregunta para el intercambio: «¿Quién podría leer o alterar este dato durante su recorrido?»
+Pregunta para el intercambio: «¿Quién podría leer o alterar el importe de una transferencia durante su recorrido?»
 
 Transición: «Además de seguir los datos, tenemos que decidir qué confianza merece cada origen y cada componente».
 
@@ -666,7 +694,7 @@ No todo componente, usuario o dato merece el mismo nivel de confianza.
 <!--
 Notas para presentar:
 
-Planteá la pregunta del título y pedí ejemplos de la experiencia del público: un correo que dice venir del banco, un pendrive encontrado en el estacionamiento, una respuesta inesperada de una API. En cada caso preguntá: ¿qué estamos asumiendo y qué podríamos comprobar?
+Planteá la pregunta del título y pedí ejemplos de la experiencia del público: un correo que dice venir del banco, una notificación que pide reingresar credenciales, una respuesta inesperada del proveedor de notificaciones. En cada caso preguntá: ¿qué estamos asumiendo y qué podríamos comprobar?
 
 Contrastá las dos tarjetas: asumir no requiere ninguna decisión y por eso pasa desapercibido; verificar hay que diseñarlo. La confianza no es binaria ni gratuita: se decide a partir de lo que sabemos del origen y de las validaciones que aplicamos antes de actuar.
 
@@ -688,15 +716,15 @@ layout: two-cols-header
 
 ```mermaid {class: 'w-full flex justify-center', scale: 0.8}
 flowchart TB
-  P["Persona"]
+  P["Cliente"]
   subgraph Scope["Sistema bajo análisis · frontera de confianza"]
     direction TB
-    A["Aplicación"] -->|solicita| S["Servicio"]
-    S -->|lee o guarda| D[("Datos")]
+    A["App de banca"] -->|solicita| S["Servicios"]
+    S -->|lee o guarda| D[("Cuentas y movimientos")]
   end
-  E["Sistema externo"]
+  E["Proveedor de notificaciones"]
   P -->|envía datos| A
-  S <--> E
+  S <-->|notificaciones| E
   %% Indices de arista en orden de definicion (numeradas desde 0):
   %% 2 = persona hacia aplicacion; 3 = servicio con sistema externo.
   %% Ambas cruzan la frontera de confianza; verificar si se reordenan nodos o aristas.
@@ -721,9 +749,9 @@ Una frontera de confianza marca el paso entre contextos con distintos niveles de
 <!--
 Notas para presentar:
 
-Señalá que es el mismo diagrama que venimos usando; lo que cambia es la pregunta. El recuadro ya no marca solo el alcance: es la frontera de confianza. Dentro, los componentes comparten un contexto de confianza; fuera, la persona y el sistema externo están en otro.
+Señalá que es el mismo diagrama que venimos usando; lo que cambia es la pregunta. El recuadro ya no marca solo el alcance: es la frontera de confianza. Dentro, los componentes comparten un contexto de confianza; fuera, el cliente y el proveedor de notificaciones están en otro.
 
-Señalá las dos flechas resaltadas: los datos que entran desde la persona y el intercambio con el sistema externo atraviesan la frontera. Usá la tabla de la derecha: en cada cruce validamos identidad (autenticación), permisos (autorización) y que los datos sean válidos (validación de entrada). Los flujos internos también pueden tener fronteras si los componentes tienen niveles de confianza distintos; empezamos por el borde porque es el cruce más visible.
+Señalá las dos flechas resaltadas: los datos que entran desde el cliente y el intercambio con el proveedor de notificaciones atraviesan la frontera. Usá la tabla de la derecha: en cada cruce validamos identidad (autenticación), permisos (autorización) y que los datos sean válidos (validación de entrada). Los flujos internos también pueden tener fronteras si los componentes tienen niveles de confianza distintos; empezamos por el borde porque es el cruce más visible.
 
 Pregunta para el intercambio: «¿Qué validaciones hace hoy una aplicación que conozcan cuando una persona envía datos?»
 
@@ -740,12 +768,12 @@ https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
 Son los lugares donde alguien puede interactuar con el sistema o influir en él.
 
 <div class="mt-6 grid grid-cols-3 gap-3 text-center text-sm" role="img" aria-label="Superficie de ataque: entradas, cuentas, APIs, archivos, interfaces y servicios externos">
-  <section class="card px-3 py-3"><strong>Entradas</strong><br />formularios, campos</section>
-  <section class="card px-3 py-3"><strong>Cuentas</strong><br />usuarias, accesos</section>
-  <section class="card px-3 py-3"><strong>APIs</strong><br />endpoints expuestos</section>
-  <section class="card px-3 py-3"><strong>Archivos</strong><br />cargas, descargas</section>
-  <section class="card px-3 py-3"><strong>Interfaces</strong><br />pantallas, puertos</section>
-  <section class="card px-3 py-3"><strong>Servicios externos</strong><br />proveedores, integraciones</section>
+  <section class="card px-3 py-3"><strong>Entradas</strong><br />formulario de transferencia</section>
+  <section class="card px-3 py-3"><strong>Cuentas</strong><br />credenciales de clientes</section>
+  <section class="card px-3 py-3"><strong>APIs</strong><br />endpoints de saldo y pagos</section>
+  <section class="card px-3 py-3"><strong>Archivos</strong><br />extractos descargables</section>
+  <section class="card px-3 py-3"><strong>Interfaces</strong><br />pantallas de la app</section>
+  <section class="card px-3 py-3"><strong>Servicios externos</strong><br />proveedor de notificaciones</section>
 </div>
 
 <p class="mt-6">Reducir entradas innecesarias reduce oportunidades de abuso.</p>
@@ -753,11 +781,11 @@ Son los lugares donde alguien puede interactuar con el sistema o influir en él.
 <!--
 Notas para presentar:
 
-Retomá la diapositiva anterior: los cruces de la frontera de confianza son parte de la superficie de ataque, pero la superficie incluye todo punto de interacción, visible o no. Recorré las seis fichas y pedí un ejemplo de cada una en sistemas que el público conozca.
+Retomá la diapositiva anterior: los cruces de la frontera de confianza son parte de la superficie de ataque, pero la superficie incluye todo punto de interacción, visible o no. Recorré las seis fichas: cada una es un punto real de la app de banca que venimos dibujando.
 
 Cerrá con la idea de reducción: cada entrada que no se necesita es una oportunidad menos para un abuso. Cada nueva funcionalidad, API o integración amplía la superficie; por eso conviene revisar qué queda expuesto y qué puede quitarse o restringirse.
 
-Pregunta para el intercambio: «¿Qué entrada del sistema que dibujamos podría eliminarse o restringirse?»
+Pregunta para el intercambio: «¿Qué entrada de la app de banca podría eliminarse o restringirse? Por ejemplo, ¿hace falta exponer la consulta de cualquier cuenta o solo de la propia?»
 
 Transición: «Veamos por cuáles de estos lugares suelen llegar los incidentes reales».
 
@@ -824,7 +852,7 @@ Notas para presentar:
 
 Abrí con la idea de la primera línea: los principios de diseño seguro no son una lista para memorizar, sino preguntas que conviene hacerse mientras se diseña. Recorré las tres tarjetas y anticipá que las vamos a ver una por una: la primera pregunta abre el principio de mínimo privilegio; la segunda, la defensa en profundidad y el fallo seguro; la tercera, la contención del impacto.
 
-Pregunta para el intercambio: «¿Cuál de estas preguntas aplicarían primero al sistema que dibujamos?»
+Pregunta para el intercambio: «¿Cuál de estas preguntas aplicarían primero a la app de banca que dibujamos?»
 
 Transición: «Empecemos por la primera: confiar lo mínimo necesario».
 
@@ -841,8 +869,8 @@ class: flex flex-col justify-center
 <p class="mt-6 text-xl">¿Qué permisos necesita cada identidad para su tarea, y por cuánto tiempo?</p>
 
 <div class="mt-8 grid grid-cols-2 gap-5 text-center">
-  <section class="card-strong px-6 py-8"><strong class="text-xl">Alcance</strong><p class="mt-3 text-base">El servicio de reportes consulta transacciones, pero no las modifica.</p></section>
-  <section class="card-strong px-6 py-8"><strong class="text-xl">Duración</strong><p class="mt-3 text-base">El acceso administrativo se habilita durante el mantenimiento y se revoca al terminar.</p></section>
+  <section class="card-strong px-6 py-8"><strong class="text-xl">Alcance</strong><p class="mt-3 text-base">El servicio de extractos consulta saldos y movimientos, pero no puede iniciar transferencias.</p></section>
+  <section class="card-strong px-6 py-8"><strong class="text-xl">Duración</strong><p class="mt-3 text-base">El acceso de mantenimiento a la base de datos se habilita por ventana y se revoca al terminar.</p></section>
 </div>
 
 <p class="mt-8 text-center">Limitar permisos reduce lo que una cuenta comprometida puede hacer.</p>
@@ -852,9 +880,9 @@ Notas para presentar:
 
 Abrí con la pregunta visible y distinguí sus dos dimensiones: el alcance (qué acciones y recursos permite un permiso) y la duración (cuánto tiempo permanece habilitado). El principio aplica tanto a personas como a cuentas de servicio y componentes.
 
-Usá los ejemplos: el servicio de reportes necesita leer transacciones, no cambiarlas; un acceso administrativo para mantenimiento puede ser temporal. No es una regla de «quitar permisos porque sí»: cada permiso debe responder a una tarea concreta.
+Usá los ejemplos del caso: el servicio de extractos necesita leer saldos y movimientos, no modificarlos ni iniciar transferencias; un acceso de mantenimiento a la base puede ser temporal. No es una regla de «quitar permisos porque sí»: cada permiso debe responder a una tarea concreta.
 
-Pregunta para el intercambio: «Si comprometieran el servicio de reportes, ¿qué acción no debería poder ejecutar?»
+Pregunta para el intercambio: «Si comprometieran el servicio de extractos, ¿qué acción no debería poder ejecutar?»
 
 Transición: «El mínimo privilegio limita lo que puede hacer cada identidad; ahora veamos por qué tampoco conviene depender de una sola barrera».
 
@@ -885,7 +913,7 @@ Notas para presentar:
 
 Retomá la pregunta visible: ningún control es infalible. La defensa en profundidad combina controles distintos para prevenir un abuso, detectar actividad que logró pasar y contener sus efectos. Las funciones se complementan; no garantizan que todo incidente se evite.
 
-Recorré las tarjetas con un ejemplo de servicio web: validar una solicitud y exigir permisos adecuados ayuda a prevenir; registrar las acciones y alertar ante patrones inusuales permite detectar; aislar el componente afectado y mantener permisos acotados ayuda a contener.
+Recorré las tarjetas con el caso: validar la solicitud de transferencia y exigir permisos adecuados ayuda a prevenir; registrar las operaciones y alertar ante patrones inusuales, como transferencias a destinos nuevos de madrugada, permite detectar; aislar el servicio afectado y mantener permisos acotados ayuda a contener.
 
 Pregunta para el intercambio: «Si el control de acceso no detectara una cuenta comprometida, ¿qué otra capa podría detectar o limitar su actividad?»
 
@@ -904,8 +932,8 @@ class: flex flex-col justify-center
 <p class="mt-4 text-center text-2xl font-semibold">Si un control o una dependencia falla, ¿cómo debería responder el sistema?</p>
 
 <div class="mt-8 grid grid-cols-3 gap-5 text-center" role="img" aria-label="Respuestas ante un fallo: proteger, degradar y recuperar">
-  <section class="card-strong px-5 py-8"><strong class="text-xl">Proteger</strong><p class="mt-3 text-base">Sin poder verificar permisos, no autorizar operaciones sensibles.</p></section>
-  <section class="card-strong px-5 py-8"><strong class="text-xl">Degradar</strong><p class="mt-3 text-base">Mantener las funciones seguras que no dependan del servicio caído.</p></section>
+  <section class="card-strong px-5 py-8"><strong class="text-xl">Proteger</strong><p class="mt-3 text-base">Sin poder verificar autorización, no ejecutar transferencias.</p></section>
+  <section class="card-strong px-5 py-8"><strong class="text-xl">Degradar</strong><p class="mt-3 text-base">Sin notificaciones, seguir consultando y transfiriendo.</p></section>
   <section class="card-strong px-5 py-8"><strong class="text-xl">Recuperar</strong><p class="mt-3 text-base">Registrar el fallo y restablecer el servicio de forma controlada.</p></section>
 </div>
 
@@ -914,7 +942,7 @@ class: flex flex-col justify-center
 <!--
 Notas para presentar:
 
-La pregunta cubre fallos de controles internos y de dependencias externas. Usá las tarjetas como decisiones de diseño: si no se puede verificar autorización, no ejecutar una operación sensible; si falla un proveedor externo, conservar las funciones independientes que puedan seguir operando; registrar el problema y restablecer el servicio con verificación.
+La pregunta cubre fallos de controles internos y de dependencias externas. Usá las tarjetas como decisiones de diseño: si no se puede verificar autorización, no ejecutar una transferencia; si falla el proveedor de notificaciones, la consulta de saldo y las transferencias siguen operando y las notificaciones pendientes se recuperan después; registrar el problema y restablecer el servicio con verificación.
 
 Aclaración importante: «fallar de forma segura» no significa denegar toda solicitud ni apagar el sistema ante cualquier error. La respuesta depende de los requisitos de confidencialidad, integridad y disponibilidad. Una consulta pública segura podría continuar mientras una operación que modifica datos queda bloqueada.
 
@@ -936,8 +964,8 @@ class: flex flex-col justify-center
 <p class="mt-4 text-center text-2xl font-semibold">Si se compromete una cuenta, ¿hasta dónde puede llegar?</p>
 
 <div class="mt-8 grid grid-cols-2 gap-5 text-center">
-  <section class="card-strong px-6 py-8"><strong class="text-xl">Alcance amplio</strong><p class="mt-3 text-base">Una cuenta comprometida puede modificar pagos y acceder a otros servicios.</p></section>
-  <section class="card-strong px-6 py-8"><strong class="text-xl">Acceso acotado</strong><p class="mt-3 text-base">El servicio de reportes solo lee transacciones; pagos y administración usan permisos separados.</p></section>
+  <section class="card-strong px-6 py-8"><strong class="text-xl">Alcance amplio</strong><p class="mt-3 text-base">Una cuenta con permisos amplios puede leer movimientos, iniciar transferencias y administrar usuarios.</p></section>
+  <section class="card-strong px-6 py-8"><strong class="text-xl">Acceso acotado</strong><p class="mt-3 text-base">El servicio de extractos solo lee; el de pagos escribe transferencias; administración usa permisos separados.</p></section>
 </div>
 
 <p class="mt-8 text-center">Separar permisos y componentes reduce el radio de impacto (<em>blast radius</em>).</p>
@@ -947,9 +975,9 @@ Notas para presentar:
 
 Usá las tarjetas para contrastar dos diseños posibles, no como una afirmación de que todo compromiso se propaga. Con permisos amplios y componentes muy conectados, una cuenta comprometida podría alcanzar otros servicios; con permisos acotados y separación, el acceso queda limitado a lo que esa identidad necesita.
 
-Retomá el ejemplo anterior: el servicio de reportes puede consultar transacciones, pero no modificarlas ni administrar usuarios. Separar funciones, permisos y componentes limita el alcance del incidente. El término técnico es «radio de impacto» o blast radius.
+Retomá el ejemplo anterior: el servicio de extractos puede consultar saldos y movimientos, pero no modificarlos ni iniciar transferencias. Separar funciones, permisos y componentes limita el alcance del incidente. El término técnico es «radio de impacto» o blast radius.
 
-Pregunta para el intercambio: «¿Qué separación de permisos o componentes reduciría el alcance de un compromiso en el sistema que dibujamos?»
+Pregunta para el intercambio: «¿Qué separación de permisos o componentes reduciría el alcance de un compromiso en la app de banca?»
 
 Transición: «Limitar el impacto reduce el daño posible; ahora cambiemos de perspectiva y pensemos cómo podrían abusar del sistema».
 
@@ -965,9 +993,9 @@ class: flex flex-col justify-center
 # ¿Cómo se podría abusar del sistema?
 
 <div class="mt-8 grid grid-cols-[1fr_auto_1fr] items-center gap-4 text-center" role="img" aria-label="Contraste entre el uso esperado y un intento de abuso">
-  <section class="card-strong px-6 py-10"><strong class="text-xl">Uso esperado</strong><p class="mt-3 text-base">Consultar las transacciones de una cuenta autorizada.</p></section>
+  <section class="card-strong px-6 py-10"><strong class="text-xl">Uso esperado</strong><p class="mt-3 text-base">Consultar el saldo y los movimientos de la propia cuenta.</p></section>
   <span class="text-3xl opacity-60" aria-hidden="true">→</span>
-  <section class="card-strong px-6 py-10"><strong class="text-xl">Intento de abuso</strong><p class="mt-3 text-base">Modificar el identificador para intentar consultar datos de otra cuenta.</p></section>
+  <section class="card-strong px-6 py-10"><strong class="text-xl">Intento de abuso</strong><p class="mt-3 text-base">Modificar el identificador de la cuenta para intentar consultar movimientos ajenos.</p></section>
 </div>
 
 <p class="mt-8 text-center text-lg">Mirar más allá del uso esperado revela requisitos que el camino feliz no muestra.</p>
@@ -975,11 +1003,11 @@ class: flex flex-col justify-center
 <!--
 Notas para presentar:
 
-Usá el contraste para cambiar la perspectiva: una persona consulta transacciones a las que tiene permiso; alguien modifica la solicitud para intentar acceder a datos ajenos. El ejemplo describe un intento, no afirma que el acceso tenga éxito: el control de autorización debería impedirlo.
+Usá el contraste para cambiar la perspectiva: el cliente consulta los movimientos de su cuenta; alguien modifica el identificador de la solicitud para intentar acceder a movimientos ajenos. El ejemplo describe un intento, no afirma que el acceso tenga éxito: el control de autorización debería impedirlo.
 
 Aclará que pensar desde el abuso no implica desconfiar de cada usuario. Sirve para descubrir qué reglas y controles necesita el sistema, además de los que hacen funcionar el caso legítimo.
 
-Pregunta para el intercambio: «¿Qué dato o acción del sistema que dibujamos intentaría alcanzar alguien sin autorización?»
+Pregunta para el intercambio: «¿Qué dato o acción de la app de banca intentaría alcanzar alguien sin autorización?»
 
 Transición: «Threat Modeling es una forma estructurada de hacer esa búsqueda antes de construir».
 
@@ -1008,7 +1036,7 @@ class: flex flex-col justify-center
 <!--
 Notas para presentar:
 
-Retomá lo que ya construimos: delimitamos el sistema, identificamos actores y datos, seguimos flujos y marcamos fronteras de confianza. Threat Modeling ordena ese contexto para explorar amenazas y decidir qué hacer.
+Retomá lo que ya construimos sobre el caso: delimitamos la app de banca, identificamos actores y datos, seguimos flujos y marcamos fronteras de confianza. Threat Modeling ordena ese contexto para explorar amenazas y decidir qué hacer.
 
 Recorré las tres etapas de izquierda a derecha. «Entender» evita analizar un sistema abstracto; «analizar» busca escenarios posibles de abuso o fallo; «responder» traduce hallazgos en requisitos, controles y pruebas. No es necesario adoptar una herramienta para empezar, y conviene revisar el análisis si cambian componentes, datos o dependencias.
 
@@ -1033,9 +1061,9 @@ class: flex flex-col justify-center
 
 <div class="mt-7 grid grid-cols-3 gap-3 text-sm" role="img" aria-label="STRIDE: suplantación, manipulación, repudio, exposición de información, denegación de servicio y elevación de privilegios">
   <section class="flex gap-3 card-strong px-4 py-5 text-left"><strong class="text-2xl text-cyber-cyan">S</strong><div><strong class="text-base">Suplantación</strong><p class="mt-1">Usar una identidad ajena.</p></div></section>
-  <section class="flex gap-3 card-strong px-4 py-5 text-left"><strong class="text-2xl text-cyber-cyan">T</strong><div><strong class="text-base">Manipulación</strong><p class="mt-1">Alterar una solicitud o un registro.</p></div></section>
+  <section class="flex gap-3 card-strong px-4 py-5 text-left"><strong class="text-2xl text-cyber-cyan">T</strong><div><strong class="text-base">Manipulación</strong><p class="mt-1">Alterar el importe o el destinatario de una transferencia.</p></div></section>
   <section class="flex gap-3 card-strong px-4 py-5 text-left"><strong class="text-2xl text-cyber-cyan">R</strong><div><strong class="text-base">Repudio</strong><p class="mt-1">Negar una acción sin evidencia trazable.</p></div></section>
-  <section class="flex gap-3 card-strong px-4 py-5 text-left"><strong class="text-2xl text-cyber-cyan">I</strong><div><strong class="text-base">Exposición de información</strong><p class="mt-1">Leer datos de otra cuenta.</p></div></section>
+  <section class="flex gap-3 card-strong px-4 py-5 text-left"><strong class="text-2xl text-cyber-cyan">I</strong><div><strong class="text-base">Exposición de información</strong><p class="mt-1">Leer movimientos de otra cuenta.</p></div></section>
   <section class="flex gap-3 card-strong px-4 py-5 text-left"><strong class="text-2xl text-cyber-cyan">D</strong><div><strong class="text-base">Denegación de servicio</strong><p class="mt-1">Impedir consultas legítimas.</p></div></section>
   <section class="flex gap-3 card-strong px-4 py-5 text-left"><strong class="text-2xl text-cyber-cyan">E</strong><div><strong class="text-base">Elevación de privilegios</strong><p class="mt-1">Obtener permisos mayores a los asignados.</p></div></section>
 </div>
@@ -1045,7 +1073,7 @@ Notas para presentar:
 
 Retomá el sistema que venimos dibujando y presentá STRIDE como una ayuda para formular escenarios, no como una lista que haya que memorizar ni como una escala de prioridad. Las categorías pueden solaparse; después hay que valorar cada escenario según el contexto y sus consecuencias.
 
-Recorré las letras con ejemplos del sistema: S, alguien usa una identidad ajena; T, altera una solicitud; R, niega haber realizado una acción y no hay evidencia suficiente para atribuirla; I, accede a transacciones de otra cuenta; D, impide que personas legítimas consulten el servicio; E, una cuenta de servicio obtiene permisos administrativos que no necesita.
+Recorré las letras con ejemplos del caso: S, alguien usa la identidad de un cliente; T, altera el importe o el destinatario de una transferencia; R, niega haber iniciado una transferencia y no hay evidencia suficiente para atribuirla; I, accede a los movimientos de otra cuenta; D, impide que clientes legítimos consulten o transfieran; E, el servicio de extractos obtiene permisos de escritura que no necesita.
 
 Pregunta para el intercambio: «¿Cuál de estas amenazas podría afectar la confidencialidad, integridad o disponibilidad del flujo que dibujamos?»
 
@@ -1097,8 +1125,8 @@ class: flex flex-col justify-center
 <p class="mt-4 text-center text-2xl font-semibold">¿Quién hace qué y con qué objetivo?</p>
 
 <div class="mt-8 grid grid-cols-2 gap-5 text-center">
-  <section class="card-strong px-6 py-8"><strong class="text-xl">Uso esperado</strong><p class="mt-4 text-base">Como <strong>cliente</strong>, quiero <strong>consultar el saldo de mi cuenta</strong> para <strong>tomar decisiones financieras</strong>.</p></section>
-  <section class="card-strong px-6 py-8"><strong class="text-xl">Historia de abuso<br /><span class="text-sm font-normal">Evil User Story</span></strong><p class="mt-4 text-base">Como <strong>atacante</strong>, quiero <strong>consultar el saldo de otra cuenta</strong> para <strong>obtener información ajena</strong>.</p></section>
+  <section class="card-strong px-6 py-8"><strong class="text-xl">Uso esperado</strong><p class="mt-4 text-base">Como <strong>cliente</strong>, quiero <strong>consultar el saldo y los movimientos de mi cuenta</strong> para <strong>administrar mi dinero</strong>.</p></section>
+  <section class="card-strong px-6 py-8"><strong class="text-xl">Historia de abuso<br /><span class="text-sm font-normal">Evil User Story</span></strong><p class="mt-4 text-base">Como <strong>atacante</strong>, quiero <strong>consultar el saldo y los movimientos de otra cuenta</strong> para <strong>obtener información privada</strong>.</p></section>
 </div>
 
 <p class="mt-8 text-center">Escribir el abuso revela requisitos que el camino esperado no muestra.</p>
@@ -1108,7 +1136,7 @@ Notas para presentar:
 
 Explicá la estructura común de ambas historias: actor («como»), acción («quiero») y objetivo («para»). La historia de abuso, llamada también Evil User Story, usa esa estructura para expresar una acción no autorizada y el beneficio que buscaría quien la intenta.
 
-Aclará que es un escenario posible, no una afirmación de que el sistema permita consultar saldos ajenos. El objetivo es hacer visible una condición que debe impedirse. La diapositiva anterior planteó el intento; ahora lo expresamos como una historia para pasar al requisito.
+Aclará que es un escenario posible, no una afirmación de que el sistema permita consultar datos de otras cuentas. El objetivo es hacer visible una condición que debe impedirse. La diapositiva anterior planteó el intento; ahora lo expresamos como una historia para pasar al requisito.
 
 Pregunta para el intercambio: «¿Qué regla debería cumplir el sistema para impedir esta historia de abuso?»
 
@@ -1125,7 +1153,7 @@ class: flex flex-col justify-center
 # Del abuso al requisito
 
 <div class="mt-8 grid grid-cols-[1fr_auto_1fr] gap-4 text-center" role="img" aria-label="De la amenaza al requisito de seguridad">
-  <section class="card-strong px-6 py-8"><strong class="text-xl">Amenaza</strong><p class="mt-3 text-base">Una persona intenta consultar el saldo de otra cuenta.</p></section>
+  <section class="card-strong px-6 py-8"><strong class="text-xl">Amenaza</strong><p class="mt-3 text-base">Una persona intenta consultar el saldo y los movimientos de otra cuenta.</p></section>
   <span class="self-center text-3xl opacity-60" aria-hidden="true">→</span>
   <section class="card-strong px-6 py-8"><strong class="text-xl">Requisito de seguridad</strong><p class="mt-3 text-base">En cada consulta, el sistema verifica que la identidad autenticada esté autorizada para esa cuenta.</p></section>
 </div>
@@ -1185,10 +1213,10 @@ class: flex flex-col justify-center
 # De la amenaza a la prueba
 
 <div class="mt-8 grid grid-cols-4 gap-3 text-center text-sm" role="img" aria-label="Trazabilidad: de la amenaza al requisito, el control y la prueba">
-  <section class="card-strong px-3 py-6"><strong class="text-lg">Amenaza</strong><p class="mt-3">Consultar el saldo de otra cuenta.</p></section>
+  <section class="card-strong px-3 py-6"><strong class="text-lg">Amenaza</strong><p class="mt-3">Consultar el saldo y movimientos de otra cuenta.</p></section>
   <section class="card-strong px-3 py-6"><strong class="text-lg">Requisito</strong><p class="mt-3">Verificar autorización en cada consulta.</p></section>
   <section class="card-strong px-3 py-6"><strong class="text-lg">Control</strong><p class="mt-3">El servidor valida el permiso sobre la cuenta solicitada.</p></section>
-  <section class="card-strong px-3 py-6"><strong class="text-lg">Prueba</strong><p class="mt-3">Otra identidad recibe rechazo y no obtiene el saldo.</p></section>
+  <section class="card-strong px-3 py-6"><strong class="text-lg">Prueba</strong><p class="mt-3">Otra identidad recibe rechazo y no obtiene los datos.</p></section>
 </div>
 
 <p class="mt-8 text-center">La trazabilidad conecta el escenario con una garantía y una comprobación.</p>
@@ -1196,7 +1224,7 @@ class: flex flex-col justify-center
 <!--
 Notas para presentar:
 
-Recorré la cadena usando el mismo ejemplo de autorización. La amenaza describe el intento; el requisito define qué debe garantizarse; el control implementa la verificación en el servidor; la prueba comprueba que una identidad sin permiso no obtiene el saldo.
+Recorré la cadena usando el mismo ejemplo de autorización. La amenaza describe el intento; el requisito define qué debe garantizarse; el control implementa la verificación en el servidor; la prueba comprueba que una identidad sin permiso no obtiene el saldo ni los movimientos.
 
 Señalá que la trazabilidad ayuda a detectar vacíos: un requisito sin prueba puede quedar sin verificar; una prueba sin requisito quizá no responda a una necesidad identificada. La implementación concreta puede variar, pero el escenario debe seguir conectado con la comprobación.
 
@@ -1319,7 +1347,7 @@ class: flex flex-col justify-center
 <!--
 Notas para presentar:
 
-Cerrá retomando el recorrido de la clase: entender el sistema, anticipar abusos, convertirlos en requisitos y elegir controles que se puedan comprobar. Esas decisiones siguen vigentes solo mientras el software y su contexto no cambien.
+Cerrá volviendo una última vez a la app de banca: entendimos sus componentes y flujos, anticipamos el abuso de consultar movimientos ajenos, lo convertimos en requisito y elegimos controles que se pueden comprobar. Esas decisiones siguen vigentes solo mientras el software y su contexto no cambien.
 
 Pregunta para el intercambio: «¿Qué cambio podría invalidar una decisión de seguridad que tomamos durante el diseño?»
 
