@@ -30,7 +30,7 @@ fonts:
 # En la clase anterior…
 
 ```text
-Activos → Riesgos → Amenazas → Requisitos → Diseño
+Activos → Amenazas → Riesgo → Requisitos → Diseño
 ```
 
 Entendimos qué proteger y cómo anticipar problemas antes de construir.
