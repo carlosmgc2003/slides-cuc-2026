@@ -532,7 +532,7 @@ Separá las tres piezas antes de nombrar el riesgo. La amenaza es el escenario c
 
 Presentá la línea del riesgo como una aproximación: combinamos dos preguntas — ¿qué tan probable es en este sistema?, ¿cuánto afectaría si ocurre? Se la resume como probabilidad × impacto, pero no es una fórmula ni una cifra: es un recordatorio de que el riesgo depende de las dos cosas a la vez. Un evento muy improbable puede importar mucho si compromete un servicio esencial sin recuperación; un evento frecuente puede ser tolerable si el daño queda acotado.
 
-Ejemplo con el caso de la clase, misma amenaza y distinto riesgo: «un atacante consulta el saldo de otra cuenta». Si la consulta confía en el identificador que envía el cliente y no verifica permisos en el servidor, el escenario es probable y puede exponer datos de muchas cuentas: riesgo alto. Con autorización verificada en cada consulta, MFA y alertas ante consultas anómalas, la misma amenaza es poco probable y su impacto queda acotado: riesgo bajo. La amenaza no cambió; cambiaron el sistema y sus controles.
+Ejemplo con el caso de la clase, misma amenaza y distinto riesgo: «un atacante consulta el saldo y los movimientos de otra cuenta». Si la consulta confía en el identificador que envía el cliente y no verifica permisos en el servidor, el escenario es probable y puede exponer datos de muchas cuentas: riesgo alto. Con autorización verificada en cada consulta, autenticación multifactor y alertas ante consultas anómalas, la misma amenaza es poco probable y su impacto queda acotado: riesgo bajo. La amenaza no cambió; cambiaron el sistema y sus controles.
 
 Pregunta para el intercambio: «¿Qué condición del sistema podría mover un escenario de riesgo bajo a riesgo alto, aunque la amenaza no cambie?»
 
