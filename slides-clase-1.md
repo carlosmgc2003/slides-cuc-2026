@@ -79,70 +79,15 @@ Una vulnerabilidad puede estar presente antes de conocerse; un nuevo hallazgo ca
 
 El origen tampoco determina por sí solo el nivel de riesgo. Una debilidad en un requisito puede ser más riesgosa que una configuración concreta, o al revés; retomaremos la priorización según escenario, probabilidad e impacto cuando definamos riesgo.
 
-Transición: «Ahora que sabemos que una vulnerabilidad puede afectar distintas partes del ciclo de vida, identifiquemos qué tiene valor en el sistema».
+Al cerrar, anticipá el recorrido de la sección en una frase: primero identificamos qué tiene valor, después cómo se conecta el sistema, luego las amenazas y sus consecuencias.
+
+Transición: «Para no hablar en abstracto, elijamos un sistema concreto que nos acompañe toda la clase».
 
 Fuentes: NIST, definición de vulnerabilidad; NIST SSDF, prácticas para proteger código, configuración y artefactos de software; NIST DevSecOps Reference Model, artefactos de desarrollo, build y release; CISA, Known Exploited Vulnerabilities Catalog.
 https://csrc.nist.gov/glossary/term/vulnerability
 https://csrc.nist.gov/pubs/sp/800/218/final
 https://pages.nist.gov/nccoe-devsecops/notational-reference-model.html
 https://www.cisa.gov/known-exploited-vulnerabilities-catalog
--->
-
----
-layout: section
----
-
-# Panorama de amenazas
-
-<div class="mt-8 grid grid-cols-4 gap-3 text-center text-sm" role="img" aria-label="Recorrido de la sección: activos, conexiones, amenazas y consecuencias">
-  <div class="card px-3 py-4">Activos</div>
-  <div class="card px-3 py-4">Conexiones</div>
-  <div class="card px-3 py-4">Amenazas</div>
-  <div class="card px-3 py-4">Consecuencias</div>
-</div>
-
-<!--
-Notas para presentar:
-
-Esta sección amplía la mirada: una debilidad importa por el sistema donde aparece, aquello que ese sistema protege y las consecuencias posibles.
-
-Presentá el recorrido visual: primero identificaremos los activos; después miraremos las conexiones del software y las oportunidades de interacción; luego, las amenazas y sus posibles consecuencias.
-
-Transición: «Empecemos por identificar qué tiene valor para cada sistema».
-
-Marco de referencia: NIST SP 800-30 organiza la evaluación de riesgos alrededor de amenazas, vulnerabilidades, impacto y probabilidad. El recorrido de esta diapositiva es una síntesis didáctica para anticipar los temas de la sección.
-https://csrc.nist.gov/pubs/sp/800/30/r1/final
-
-PowerPoint original · diapositiva 5 · Panorama de Amenazas
--->
-
----
-
-# Cada sistema tiene algo que proteger
-
-**Activo:** algo que tiene valor para una persona u organización.
-
-<div class="mt-6 grid grid-cols-3 gap-4 text-center" role="img" aria-label="Ejemplos de activos: personas y datos, dinero y operaciones, disponibilidad y confianza">
-  <div class="card px-4 py-6">Personas<br />y datos</div>
-  <div class="card px-4 py-6">Dinero<br />y operaciones</div>
-  <div class="card px-4 py-6">Disponibilidad<br />y confianza</div>
-</div>
-
-<p class="mt-5 text-center text-sm opacity-70">Primero identificamos el valor; después, qué podría ponerlo en riesgo.</p>
-
-<!--
-Notas para presentar:
-
-Presentá «activo» como algo que tiene valor para alguien y que el sistema debe proteger. Puede ser tangible o intangible; no se limita a servidores o bases de datos.
-
-Usá las tres tarjetas como ejemplos, no como una lista exhaustiva. En una app de banca, el activo puede ser la persona y sus datos, una transferencia correcta, la continuidad del servicio o la confianza para usarla.
-
-El valor depende de quién necesita el sistema y qué perdería si una parte deja de funcionar, queda expuesta o se modifica sin autorización. Por eso conviene identificar activos antes de elegir controles.
-
-Transición: «Para no hablar en abstracto, elijamos un sistema concreto que nos acompañe toda la clase».
-
-Fuente de la definición: NIST CSRC Glossary, “Asset”; incluye entidades tangibles e intangibles cuyo valor determinan las partes interesadas.
-https://csrc.nist.gov/glossary/term/asset
 -->
 
 ---
@@ -170,179 +115,14 @@ Aclará que la clase no trata de banca: el sistema es el vehículo para aprender
 
 Pregunta para el intercambio: «¿Qué otro viaje harían con una app así?» Las respuestas —por ejemplo, descargar un extracto o cambiar el alias— sirven después cuando hablemos de superficie de ataque.
 
-Transición: «Empecemos por mirar cómo se conectan las piezas de este sistema».
--->
-
----
-
-# El software moderno está conectado
-
-```mermaid
-flowchart LR
-  U[Cliente] -->|usa| A[App de banca]
-  A -->|invoca| S[Servicios]
-  S -->|consulta o registra| D[(Cuentas y movimientos)]
-  S -->|integra| X[Proveedor de notificaciones]
-  S -->|se aloja en| C[Nube]
-```
-
-Cada vínculo requiere definir qué se intercambia, quién participa y qué permisos necesita.
-
-<!--
-Notas para presentar:
-
-Presentá el dibujo como el mapa simplificado de nuestro caso: la app de banca, sus servicios, la base de cuentas y movimientos y el proveedor de notificaciones. Las flechas muestran que una misma operación pasa por varios componentes y llega también a un proveedor externo. La nube representa dónde pueden ejecutarse los servicios.
-
-Recorré una transferencia del caso: el cliente confirma la operación desde la app, el servicio de pagos consulta o registra datos en la base y el sistema integra el proveedor de notificaciones para avisar que la transferencia se realizó. Preguntá: «¿Qué información necesita cada componente para completar la transferencia?». Usá las respuestas para señalar que cada vínculo requiere definir los datos que circulan y los permisos necesarios.
-
-La ubicación de red por sí sola no determina si un componente es confiable. NIST recomienda centrar la protección en usuarios, dispositivos, activos y recursos, incluidas aplicaciones y servicios, sin conceder confianza implícita por estar dentro de una red.
-
-Transición: «Como las aplicaciones se apoyan en muchos componentes y conexiones, proteger solo una entrada de la red no alcanza».
-
-Fuente: NIST SP 800-207, Zero Trust Architecture.
-https://csrc.nist.gov/pubs/sp/800/207/final
--->
-
----
-
-# Defender solo el perímetro no alcanza
-
-El control de entrada no vuelve confiables a todos los componentes internos.
-
-```mermaid
-flowchart LR
-  U[Cliente con acceso] --> F[Control perimetral]
-  subgraph R[Red interna]
-    A[App de banca] --> S[Servicios] --> D[(Cuentas y movimientos)]
-  end
-  F --> A
-  S --> X[Proveedor de notificaciones]
-```
-
-<div class="mt-4 grid grid-cols-3 gap-3 text-center text-sm">
-  <div class="card px-3 py-3"><strong>Identidad</strong><br />Una cuenta legítima puede usarse mal o ser robada.</div>
-  <div class="card px-3 py-3"><strong>Servicios</strong><br />Un componente conectado puede quedar comprometido.</div>
-  <div class="card px-3 py-3"><strong>Comunicaciones</strong><br />Cada llamada requiere controles propios.</div>
-</div>
-
-<!--
-Notas para presentar:
-
-Retomá el mapa anterior. El control perimetral puede filtrar una entrada, pero no verifica por sí mismo cada identidad, servicio ni llamada una vez que existen conexiones entre componentes. La red interna no es automáticamente confiable.
-
-Recorré las tres tarjetas: una cuenta válida puede ser robada o usarse por error; un servicio interno puede tener una debilidad; una llamada entre componentes necesita permisos adecuados. Esto no vuelve inútiles al firewall ni a otros controles de red: muestra que hay que proteger también los recursos y sus interacciones.
-
-Preguntá: «Si la solicitud ya llegó a la aplicación, ¿qué controles siguen haciendo falta entre la aplicación, el servicio y los datos?». Retomá autenticación, autorización y validación según lo que proponga el grupo.
-
-Transición: «El enfoque centrado en el perímetro también tendía a dejar la seguridad de las aplicaciones para el final; veamos por qué eso se vuelve un límite en ciclos de desarrollo rápidos».
-
-Fuente: NIST SP 800-207 explica que la ubicación de red no concede confianza implícita y que la protección debe centrarse en recursos, incluidos servicios y aplicaciones.
-https://csrc.nist.gov/pubs/sp/800/207/final
--->
-
----
-
-# El límite de la seguridad reactiva
-
-El modelo de **fortaleza y foso** concentra la defensa en la red y deja la seguridad de la aplicación para una revisión antes del lanzamiento.
-
-```mermaid
-flowchart LR
-  R[Requisitos] --> D[Diseño] --> C[Código] --> B[Build y pruebas] --> P[Pentest final] --> L[Lanzamiento]
-  P -.hallazgos para corregir.-> D
-```
-
-Una revisión tardía puede sumar retrabajo y tensionar la fecha de liberación.
-
-<!--
-Notas para presentar:
-
-Explicá «fortaleza y foso» como un modelo que pone defensas fuertes en el borde de la red y confía en lo que queda adentro. Para las aplicaciones, reserva una revisión intensiva —por ejemplo, un pentest— cerca del lanzamiento.
-
-Señalá la flecha de regreso: si el pentest encuentra un problema que requiere cambios, el equipo vuelve a diseño o código, repite pruebas y puede tener que revisar la fecha de salida. En ciclos cortos, ese control tardío puede acumular hallazgos y competir con la entrega; no significa que todo pentest bloquee un lanzamiento ni que deba quitarse.
-
-La alternativa es integrar prácticas de seguridad a lo largo del ciclo y conservar pruebas especializadas antes de liberar. NIST recomienda incorporar prácticas de desarrollo seguro en cada implementación del SDLC. Su material de apoyo señala que, en general, atender la seguridad antes puede requerir menos esfuerzo y costo; presentá esto como una tendencia orientativa, no como una curva universal ni como una cifra fija.
-
-Transición: «La seguridad necesita acompañar el sistema desde el diseño hasta la operación; no depende de una única herramienta o revisión final».
-
-Fuentes: NIST, Secure Software Development Framework (SSDF), SP 800-218; NIST, Mitigating the Risk of Software Vulnerabilities by Adopting an SSDF (2020).
-https://csrc.nist.gov/pubs/sp/800/218/final
-https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.04232020.pdf
-
-PowerPoint original · diapositiva 8 · Limitaciones de la seguridad tradicional reactiva
--->
-
----
-
-# Seguridad es una propiedad del sistema
-
-La seguridad no depende de una herramienta aislada, sino de decisiones coordinadas:
-
-<div class="mt-4 grid grid-cols-2 gap-3 text-sm">
-  <section class="card px-4 py-3" aria-label="Diseño">
-    <strong>Diseño</strong>
-    <ul class="mt-2 list-disc space-y-1 pl-5">
-      <li>Modelado de amenazas y flujos de datos</li>
-      <li>Límites de confianza entre componentes</li>
-      <li>Reglas de autorización por operación</li>
-    </ul>
-  </section>
-  <section class="card px-4 py-3" aria-label="Implementación">
-    <strong>Implementación</strong>
-    <ul class="mt-2 list-disc space-y-1 pl-5">
-      <li>Validación de entradas según el dominio</li>
-      <li>Consultas parametrizadas</li>
-      <li>Autorización aplicada en el servidor</li>
-    </ul>
-  </section>
-  <section class="card px-4 py-3" aria-label="Configuración">
-    <strong>Configuración</strong>
-    <ul class="mt-2 list-disc space-y-1 pl-5">
-      <li>Cuentas de servicio con mínimo privilegio</li>
-      <li>Secretos en un gestor con acceso restringido</li>
-      <li>Desactivar cuentas y servicios innecesarios</li>
-    </ul>
-  </section>
-  <section class="card px-4 py-3" aria-label="Operación">
-    <strong>Operación</strong>
-    <ul class="mt-2 list-disc space-y-1 pl-5">
-      <li>Actualizar sistemas y dependencias</li>
-      <li>Monitorear registros y alertas</li>
-      <li>Probar restauraciones de copias de seguridad</li>
-    </ul>
-  </section>
-</div>
-
-<!--
-Notas para presentar:
-
-Retomá la idea anterior: una revisión final o una defensa perimetral no bastan. La matriz profundiza las cuatro dimensiones con ejemplos representativos; no es una lista completa ni una receta idéntica para todos los sistemas.
-
-En diseño, modelar amenazas, flujos de datos y límites de confianza ayuda a decidir dónde ubicar controles y qué permisos hacen falta. En implementación, reglas de validación, consultas parametrizadas y verificaciones de autorización llevan esas decisiones al código. En configuración, las cuentas de servicio, los secretos y los valores predeterminados determinan la exposición concreta del despliegue. En operación, actualizar componentes, monitorear eventos y probar restauraciones mantienen la capacidad de proteger y recuperar el sistema.
-
-Los ejemplos se condicionan entre sí. Un modelo de autorización correcto en el diseño no protege si no se verifica en cada operación; una implementación adecuada puede quedar expuesta por credenciales excesivas; y los controles pueden perder efectividad si no se mantienen.
-
-Preguntá: «¿Qué parte de este sistema quedaría desprotegida si solo agregáramos una herramienta?».
-
-NIST plantea integrar prácticas seguras en cada implementación del ciclo de desarrollo. OWASP recomienda modelar amenazas a partir de flujos de datos y límites de confianza, verificar autorización en cada solicitud y usar consultas parametrizadas. Sus guías de secretos y registros desarrollan controles para acceso, rotación, monitoreo y recuperación.
-
-Transición: «Para tomar esas decisiones, primero identifiquemos qué tiene valor y necesita protección».
-
-Fuentes: NIST SP 800-160 Vol. 1 Rev. 1, Engineering Trustworthy Secure Systems; NIST SP 800-218, Secure Software Development Framework (SSDF); NIST SP 800-53 Rev. 5, Security and Privacy Controls; OWASP Threat Modeling, Authorization, SQL Injection Prevention, Secrets Management y Logging Cheat Sheets.
-https://csrc.nist.gov/pubs/sp/800/160/v1/r1/final
-https://csrc.nist.gov/pubs/sp/800/218/final
-https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final
-https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
-https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html
-https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
-https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html
-https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
+Transición: «Antes de mirar cómo se conectan sus piezas, identifiquemos qué tiene valor en este sistema».
 -->
 
 ---
 
 # ¿Qué queremos proteger?
 
+**Activo:** algo que tiene valor para una persona u organización.
 **En la app de banca:** los datos de clientes, el registro de movimientos y la disponibilidad del servicio.
 
 <div class="mt-5 grid grid-cols-3 gap-3 text-center text-sm">
@@ -360,14 +140,17 @@ https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
   </section>
 </div>
 
+<p class="mt-5 text-center text-sm opacity-70">Primero identificamos el valor y las propiedades que lo sostienen; después, qué podría ponerlo en riesgo.</p>
+
 <!--
+
 Notas para presentar:
 
-Retomá la definición de activo de la diapositiva anterior. Para concretarla, volvé al caso: la app de banca protege los datos de clientes, el registro de movimientos y la capacidad de completar transferencias.
+Presentá «activo» como algo que tiene valor para alguien y que el sistema debe proteger. Puede ser tangible o intangible; no se limita a servidores o bases de datos. En la app de banca, el activo es la persona y sus datos, una transferencia correcta, la continuidad del servicio o la confianza para usarla. El valor depende de quién necesita el sistema y qué perdería si una parte deja de funcionar, queda expuesta o se modifica sin autorización. Por eso conviene identificar activos antes de elegir controles.
 
 Presentá confidencialidad, integridad y disponibilidad como tres objetivos clásicos de seguridad de la información. Confidencialidad limita quién puede conocer los datos; integridad protege contra modificaciones o destrucciones impropias; disponibilidad busca que la información y los sistemas se puedan usar de manera oportuna y confiable.
 
-Recorré el ejemplo en las tres tarjetas: una consulta no autorizada afecta la confidencialidad; cambiar el importe o el destinatario sin autorización afecta la integridad; interrumpir la app cuando se necesita procesar una transferencia afecta la disponibilidad.
+Recorré el caso en las tres tarjetas: una consulta no autorizada afecta la confidencialidad; cambiar el importe o el destinatario sin autorización afecta la integridad; interrumpir la app cuando se necesita procesar una transferencia afecta la disponibilidad.
 
 Las tres propiedades ayudan a analizar impactos, pero no agotan todos los atributos que pueden importar en un sistema; el contexto puede exigir otros, como autenticidad o trazabilidad de las acciones.
 
@@ -375,8 +158,10 @@ Preguntá: «Si una transferencia llega, pero con un importe distinto del autori
 
 Transición: «Ya identificamos qué propiedades queremos preservar; ahora veamos qué situaciones podrían afectarlas».
 
-Fuente: NIST CSRC Glossary, Information Security; deriva las definiciones de confidencialidad, integridad y disponibilidad de FIPS 200 y otras publicaciones NIST.
+Fuente de las definiciones: NIST CSRC Glossary, “Asset” e Information Security; deriva confidencialidad, integridad y disponibilidad de FIPS 200 y otras publicaciones NIST.
+https://csrc.nist.gov/glossary/term/asset
 https://csrc.nist.gov/glossary/term/information_security
+
 -->
 
 ---
@@ -420,55 +205,11 @@ https://csrc.nist.gov/pubs/sp/800/30/r1/final
 
 ---
 
-# Amenazas en organizaciones públicas y privadas
-
-<p class="mt-3 text-center text-sm">Patrones en brechas observadas globalmente, Verizon DBIR 2026</p>
-
-<div class="mt-5 grid grid-cols-3 gap-3 text-center">
-  <section class="card px-4 py-5" aria-label="Explotación de vulnerabilidades: 31 por ciento de las brechas">
-    <p class="text-sm uppercase tracking-wide">Vulnerabilidades</p>
-    <strong class="text-3xl">31%</strong>
-    <p class="mt-2 text-sm">de las brechas se inició con explotación de vulnerabilidades de software</p>
-  </section>
-  <section class="card px-4 py-5" aria-label="Ransomware presente en el 48 por ciento de las brechas">
-    <p class="text-sm uppercase tracking-wide">Ransomware</p>
-    <strong class="text-3xl">48%</strong>
-    <p class="mt-2 text-sm">de las brechas incluyó ransomware</p>
-  </section>
-  <section class="card px-4 py-5" aria-label="Terceros involucrados en el 48 por ciento de las brechas">
-    <p class="text-sm uppercase tracking-wide">Terceros</p>
-    <strong class="text-3xl">48%</strong>
-    <p class="mt-2 text-sm">de las brechas involucró a terceros</p>
-  </section>
-</div>
-
-<p class="mt-4 text-center text-sm">Las técnicas se repiten; los objetivos y servicios afectados dependen de cada organización.</p>
-
-<!--
-Notas para presentar:
-
-Usá las cifras como patrones transversales observados en brechas de distintos sectores, no como una estimación de riesgo para cada organización. En la edición 2026 del DBIR, el período analizado va del 1 de noviembre de 2024 al 31 de octubre de 2025.
-
-Precisá que los porcentajes describen dimensiones diferentes y pueden superponerse: el 31% mide explotación de vulnerabilidades como vía de acceso inicial; el 48% indica presencia de ransomware en brechas; y el otro 48% señala participación de terceros. No se suman entre sí ni implican que todas las organizaciones enfrenten la misma frecuencia.
-
-En ambos sectores pueden aparecer explotación de fallas, robo de credenciales, ingeniería social, ransomware y exposición por dependencias externas. Cambia qué busca el actor y qué impacto tiene: por ejemplo, interrumpir un servicio público, obtener información estratégica, extorsionar a una empresa o acceder a datos de clientes.
-
-Como contraste situado, ENISA informa que la administración pública fue el sector más atacado en la Unión Europea durante 2025; el 82% de los incidentes registrados contra ese sector fueron DDoS. Aclará que esos datos describen organizaciones europeas y no representan por igual al sector privado ni a otros países.
-
-Pregunta para abrir el intercambio: «¿Qué dependencia de una organización pública o privada podría transformar una falla técnica en una interrupción del servicio?»
-
-Transición: «Estos patrones pueden afectar datos, operaciones o servicios. Ahora veamos cómo esas consecuencias se expresan como impacto y riesgo».
-
-Fuentes: Verizon, 2026 Data Breach Investigations Report; ENISA, 2026 Threat Landscape.
-https://www.verizon.com/business/resources/reports/dbir/
-https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape
--->
-
----
-
 # Consecuencias reales de ciberataques
 
-<div class="mt-6 grid grid-cols-2 gap-8">
+<p class="mt-2 text-center text-sm">Patrones en brechas observadas globalmente (Verizon DBIR 2026): <strong>31%</strong> se inició explotando vulnerabilidades · <strong>48%</strong> incluyó ransomware · <strong>48%</strong> involucró a terceros.</p>
+
+<div class="mt-5 grid grid-cols-2 gap-8">
   <section class="border-t border-gray-400/60 pt-3" aria-label="WannaCry en el sistema público de salud de Inglaterra, 2017">
     <p class="text-sm uppercase tracking-wide">Sector público · Inglaterra · 2017</p>
     <h2 class="mt-2 text-xl font-semibold">WannaCry y el NHS</h2>
@@ -483,10 +224,13 @@ https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape
   </section>
 </div>
 
-<p class="mt-5 text-center text-sm">El impacto puede alcanzar a personas y servicios que dependen de los sistemas afectados.</p>
+<p class="mt-5 text-center text-sm">Las técnicas se repiten; el impacto alcanza a personas y servicios que dependen de los sistemas afectados.</p>
 
 <!--
+
 Notas para presentar:
+
+Usá las cifras como patrones transversales observados en brechas de distintos sectores, no como una estimación de riesgo para cada organización. En la edición 2026 del DBIR, el período analizado va del 1 de noviembre de 2024 al 31 de octubre de 2025. Los porcentajes describen dimensiones diferentes y pueden superponerse: el 31% mide explotación de vulnerabilidades como vía de acceso inicial; el 48% indica presencia de ransomware en brechas; y el otro 48% señala participación de terceros. No se suman entre sí ni implican que todas las organizaciones enfrenten la misma frecuencia. Como contraste situado, ENISA informa que la administración pública fue el sector más atacado en la Unión Europea durante 2025; el 82% de los incidentes registrados contra ese sector fueron DDoS. Aclará que esos datos describen organizaciones europeas y no representan por igual al sector privado ni a otros países.
 
 Usá los casos para darle contenido concreto a «impacto»: la magnitud del daño que puede producir un evento en operaciones, activos y personas. NIST incluye explícitamente esos efectos en su guía de evaluación de riesgos.
 
@@ -494,14 +238,17 @@ En Inglaterra, el ransomware WannaCry afectó al NHS en mayo de 2017. NHS Englan
 
 En Colonial Pipeline, el ransomware afectó los sistemas corporativos. La empresa desconectó preventivamente sistemas que monitoreaban y controlaban el oleoducto para evitar que el incidente llegara a ellos. No había indicios de compromiso de esos sistemas operativos al 12 de mayo, pero la desconexión detuvo temporalmente las operaciones y cortó la entrega de combustible en parte del sudeste de Estados Unidos. El oleoducto reanudó operaciones el 13 de mayo.
 
-Pregunta para el intercambio: «En Colonial Pipeline, ¿por qué se interrumpió un servicio físico aunque el ataque afectó los sistemas corporativos?» Guiá la respuesta hacia las dependencias entre TI y operación, y hacia las decisiones de continuidad ante incertidumbre.
+Preguntá: «En Colonial Pipeline, ¿por qué se interrumpió un servicio físico aunque el ataque afectó los sistemas corporativos?» Guiá la respuesta hacia las dependencias entre TI y operación, y hacia las decisiones de continuidad ante incertidumbre.
 
 Transición: «En estos casos podemos separar tres piezas: la debilidad que existía, la amenaza que actuó y el impacto que se produjo. Veamos cómo se relacionan».
 
-Fuentes: National Audit Office, Investigation: WannaCry cyber attack and the NHS; U.S. Government Accountability Office, Colonial Pipeline Cyberattack Highlights Need for Better Federal and Private-Sector Preparedness; NIST SP 800-30 Rev. 1.
+Fuentes: Verizon, 2026 Data Breach Investigations Report; ENISA, 2026 Threat Landscape; National Audit Office, Investigation: WannaCry cyber attack and the NHS; U.S. Government Accountability Office, Colonial Pipeline Cyberattack Highlights Need for Better Federal and Private-Sector Preparedness; NIST SP 800-30 Rev. 1.
+https://www.verizon.com/business/resources/reports/dbir/
+https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape
 https://www.nao.org.uk/reports/investigation-wannacry-cyber-attack-and-the-nhs/
 https://www.gao.gov/blog/colonial-pipeline-cyberattack-highlights-need-better-federal-and-private-sector-preparedness-infographic
 https://csrc.nist.gov/pubs/sp/800/30/r1/final
+
 -->
 
 ---
@@ -538,13 +285,101 @@ Pregunta para el intercambio: «¿Qué condición del sistema podría mover un e
 
 Si sirve para fijar la idea, retomá brevemente los dos casos anteriores: WannaCry muestra cómo una debilidad de software permitió afectar la atención; Colonial Pipeline muestra cómo las dependencias y una decisión de continuidad ampliaron las consecuencias. Usalos como ejemplos, sin convertirlos en definiciones.
 
-Transición: «Para estimar exposición e impacto necesitamos entender qué partes tiene el sistema y cómo se relacionan».
+Transición: «El riesgo no se evalúa en el aire: depende de cómo el sistema conecta personas, servicios, datos y terceros. Miremos ese mapa».
 
 Fuentes: NIST CSRC Glossary, Threat, Risk and Vulnerability; NIST SP 800-30 Rev. 1, Guide for Conducting Risk Assessments.
 https://csrc.nist.gov/glossary/term/threat
 https://csrc.nist.gov/glossary/term/risk
 https://csrc.nist.gov/glossary/term/vulnerability
 https://csrc.nist.gov/pubs/sp/800/30/r1/final
+-->
+
+---
+
+# El software moderno está conectado
+
+```mermaid
+flowchart LR
+  U[Cliente] -->|usa| A[App de banca]
+  A -->|invoca| S[Servicios]
+  S -->|consulta o registra| D[(Cuentas y movimientos)]
+  S -->|integra| X[Proveedor de notificaciones]
+  S -->|se aloja en| C[Nube]
+```
+
+Cada vínculo requiere definir qué se intercambia, quién participa y qué permisos necesita. Proteger solo la entrada de la red no alcanza:
+
+<div class="mt-4 grid grid-cols-3 gap-3 text-center text-sm">
+  <div class="card px-3 py-3"><strong>Identidad</strong><br />Una cuenta legítima puede usarse mal o ser robada.</div>
+  <div class="card px-3 py-3"><strong>Servicios</strong><br />Un componente conectado puede quedar comprometido.</div>
+  <div class="card px-3 py-3"><strong>Comunicaciones</strong><br />Cada llamada requiere controles propios.</div>
+</div>
+
+<p class="mt-4 text-center text-sm opacity-70">El control perimetral filtra entradas; no vuelve confiables a los componentes internos ni sus interacciones.</p>
+
+<!--
+
+Notas para presentar:
+
+Presentá el dibujo como el mapa simplificado de nuestro caso: la app de banca, sus servicios, la base de cuentas y movimientos y el proveedor de notificaciones. Las flechas muestran que una misma operación pasa por varios componentes y llega también a un proveedor externo. La nube representa dónde pueden ejecutarse los servicios.
+
+Recorré una transferencia del caso: el cliente confirma la operación desde la app, el servicio de pagos consulta o registra datos en la base y el sistema integra el proveedor de notificaciones para avisar que la transferencia se realizó. Preguntá: «¿Qué información necesita cada componente para completar la transferencia?». Usá las respuestas para señalar que cada vínculo requiere definir los datos que circulan y los permisos necesarios.
+
+Del mapa al perímetro: el control de entrada puede filtrar una solicitud, pero no verifica por sí mismo cada identidad, servicio ni llamada una vez que existen conexiones entre componentes; la red interna no es automáticamente confiable. Recorré las tres tarjetas: una cuenta válida puede ser robada o usarse por error; un servicio interno puede tener una debilidad; una llamada entre componentes necesita permisos adecuados. Esto no vuelve inútiles al firewall ni a otros controles de red: muestra que hay que proteger también los recursos y sus interacciones.
+
+Preguntá: «Si la solicitud ya llegó a la aplicación, ¿qué controles siguen haciendo falta entre la aplicación, el servicio y los datos?». Retomá autenticación, autorización y validación según lo que proponga el grupo.
+
+Transición: «El enfoque centrado en el perímetro también tendía a dejar la seguridad de las aplicaciones para el final; veamos por qué eso se vuelve un límite en ciclos de desarrollo rápidos».
+
+Fuente: NIST SP 800-207 explica que la ubicación de red no concede confianza implícita y que la protección debe centrarse en recursos, incluidos servicios y aplicaciones.
+https://csrc.nist.gov/pubs/sp/800/207/final
+
+-->
+
+---
+
+# El límite de la seguridad reactiva
+
+El modelo de **fortaleza y foso** concentra la defensa en la red y deja la seguridad de la aplicación para una revisión antes del lanzamiento.
+
+```mermaid
+flowchart LR
+  R[Requisitos] --> D[Diseño] --> C[Código] --> B[Build y pruebas] --> P[Pentest final] --> L[Lanzamiento]
+  P -.hallazgos para corregir.-> D
+```
+
+Una revisión tardía puede sumar retrabajo y tensionar la fecha de liberación.
+
+<p class="mt-4 text-center text-sm">La seguridad no depende de una herramienta aislada: es una <strong>propiedad del sistema</strong>, sostenida por decisiones coordinadas en <strong>diseño, implementación, configuración y operación</strong>.</p>
+
+<!--
+
+Notas para presentar:
+
+Explicá «fortaleza y foso» como un modelo que pone defensas fuertes en el borde de la red y confía en lo que queda adentro. Para las aplicaciones, reserva una revisión intensiva —por ejemplo, un pentest— cerca del lanzamiento.
+
+Señalá la flecha de regreso: si el pentest encuentra un problema que requiere cambios, el equipo vuelve a diseño o código, repite pruebas y puede tener que revisar la fecha de salida. En ciclos cortos, ese control tardío puede acumular hallazgos y competir con la entrega; no significa que todo pentest bloquee un lanzamiento ni que deba quitarse.
+
+Cerrá con la línea final: la seguridad no depende de una herramienta aislada, sino de decisiones coordinadas en cuatro dimensiones. No es una lista completa ni una receta idéntica para todos los sistemas. En diseño, modelar amenazas, flujos de datos y límites de confianza ayuda a decidir dónde ubicar controles y qué permisos hacen falta. En implementación, reglas de validación, consultas parametrizadas y verificaciones de autorización llevan esas decisiones al código. En configuración, las cuentas de servicio, los secretos y los valores predeterminados determinan la exposición concreta del despliegue. En operación, actualizar componentes, monitorear eventos y probar restauraciones mantienen la capacidad de proteger y recuperar el sistema.
+
+Los ejemplos se condicionan entre sí. Un modelo de autorización correcto en el diseño no protege si no se verifica en cada operación; una implementación adecuada puede quedar expuesta por credenciales excesivas; y los controles pueden perder efectividad si no se mantienen.
+
+Preguntá: «¿Qué parte de este sistema quedaría desprotegida si solo agregáramos una herramienta?».
+
+Transición: «Si la seguridad no la da una herramienta ni una revisión final, sino el sistema entero, empecemos por lo básico: qué incluye nuestro sistema y de qué depende».
+
+Fuentes: NIST, Secure Software Development Framework (SSDF), SP 800-218; NIST, Mitigating the Risk of Software Vulnerabilities by Adopting an SSDF (2020); NIST SP 800-160 Vol. 1 Rev. 1, Engineering Trustworthy Secure Systems; OWASP Threat Modeling, Authorization, SQL Injection Prevention, Secrets Management y Logging Cheat Sheets.
+https://csrc.nist.gov/pubs/sp/800/218/final
+https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.04232020.pdf
+https://csrc.nist.gov/pubs/sp/800/160/v1/r1/final
+https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
+https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html
+https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
+https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html
+https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
+
+PowerPoint original · diapositiva 8 · Limitaciones de la seguridad tradicional reactiva
+
 -->
 
 ---
