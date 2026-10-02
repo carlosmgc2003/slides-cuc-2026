@@ -1215,39 +1215,9 @@ https://csrc.nist.gov/pubs/sp/800/218/final
 class: flex flex-col justify-center
 ---
 
-# Ciclo de vida de desarrollo seguro
+# Esas propiedades no se conservan solas
 
-<p class="mt-4 text-center text-2xl font-semibold">La seguridad forma parte de cada decisión y verificación, no solo de una revisión final.</p>
-
-<div class="mt-8 grid grid-cols-2 gap-5 text-center">
-  <section class="card-strong px-6 py-8"><strong class="text-xl">Decidir temprano</strong><p class="mt-3 text-base">Definir requisitos, arquitectura y modelos de confianza.</p></section>
-  <section class="card-strong px-6 py-8"><strong class="text-xl">Verificar continuamente</strong><p class="mt-3 text-base">Revisar código, pruebas, despliegue y operación.</p></section>
-</div>
-
-<p class="mt-7 text-center">Este enfoque se conoce como SSDLC (<em>Secure Software Development Lifecycle</em>).</p>
-
-<!--
-Notas para presentar:
-
-Explicá primero la idea: la seguridad no es una fase que se agrega al cierre. El SSDLC integra decisiones de seguridad y verificaciones en el ciclo de vida del software, desde los requisitos hasta la operación.
-
-La integración temprana permite discutir requisitos, arquitectura y modelos de confianza antes de que cambiar el diseño sea más costoso; las verificaciones continúan durante desarrollo, pruebas, despliegue y operación. No significa aplicar las mismas herramientas en cada etapa.
-
-Pregunta para el intercambio: «¿Qué decisión de seguridad de las que vimos debería tomarse antes de empezar a programar?»
-
-Transición: «Veamos cómo se nombra el recorrido completo, desde los requisitos hasta la operación».
-
-Fuente: NIST SP 800-218, Secure Software Development Framework (SSDF).
-https://csrc.nist.gov/pubs/sp/800/218/final
--->
-
----
-class: flex flex-col justify-center
----
-
-# Del requisito a la operación
-
-<p class="mt-3 text-center text-lg">La seguridad acompaña cada etapa del ciclo.</p>
+<p class="mt-3 text-center text-lg">El diseño define las reglas; el resto del ciclo debe sostenerlas.</p>
 
 <div class="mt-8 grid grid-cols-6 gap-2 text-center" role="img" aria-label="Etapas del ciclo de vida: requisitos, diseño, código y construcción, pruebas, despliegue y operación">
   <section class="card-strong px-2 py-6"><span class="text-xs opacity-70">01</span><strong class="mt-2 block text-sm">Requisitos</strong><span class="text-xs opacity-70">Requirements</span></section>
@@ -1258,20 +1228,22 @@ class: flex flex-col justify-center
   <section class="card-strong px-2 py-6"><span class="text-xs opacity-70">06</span><strong class="mt-2 block text-sm">Operación</strong><span class="text-xs opacity-70">Operate</span></section>
 </div>
 
-<p class="mt-8 text-center">Las fases pueden variar; la seguridad continúa después del despliegue.</p>
+<p class="mt-8 text-center">A este enfoque se lo llama SSDLC: la seguridad acompaña todo el ciclo de vida.</p>
 
 <!--
 Notas para presentar:
 
-Recorré las etapas de izquierda a derecha: requisitos, diseño, código y construcción, pruebas, despliegue y operación. En algunos equipos, Code y Build se consideran etapas separadas; acá aparecen agrupadas para mantener una vista compacta.
+Retomá la cadena que acabamos de construir: la amenaza de consultar movimientos ajenos se convirtió en un requisito, el requisito en un control y el control en una prueba. Esas son las propiedades que el sistema debe preservar.
 
-Enfatizá que desplegar no cierra el ciclo: aparecen cambios de configuración, dependencias, código e infraestructura, y la seguridad se sigue verificando durante la operación.
+Ahora señalá que el diseño no las garantiza por sí solo. Cada etapa del ciclo —requisitos, diseño, código y construcción, pruebas, despliegue y operación— puede reforzarlas o debilitarlas. A este enfoque se lo llama SSDLC (Secure Software Development Lifecycle): la seguridad acompaña todo el ciclo, no es una revisión final.
 
-Pregunta para el intercambio: «¿En qué etapa del ciclo suelen aparecer cambios que obligan a revisar una decisión de seguridad?»
+No entres todavía en herramientas ni en cómo se automatiza cada etapa; eso es el tema de la próxima clase.
 
-Transición: «Ahora veamos ejemplos de actividades de seguridad para cada fase».
+Pregunta para el intercambio: «¿En qué etapa creen que es más fácil romper una decisión de seguridad sin darse cuenta?»
 
-Fuente: NIST SP 800-218, Secure Software Development Framework.
+Transición: «Y hay algo que vuelve esto más difícil: el software no queda quieto».
+
+Fuente: NIST SP 800-218, Secure Software Development Framework (SSDF).
 https://csrc.nist.gov/pubs/sp/800/218/final
 -->
 
@@ -1279,55 +1251,53 @@ https://csrc.nist.gov/pubs/sp/800/218/final
 class: flex flex-col justify-center
 ---
 
-# Seguridad en todo el SDLC
+# Pero el software cambia
 
-<p class="mt-2 text-center text-sm opacity-80">SDLC: ciclo de vida de desarrollo de software; las actividades se eligen según el contexto.</p>
+<p class="mt-6 text-center text-2xl font-semibold">Cambian el código, las dependencias, la configuración y la infraestructura.</p>
 
-<div class="mt-6 grid grid-cols-[10rem_1fr] gap-x-3 gap-y-2 text-sm">
-  <strong class="card px-3 py-2">Requisitos</strong><span class="self-center">Acordar requisitos de seguridad junto con los funcionales.</span>
-  <strong class="card px-3 py-2">Diseño</strong><span class="self-center">Modelar amenazas y revisar arquitectura, confianza y accesos.</span>
-  <strong class="card px-3 py-2">Desarrollo</strong><span class="self-center">Código seguro, revisión, análisis estático de código (SAST) y de dependencias (SCA).</span>
-  <strong class="card px-3 py-2">Pruebas</strong><span class="self-center">Análisis dinámico de la aplicación (DAST), fuzzing y pruebas de requisitos.</span>
-  <strong class="card px-3 py-2">Despliegue y operación</strong><span class="self-center">Configuración segura, monitoreo, gestión de vulnerabilidades y respuesta a incidentes.</span>
+<div class="mt-8 grid grid-cols-4 gap-3 text-center text-sm">
+  <section class="card-strong px-3 py-5">Código</section>
+  <section class="card-strong px-3 py-5">Dependencias</section>
+  <section class="card-strong px-3 py-5">Configuración</section>
+  <section class="card-strong px-3 py-5">Infraestructura</section>
 </div>
 
+<p class="mt-8 text-center">Cada cambio puede alterar lo que el sistema permite hacer.</p>
+
 <!--
 Notas para presentar:
 
-Usá la tabla como un mapa de ejemplos, no como una lista obligatoria de herramientas para todo proyecto. Las actividades se seleccionan según arquitectura, exposición, datos, riesgos y capacidad del equipo.
+Volvé a la app de banca. Una actualización de librería, un permiso que cambia, una variable de configuración o un servicio que se mueve a la nube pueden modificar el comportamiento sin que nadie toque la lógica de autorización que diseñamos.
 
-Aclará las siglas: SAST analiza el código sin ejecutarlo; SCA identifica riesgos en componentes y dependencias; DAST examina una aplicación en ejecución; fuzzing prueba el comportamiento con entradas variadas o inesperadas. Algunas verificaciones se ejecutan en más de una fase: por ejemplo, SAST puede integrarse en el desarrollo y en CI.
+La idea no es que todo cambio sea peligroso, sino que el sistema que verificamos ayer no es exactamente el sistema que corre hoy. Las propiedades que diseñamos siguen siendo válidas solo si algo las vuelve a comprobar sobre el sistema actual.
 
-El enfoque «shift left» busca descubrir problemas antes, pero no reemplaza pruebas de despliegue ni monitoreo durante la operación. Volvé a señalar que el ciclo no termina cuando se publica una versión.
+Pregunta para el intercambio: «¿Qué cambio reciente en un sistema que conozcan podría haber alterado una decisión de seguridad?»
 
-Pregunta para el intercambio: «¿Qué actividad de esta tabla daría evidencia sobre el requisito de autorización que definimos?»
+Transición: «Entonces la pregunta ya no es solo cómo diseñamos seguridad, sino cómo la verificamos mientras todo cambia».
 
-Fuentes: NIST SP 800-218, Secure Software Development Framework; OWASP Software Assurance Maturity Model (SAMM).
+Fuente: NIST SP 800-218, Secure Software Development Framework.
 https://csrc.nist.gov/pubs/sp/800/218/final
-https://owaspsamm.org/
 -->
 
 ---
 class: flex flex-col justify-center
 ---
 
-# Diseñar seguridad y mantenerla
+# Una pregunta para la próxima clase
 
-<p class="mt-6 text-center text-2xl font-semibold">¿Qué pasa cuando cambian el código, las dependencias, la configuración y la infraestructura?</p>
+<p class="mt-6 text-center text-2xl font-semibold">¿Cómo verificamos continuamente que esas propiedades se mantienen mientras el software evoluciona?</p>
 
-<p class="mt-7 text-center text-lg">La seguridad se verifica mientras el software evoluciona, no solo antes del primer despliegue.</p>
-
-<section class="mt-8 card-strong px-6 py-5 text-center"><strong>En la próxima clase</strong><br />Cómo verificar la seguridad en los cambios del software.</section>
+<section class="mt-8 card-strong px-6 py-5 text-center"><strong>En la próxima clase</strong><br />Shift Left or get hacked: verificar la seguridad a medida que cambian el código, las dependencias, la infraestructura y la configuración.</section>
 
 <!--
 Notas para presentar:
 
-Cerrá volviendo una última vez a la app de banca: entendimos sus componentes y flujos, anticipamos el abuso de consultar movimientos ajenos, lo convertimos en requisito y elegimos controles que se pueden comprobar. Esas decisiones siguen vigentes solo mientras el software y su contexto no cambien.
+Cerrá la clase dejando la pregunta abierta. Diseñamos las propiedades que el sistema debe preservar: entendimos los activos, modelamos el sistema, definimos fronteras de confianza, anticipamos amenazas con STRIDE, las convertimos en requisitos y elegimos controles que se pueden probar.
 
-Pregunta para el intercambio: «¿Qué cambio podría invalidar una decisión de seguridad que tomamos durante el diseño?»
+El software cambia, y con él cambian el código, las dependencias, la configuración y la infraestructura. La verificación no puede depender de una revisión puntual.
 
-Anunciá que la próxima clase se va a enfocar en verificar seguridad durante la evolución del software: cambios de código, dependencias, configuración e infraestructura.
+No respondas la pregunta ni adelantes herramientas: la próxima clase, «Shift Left or get hacked», se ocupa de cómo verificar esas propiedades de forma continua a medida que el software evoluciona.
 
-Fuente: NIST SP 800-218, Secure Software Development Framework.
+Fuente: NIST SP 800-218, Secure Software Development Framework (SSDF).
 https://csrc.nist.gov/pubs/sp/800/218/final
 -->
