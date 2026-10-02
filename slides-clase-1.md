@@ -468,7 +468,7 @@ En Colonial Pipeline, el ransomware afectó los sistemas corporativos. La empres
 
 Pregunta para el intercambio: «En Colonial Pipeline, ¿por qué se interrumpió un servicio físico aunque el ataque afectó los sistemas corporativos?» Guiá la respuesta hacia las dependencias entre TI y operación, y hacia las decisiones de continuidad ante incertidumbre.
 
-Transición: «En estos casos podemos separar tres piezas: la debilidad que existía, la amenaza que actuó y el riesgo que se materializó. Veámoslas por separado».
+Transición: «En estos casos podemos separar tres piezas: la debilidad que existía, la amenaza que actuó y el impacto que se produjo. Veamos cómo se relacionan».
 
 Fuentes: National Audit Office, Investigation: WannaCry cyber attack and the NHS; U.S. Government Accountability Office, Colonial Pipeline Cyberattack Highlights Need for Better Federal and Private-Sector Preparedness; NIST SP 800-30 Rev. 1.
 https://www.nao.org.uk/reports/investigation-wannacry-cyber-attack-and-the-nhs/
@@ -478,34 +478,33 @@ https://csrc.nist.gov/pubs/sp/800/30/r1/final
 
 ---
 
-# Amenaza y riesgo dependen del contexto
+# De la amenaza al riesgo
 
-Una amenaza describe un evento con potencial de daño. El riesgo valora la posibilidad de que afecte a un sistema y la gravedad de sus consecuencias.
+Una amenaza es un escenario con potencial de daño. El riesgo valora si ese escenario puede concretarse en **este** sistema y cuánto afectaría.
 
-<div class="mt-4 grid grid-cols-3 gap-2 text-center text-sm" role="img" aria-label="Matriz cualitativa: cruza amenaza baja o alta con riesgo bajo o alto, con un ejemplo en cada combinación">
-  <div></div>
-  <strong class="rounded-t-lg bg-gray-200/70 px-3 py-2 text-gray-900">Riesgo bajo</strong>
-  <strong class="rounded-t-lg bg-gray-200/70 px-3 py-2 text-gray-900">Riesgo alto</strong>
-
-  <strong class="rounded-l-lg bg-gray-200/70 px-3 py-3 text-gray-900">Amenaza baja</strong>
-  <div class="border border-gray-300/60 px-3 py-3">Evento poco probable y consecuencia acotada.</div>
-  <div class="border border-gray-300/60 px-3 py-3">Evento poco probable, pero podría interrumpir un servicio esencial sin alternativa de recuperación.</div>
-
-  <strong class="rounded-l-lg bg-gray-200/70 px-3 py-3 text-gray-900">Amenaza alta</strong>
-  <div class="border border-gray-300/60 px-3 py-3">Intentos frecuentes; controles eficaces y recuperación rápida.</div>
-  <div class="border border-gray-300/60 px-3 py-3">Ataque probable contra un servicio crítico expuesto, con recuperación insuficiente.</div>
+<div class="mt-4 grid grid-cols-3 gap-3 text-center text-sm" role="img" aria-label="Tres piezas: la amenaza define el escenario; la vulnerabilidad y la exposición deciden si puede concretarse; los controles reducen probabilidad e impacto">
+  <section class="card px-3 py-4"><strong>Amenaza</strong><p class="mt-2">El escenario: qué podría pasar y quién o qué podría provocarlo.</p></section>
+  <section class="card px-3 py-4"><strong>Vulnerabilidad y exposición</strong><p class="mt-2">Deciden si el escenario puede concretarse: una debilidad y un punto de contacto que la alcance.</p></section>
+  <section class="card px-3 py-4"><strong>Controles</strong><p class="mt-2">Reducen la probabilidad de que ocurra, el impacto si ocurre, o ambos.</p></section>
 </div>
 
-<p class="mt-4 text-center text-sm">La amenaza influye en el escenario; la exposición, las vulnerabilidades, los controles y el impacto modifican el riesgo.</p>
+<div class="mt-4 card px-4 py-4 text-center" role="img" aria-label="Aproximación simple del riesgo: combina probabilidad e impacto">
+  <strong>Riesgo ≈ probabilidad × impacto</strong>
+  <p class="mt-1 text-sm">¿Qué tan probable es aquí, y cuánto afectaría? Una aproximación para ordenar la conversación, no una fórmula.</p>
+</div>
+
+<p class="mt-4 text-center text-sm">La misma amenaza puede dar riesgos distintos: cambian las vulnerabilidades, la exposición y los controles.</p>
 
 <!--
 Notas para presentar:
 
-Volvé al concepto después de los casos anteriores. Un caso real sirve para darle peso al tema, pero acá interesa la relación general entre amenaza y riesgo.
+Volvé al concepto después de los casos reales. Un caso sirve para darle peso al tema, pero acá interesa la relación general entre las piezas.
 
-NIST define amenaza como una circunstancia o evento con potencial de causar daño. El riesgo considera la posibilidad de que ese escenario ocurra y la magnitud de sus consecuencias. La amenaza influye en la evaluación, pero por sí sola no determina el riesgo: importan el sistema concreto, sus vulnerabilidades, exposición, controles, criticidad y capacidad de recuperación.
+Separá las tres piezas antes de nombrar el riesgo. La amenaza es el escenario con potencial de daño: qué podría pasar y quién o qué podría provocarlo; puede haber un atacante detrás, o un error, una falla u otro evento no deliberado. Que ese escenario pueda concretarse depende del sistema: la vulnerabilidad es la debilidad que podría aprovechar, y la exposición es que exista un punto de contacto que la alcance. Los controles son las decisiones que reducen la probabilidad de que ocurra, el impacto si ocurre, o ambos.
 
-Recorré la matriz como una clasificación cualitativa, no como una escala universal ni una fórmula matemática. En este ejemplo, amenaza baja o alta describe la actividad o posibilidad del escenario en un contexto; no es una etiqueta permanente para un actor. Una actividad de amenaza alta puede traducirse en riesgo bajo si los controles limitan la posibilidad de éxito y el impacto. Un evento poco probable puede implicar riesgo alto si compromete un servicio esencial sin alternativas de recuperación.
+Presentá la línea del riesgo como una aproximación: combinamos dos preguntas — ¿qué tan probable es en este sistema?, ¿cuánto afectaría si ocurre? Se la resume como probabilidad × impacto, pero no es una fórmula ni una cifra: es un recordatorio de que el riesgo depende de las dos cosas a la vez. Un evento muy improbable puede importar mucho si compromete un servicio esencial sin recuperación; un evento frecuente puede ser tolerable si el daño queda acotado.
+
+Ejemplo con el caso de la clase, misma amenaza y distinto riesgo: «un atacante consulta el saldo de otra cuenta». Si la consulta confía en el identificador que envía el cliente y no verifica permisos en el servidor, el escenario es probable y puede exponer datos de muchas cuentas: riesgo alto. Con autorización verificada en cada consulta, MFA y alertas ante consultas anómalas, la misma amenaza es poco probable y su impacto queda acotado: riesgo bajo. La amenaza no cambió; cambiaron el sistema y sus controles.
 
 Pregunta para el intercambio: «¿Qué condición del sistema podría mover un escenario de riesgo bajo a riesgo alto, aunque la amenaza no cambie?»
 
@@ -513,9 +512,10 @@ Si sirve para fijar la idea, retomá brevemente los dos casos anteriores: WannaC
 
 Transición: «Para estimar exposición e impacto necesitamos entender qué partes tiene el sistema y cómo se relacionan».
 
-Fuentes: NIST CSRC Glossary, Threat and Risk; NIST SP 800-30 Rev. 1, Guide for Conducting Risk Assessments.
+Fuentes: NIST CSRC Glossary, Threat, Risk and Vulnerability; NIST SP 800-30 Rev. 1, Guide for Conducting Risk Assessments.
 https://csrc.nist.gov/glossary/term/threat
 https://csrc.nist.gov/glossary/term/risk
+https://csrc.nist.gov/glossary/term/vulnerability
 https://csrc.nist.gov/pubs/sp/800/30/r1/final
 -->
 
