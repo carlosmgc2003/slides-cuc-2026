@@ -29,18 +29,12 @@ fonts:
 </div>
 
 <!--
-Notas para presentar:
+- Abrí con una decisión concreta: quién puede consultar una cuenta se acuerda antes de elegir una biblioteca o escribir un endpoint. Agregar una herramienta al final no resuelve una regla de acceso que nunca definimos.
+- Señalá diseño, sin presentarlo como la única etapa importante: las reglas elegidas ahí deben implementarse, probarse y sostenerse en operación.
+- Anticipá el recorrido: entender un sistema, modelar sus partes, explorar amenazas y convertirlas en decisiones comprobables. No hace falta empezar por herramientas.
+- Enlace: «¿Dónde puede nacer una debilidad, incluso antes de escribir código?»
 
-Abrí con la idea central: un sistema no se vuelve seguro solo por agregar controles cuando ya está construido. Las decisiones tempranas definen qué información se maneja, quién puede acceder y cómo se conectan sus componentes.
-
-Señalá el recorrido. El diseño merece atención porque allí se eligen estructuras y reglas que condicionan las etapas posteriores; la seguridad se sigue verificando durante la construcción, las pruebas y la operación.
-
-En esta clase vamos a aprender a entender el sistema, modelar sus partes, anticipar amenazas y convertir ese análisis en decisiones de diseño. No hace falta empezar por una herramienta.
-
-Transición: «Antes de pensar en defensas, preguntémonos: ¿dónde nace una vulnerabilidad y cuándo todavía es barato cambiar el rumbo?»
-
-Fuente conceptual del ciclo de vida: NIST, Secure Software Development Framework (SSDF), SP 800-218. El marco recomienda integrar prácticas de desarrollo seguro en cada implementación del ciclo de vida del software.
-https://www.nist.gov/publications/secure-software-development-framework-ssdf-version-11-recommendations-mitigating-risk
+Respaldo: NIST SSDF, SP 800-218. Enlaces completos en el guion.
 -->
 
 ---
@@ -63,31 +57,13 @@ Una debilidad en un sistema, sus procedimientos, controles o implementación que
 <p class="mt-4 text-center text-sm opacity-70">Una vulnerabilidad no está limitada al código fuente.</p>
 
 <!--
-Notas para presentar:
+- Separá existencia, descubrimiento y explotación: una debilidad puede estar ahí sin que nadie la conozca ni la use. Un hallazgo cambia lo que sabemos aunque el código propio no cambie; CISA KEV reúne vulnerabilidades con explotación real confirmada.
+- Elegí ejemplos, sin leer las seis tarjetas: un requisito omite quién puede ver movimientos; el diseño confía en el identificador del cliente; el código no verifica autorización; el pipeline permite alterar un artefacto; la configuración da permisos excesivos; en operación queda una versión sin actualizar.
+- No deduzcas el riesgo del origen: un requisito incompleto no es necesariamente menos grave que un bug. La prioridad depende del escenario, su probabilidad y sus consecuencias.
+- Preguntá: «Si descubrimos hoy una falla en una biblioteca que no cambió, ¿la debilidad nació hoy?» Esperado: cambió nuestro conocimiento, no necesariamente el software.
+- Enlace: «Usemos un sistema concreto para seguir estas relaciones».
 
-Definí vulnerabilidad como una debilidad que una amenaza puede explotar o activar. No es lo mismo que un ataque: la debilidad puede existir sin que nadie la haya descubierto o utilizado.
-
-Recorré los artefactos del SDLC con ejemplos:
-- Requisitos e historias: no especificar quién puede acceder a un dato o qué validaciones debe cumplir una operación.
-- Diseño y arquitectura: confiar en un componente sin verificarlo o no separar permisos entre servicios.
-- Código y dependencias: una comprobación de autorización ausente o una biblioteca con una vulnerabilidad conocida.
-- Scripts, pipeline y build: proteger de forma insuficiente el proceso que transforma el código o los artefactos que produce.
-- Configuración e infraestructura: permisos excesivos, un servicio expuesto o almacenamiento accesible públicamente.
-- Software en operación: una versión sin actualizar o una debilidad que se descubre después de su despliegue.
-
-Una vulnerabilidad puede estar presente antes de conocerse; un nuevo hallazgo cambia lo que sabemos, aunque el código propio no cambie. Descubrimiento y explotación son estados distintos: el catálogo KEV de CISA identifica vulnerabilidades cuya explotación en el mundo real está confirmada.
-
-El origen tampoco determina por sí solo el nivel de riesgo. Una debilidad en un requisito puede ser más riesgosa que una configuración concreta, o al revés; retomaremos la priorización según escenario, probabilidad e impacto cuando definamos riesgo.
-
-Al cerrar, anticipá el recorrido de la sección en una frase: primero identificamos qué tiene valor, después cómo se conecta el sistema, luego las amenazas y sus consecuencias.
-
-Transición: «Para no hablar en abstracto, elijamos un sistema concreto que nos acompañe toda la clase».
-
-Fuentes: NIST, definición de vulnerabilidad; NIST SSDF, prácticas para proteger código, configuración y artefactos de software; NIST DevSecOps Reference Model, artefactos de desarrollo, build y release; CISA, Known Exploited Vulnerabilities Catalog.
-https://csrc.nist.gov/glossary/term/vulnerability
-https://csrc.nist.gov/pubs/sp/800/218/final
-https://pages.nist.gov/nccoe-devsecops/notational-reference-model.html
-https://www.cisa.gov/known-exploited-vulnerabilities-catalog
+Respaldo: NIST (vulnerabilidad, SSDF y DevSecOps); CISA KEV.
 -->
 
 ---
@@ -105,17 +81,10 @@ https://www.cisa.gov/known-exploited-vulnerabilities-catalog
 <p class="mt-5 text-center text-sm opacity-70">Detrás de la app hay servicios, una base de datos y un proveedor externo de notificaciones.</p>
 
 <!--
-Notas para presentar:
-
-Presentá el caso que vamos a usar durante toda la clase: una app de banca digital. La elegimos porque es fácil de imaginar y concentra lo que aparece en casi cualquier sistema: personas, una aplicación, servicios que procesan, datos que se guardan y un proveedor externo.
-
-Recorré los tres viajes del cliente: se autentica, consulta el saldo y los movimientos de su cuenta, inicia una transferencia a otra cuenta. Estos mismos viajes reaparecen en cada concepto de la clase: activos, flujos, fronteras de confianza, abusos y requisitos.
-
-Aclará que la clase no trata de banca: el sistema es el vehículo para aprender decisiones de diseño seguro que aplican a cualquier software.
-
-Pregunta para el intercambio: «¿Qué otro viaje harían con una app así?» Las respuestas —por ejemplo, descargar un extracto o cambiar el alias— sirven después cuando hablemos de superficie de ataque.
-
-Transición: «Antes de mirar cómo se conectan sus piezas, identifiquemos qué tiene valor en este sistema».
+- Aclará que la banca es el vehículo, no el tema: vamos a reutilizar el caso para evitar aprender un sistema nuevo con cada concepto. Personas, servicios, datos y terceros aparecen también en otros dominios.
+- Preguntá: «¿Qué otro viaje harían con una app así?» Guardá respuestas como descargar un extracto o cambiar el alias: después servirán para mostrar cómo una función agrega puntos de interacción.
+- No profundices todavía en controles ni agregues componentes al modelo. Los tres viajes nos alcanzan para hablar de activos, flujos, confianza, abusos y requisitos.
+- Enlace: «Antes de conectar las piezas, ¿qué perderían las personas si algo funciona mal?»
 -->
 
 ---
@@ -144,63 +113,54 @@ Transición: «Antes de mirar cómo se conectan sus piezas, identifiquemos qué 
 
 <!--
 
-Notas para presentar:
+- Llevá el valor más allá del inventario técnico: una base importa por los datos que conserva y las decisiones que permite tomar; también importan la continuidad del servicio y la confianza de sus clientes. Identificar pérdidas posibles orienta la elección de controles.
+- Preguntá: «Si una transferencia llega, pero con un importe distinto del autorizado, ¿qué propiedad se vio afectada?» Esperado: integridad; que el servicio responda no garantiza que el resultado sea correcto.
+- Las tres propiedades no son compartimentos excluyentes: un incidente puede afectar varias. Tampoco agotan todo lo necesario; el contexto puede exigir autenticidad o trazabilidad.
+- Evitá prometer disponibilidad absoluta: interesa poder usar el servicio de manera oportuna y confiable según sus necesidades.
+- Enlace: «Ya sabemos qué preservar; veamos qué situaciones podrían afectarlo».
 
-Presentá «activo» como algo que tiene valor para alguien y que el sistema debe proteger. Puede ser tangible o intangible; no se limita a servidores o bases de datos. En la app de banca, el activo es la persona y sus datos, una transferencia correcta, la continuidad del servicio o la confianza para usarla. El valor depende de quién necesita el sistema y qué perdería si una parte deja de funcionar, queda expuesta o se modifica sin autorización. Por eso conviene identificar activos antes de elegir controles.
-
-Presentá confidencialidad, integridad y disponibilidad como tres objetivos clásicos de seguridad de la información. Confidencialidad limita quién puede conocer los datos; integridad protege contra modificaciones o destrucciones impropias; disponibilidad busca que la información y los sistemas se puedan usar de manera oportuna y confiable.
-
-Recorré el caso en las tres tarjetas: una consulta no autorizada afecta la confidencialidad; cambiar el importe o el destinatario sin autorización afecta la integridad; interrumpir la app cuando se necesita procesar una transferencia afecta la disponibilidad.
-
-Las tres propiedades ayudan a analizar impactos, pero no agotan todos los atributos que pueden importar en un sistema; el contexto puede exigir otros, como autenticidad o trazabilidad de las acciones.
-
-Preguntá: «Si una transferencia llega, pero con un importe distinto del autorizado, ¿qué propiedad se vio afectada?».
-
-Transición: «Ya identificamos qué propiedades queremos preservar; ahora veamos qué situaciones podrían afectarlas».
-
-Fuente de las definiciones: NIST CSRC Glossary, “Asset” e Information Security; deriva confidencialidad, integridad y disponibilidad de FIPS 200 y otras publicaciones NIST.
-https://csrc.nist.gov/glossary/term/asset
-https://csrc.nist.gov/glossary/term/information_security
+Respaldo: NIST, Asset e Information Security (FIPS 200).
 
 -->
 
 ---
 
-# ¿Qué podría pasarle?
+# Amenaza y atacante
 
-Una amenaza es una circunstancia o evento con potencial de afectar activos, personas u operaciones.
-
-<div class="mt-5 grid grid-cols-3 gap-3 text-center text-sm">
-  <section class="card px-4 py-4" aria-label="Amenaza a la confidencialidad">
-    <strong>Confidencialidad</strong>
-    <p class="mt-2">Alguien consulta el saldo o los movimientos de otra cuenta.</p>
+<div class="mt-5 grid grid-cols-2 gap-4 text-sm">
+  <section class="card px-4 py-4" aria-label="Definición de amenaza">
+    <strong class="text-lg">Amenaza: qué podría ocurrir</strong>
+    <p class="mt-2">Circunstancia o evento con potencial de dañar activos, personas u operaciones.</p>
   </section>
-  <section class="card px-4 py-4" aria-label="Amenaza a la integridad">
-    <strong>Integridad</strong>
-    <p class="mt-2">Alguien modifica el importe o el destinatario sin autorización.</p>
-  </section>
-  <section class="card px-4 py-4" aria-label="Amenaza a la disponibilidad">
-    <strong>Disponibilidad</strong>
-    <p class="mt-2">Una falla o un ataque impide realizar transferencias.</p>
+  <section class="card px-4 py-4" aria-label="Definición de atacante">
+    <strong class="text-lg">Atacante: quién actúa con intención</strong>
+    <p class="mt-2">Persona o grupo que intenta comprometer la seguridad del sistema, desde dentro o fuera de la organización.</p>
   </section>
 </div>
 
+<div class="mt-4 text-sm font-semibold">Ejemplos en la app de banca:</div>
+
+<table class="mt-2 text-sm">
+  <thead>
+    <tr><th scope="col">Amenaza</th><th scope="col">Quién o qué la origina</th><th scope="col">¿Hay atacante?</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Consulta no autorizada de movimientos</td><td>Persona que busca datos ajenos</td><td>Sí</td></tr>
+    <tr><td>Exposición accidental de datos</td><td>Administrador que configura mal un permiso</td><td>No</td></tr>
+    <tr><td>Interrupción de las transferencias</td><td>Falla de la base de datos</td><td>No</td></tr>
+  </tbody>
+</table>
+
+<p class="mt-4 text-center text-lg"><strong>No toda amenaza requiere un atacante.</strong></p>
+
 <!--
-Notas para presentar:
+- Subrayá el carácter potencial: describir una amenaza no significa que ya ocurrió ni que el daño sea inevitable.
+- Usá un solo escenario para separar términos: falta una comprobación de autorización (vulnerabilidad); alguien intenta consultar movimientos ajenos (evento amenazante); quien lo intenta deliberadamente es el atacante.
+- Preguntá: «Si un empleado expone datos por error, ¿es un atacante?» No por ese error: puede originar una amenaza accidental sin intención de comprometer el sistema. En cambio, un empleado que abusa deliberadamente de sus permisos sí puede actuar como atacante.
+- El acceso legítimo y la ubicación interna no prueban buena intención. NIST distingue fuentes adversarias, accidentales, estructurales y ambientales: “fuente de amenaza” es más amplio que “atacante”.
+- Enlace: «Pasemos de escenarios posibles a consecuencias documentadas de ataques reales».
 
-NIST define una amenaza como una circunstancia o evento con potencial de causar un impacto. Subrayá «potencial»: todavía no significa que el evento haya ocurrido ni que el daño sea inevitable.
-
-Relacioná las tarjetas con la diapositiva anterior: los casos describen posibles efectos sobre confidencialidad, integridad y disponibilidad. La primera expone información; la segunda modifica una operación; la tercera interrumpe el servicio.
-
-Amenaza y vulnerabilidad no son sinónimos. Una vulnerabilidad es una debilidad del sistema; una amenaza es una circunstancia o evento que podría aprovecharla o afectarlo. Tampoco todas las amenazas requieren un atacante: puede haber errores humanos, fallas técnicas u otros eventos no deliberados.
-
-Preguntá: «¿Hace falta que exista un atacante para que ocurra una amenaza?». Retomá errores de configuración o fallas como ejemplos de eventos no deliberados.
-
-Transición: «Ahora que identificamos los efectos posibles sobre el caso, miremos qué patrones se observan en brechas reales».
-
-Fuentes: NIST CSRC Glossary, Threat; NIST SP 800-30 Rev. 1, Guide for Conducting Risk Assessments.
-https://csrc.nist.gov/glossary/term/threat
-https://csrc.nist.gov/pubs/sp/800/30/r1/final
+Respaldo: NIST, Threat y Adversary; SP 800-30 Rev. 1.
 -->
 
 ---
@@ -228,26 +188,13 @@ https://csrc.nist.gov/pubs/sp/800/30/r1/final
 
 <!--
 
-Notas para presentar:
+- DBIR 2026 analiza del 1/11/2024 al 31/10/2025. Los porcentajes miden dimensiones distintas de brechas observadas y pueden superponerse: no se suman ni estiman el riesgo de cada organización. No traslades frecuencias entre sectores o países.
+- NHS: se identificaron 6.912 citas canceladas en los datos recogidos; más de 19.000 es la estimación total, no un conteo completo. La exposición se vinculó a Windows sin actualizar o fuera de soporte. Conectá la debilidad técnica con atención postergada y pacientes derivados.
+- Colonial: el ransomware afectó TI corporativa. Se desconectaron preventivamente sistemas de control del oleoducto; al 12 de mayo de 2021 no había indicios de compromiso de esos sistemas. La decisión interrumpió operaciones; se reanudaron el 13 de mayo.
+- Preguntá: «¿Por qué se detuvo un servicio físico sin evidencia de ataque a sus controles?» Guiá hacia dependencias y continuidad ante incertidumbre.
+- Impacto incluye daños a personas, activos y operaciones, no solo datos perdidos. Enlace: «Separemos debilidad, amenaza e impacto; después valoremos el riesgo».
 
-Usá las cifras como patrones transversales observados en brechas de distintos sectores, no como una estimación de riesgo para cada organización. En la edición 2026 del DBIR, el período analizado va del 1 de noviembre de 2024 al 31 de octubre de 2025. Los porcentajes describen dimensiones diferentes y pueden superponerse: el 31% mide explotación de vulnerabilidades como vía de acceso inicial; el 48% indica presencia de ransomware en brechas; y el otro 48% señala participación de terceros. No se suman entre sí ni implican que todas las organizaciones enfrenten la misma frecuencia. Como contraste situado, ENISA informa que la administración pública fue el sector más atacado en la Unión Europea durante 2025; el 82% de los incidentes registrados contra ese sector fueron DDoS. Aclará que esos datos describen organizaciones europeas y no representan por igual al sector privado ni a otros países.
-
-Usá los casos para darle contenido concreto a «impacto»: la magnitud del daño que puede producir un evento en operaciones, activos y personas. NIST incluye explícitamente esos efectos en su guía de evaluación de riesgos.
-
-En Inglaterra, el ransomware WannaCry afectó al NHS en mayo de 2017. NHS England identificó 6.912 citas canceladas en los datos que pudo recoger y estimó más de 19.000 en total. La cifra es una estimación, no un conteo completo. Al menos 81 de 236 trusts resultaron afectados y hospitales de cinco zonas tuvieron que derivar pacientes a otros servicios de urgencias. El informe atribuyó la exposición a sistemas Windows sin actualizar o fuera de soporte que compartían una vulnerabilidad.
-
-En Colonial Pipeline, el ransomware afectó los sistemas corporativos. La empresa desconectó preventivamente sistemas que monitoreaban y controlaban el oleoducto para evitar que el incidente llegara a ellos. No había indicios de compromiso de esos sistemas operativos al 12 de mayo, pero la desconexión detuvo temporalmente las operaciones y cortó la entrega de combustible en parte del sudeste de Estados Unidos. El oleoducto reanudó operaciones el 13 de mayo.
-
-Preguntá: «En Colonial Pipeline, ¿por qué se interrumpió un servicio físico aunque el ataque afectó los sistemas corporativos?» Guiá la respuesta hacia las dependencias entre TI y operación, y hacia las decisiones de continuidad ante incertidumbre.
-
-Transición: «En estos casos podemos separar tres piezas: la debilidad que existía, la amenaza que actuó y el impacto que se produjo. Veamos cómo se relacionan».
-
-Fuentes: Verizon, 2026 Data Breach Investigations Report; ENISA, 2026 Threat Landscape; National Audit Office, Investigation: WannaCry cyber attack and the NHS; U.S. Government Accountability Office, Colonial Pipeline Cyberattack Highlights Need for Better Federal and Private-Sector Preparedness; NIST SP 800-30 Rev. 1.
-https://www.verizon.com/business/resources/reports/dbir/
-https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape
-https://www.nao.org.uk/reports/investigation-wannacry-cyber-attack-and-the-nhs/
-https://www.gao.gov/blog/colonial-pipeline-cyberattack-highlights-need-better-federal-and-private-sector-preparedness-infographic
-https://csrc.nist.gov/pubs/sp/800/30/r1/final
+Fuentes: Verizon DBIR 2026; NAO (NHS); GAO (Colonial); NIST SP 800-30. Enlaces en el guion.
 
 -->
 
@@ -271,27 +218,13 @@ Una amenaza es un escenario con potencial de daño. El riesgo valora si ese esce
 <p class="mt-4 text-center text-sm">La misma amenaza puede dar riesgos distintos: cambian las vulnerabilidades, la exposición y los controles.</p>
 
 <!--
-Notas para presentar:
+- Usá la misma amenaza: consultar movimientos ajenos. Si el servidor confía en el identificador del cliente sin verificar permisos, el abuso puede concretarse y alcanzar muchas cuentas. Verificar autorización en cada consulta reduce esa posibilidad; acotar accesos y detectar consultas anómalas puede limitar el daño.
+- No asignes “riesgo bajo” solo por tener controles: importa su efectividad y el contexto. La autenticación multifactor ayuda contra cuentas robadas, pero no corrige por sí sola una falla de autorización sobre otra cuenta.
+- La multiplicación es un recordatorio, no un cálculo con escalas arbitrarias. Un escenario improbable puede exigir atención si afecta un servicio esencial sin recuperación; uno frecuente puede ser tolerable si sus consecuencias son acotadas.
+- Preguntá: «¿Qué cambio del sistema aumentaría el riesgo sin cambiar la amenaza?» Buscá exposición, permisos, controles o capacidad de recuperación.
+- Enlace: «Para valorar eso, necesitamos ver cómo se conectan personas, servicios y datos».
 
-Volvé al concepto después de los casos reales. Un caso sirve para darle peso al tema, pero acá interesa la relación general entre las piezas.
-
-Separá las tres piezas antes de nombrar el riesgo. La amenaza es el escenario con potencial de daño: qué podría pasar y quién o qué podría provocarlo; puede haber un atacante detrás, o un error, una falla u otro evento no deliberado. Que ese escenario pueda concretarse depende del sistema: la vulnerabilidad es la debilidad que podría aprovechar, y la exposición es que exista un punto de contacto que la alcance. Los controles son las decisiones que reducen la probabilidad de que ocurra, el impacto si ocurre, o ambos.
-
-Presentá la línea del riesgo como una aproximación: combinamos dos preguntas — ¿qué tan probable es en este sistema?, ¿cuánto afectaría si ocurre? Se la resume como probabilidad × impacto, pero no es una fórmula ni una cifra: es un recordatorio de que el riesgo depende de las dos cosas a la vez. Un evento muy improbable puede importar mucho si compromete un servicio esencial sin recuperación; un evento frecuente puede ser tolerable si el daño queda acotado.
-
-Ejemplo con el caso de la clase, misma amenaza y distinto riesgo: «un atacante consulta el saldo y los movimientos de otra cuenta». Si la consulta confía en el identificador que envía el cliente y no verifica permisos en el servidor, el escenario es probable y puede exponer datos de muchas cuentas: riesgo alto. Con autorización verificada en cada consulta, autenticación multifactor y alertas ante consultas anómalas, la misma amenaza es poco probable y su impacto queda acotado: riesgo bajo. La amenaza no cambió; cambiaron el sistema y sus controles.
-
-Pregunta para el intercambio: «¿Qué condición del sistema podría mover un escenario de riesgo bajo a riesgo alto, aunque la amenaza no cambie?»
-
-Si sirve para fijar la idea, retomá brevemente los dos casos anteriores: WannaCry muestra cómo una debilidad de software permitió afectar la atención; Colonial Pipeline muestra cómo las dependencias y una decisión de continuidad ampliaron las consecuencias. Usalos como ejemplos, sin convertirlos en definiciones.
-
-Transición: «El riesgo no se evalúa en el aire: depende de cómo el sistema conecta personas, servicios, datos y terceros. Miremos ese mapa».
-
-Fuentes: NIST CSRC Glossary, Threat, Risk and Vulnerability; NIST SP 800-30 Rev. 1, Guide for Conducting Risk Assessments.
-https://csrc.nist.gov/glossary/term/threat
-https://csrc.nist.gov/glossary/term/risk
-https://csrc.nist.gov/glossary/term/vulnerability
-https://csrc.nist.gov/pubs/sp/800/30/r1/final
+Respaldo: NIST, Risk, Threat y Vulnerability; SP 800-30 Rev. 1.
 -->
 
 ---
@@ -319,20 +252,13 @@ Cada vínculo requiere definir qué se intercambia, quién participa y qué perm
 
 <!--
 
-Notas para presentar:
+- Seguí una transferencia, no todas las flechas: el cliente confirma; pagos registra la operación; el proveedor recibe lo necesario para notificar. La nube indica alojamiento, no una etapa por la que pasan los datos.
+- Preguntá: «¿El proveedor necesita todo el historial de movimientos para enviar una confirmación?» Usá la respuesta para discutir datos mínimos y permisos por vínculo.
+- Estar dentro de la red no vuelve confiable a una cuenta o servicio. Una identidad válida puede estar robada y un componente interno, comprometido; las llamadas siguen necesitando autorización y validación.
+- No descartes el firewall: filtra conexiones, pero no reemplaza los controles sobre recursos y operaciones.
+- Enlace: «El perímetro y una revisión final no resuelven todas estas relaciones; veamos el costo de descubrirlas tarde».
 
-Presentá el dibujo como el mapa simplificado de nuestro caso: la app de banca, sus servicios, la base de cuentas y movimientos y el proveedor de notificaciones. Las flechas muestran que una misma operación pasa por varios componentes y llega también a un proveedor externo. La nube representa dónde pueden ejecutarse los servicios.
-
-Recorré una transferencia del caso: el cliente confirma la operación desde la app, el servicio de pagos consulta o registra datos en la base y el sistema integra el proveedor de notificaciones para avisar que la transferencia se realizó. Preguntá: «¿Qué información necesita cada componente para completar la transferencia?». Usá las respuestas para señalar que cada vínculo requiere definir los datos que circulan y los permisos necesarios.
-
-Del mapa al perímetro: el control de entrada puede filtrar una solicitud, pero no verifica por sí mismo cada identidad, servicio ni llamada una vez que existen conexiones entre componentes; la red interna no es automáticamente confiable. Recorré las tres tarjetas: una cuenta válida puede ser robada o usarse por error; un servicio interno puede tener una debilidad; una llamada entre componentes necesita permisos adecuados. Esto no vuelve inútiles al firewall ni a otros controles de red: muestra que hay que proteger también los recursos y sus interacciones.
-
-Preguntá: «Si la solicitud ya llegó a la aplicación, ¿qué controles siguen haciendo falta entre la aplicación, el servicio y los datos?». Retomá autenticación, autorización y validación según lo que proponga el grupo.
-
-Transición: «El enfoque centrado en el perímetro también tendía a dejar la seguridad de las aplicaciones para el final; veamos por qué eso se vuelve un límite en ciclos de desarrollo rápidos».
-
-Fuente: NIST SP 800-207 explica que la ubicación de red no concede confianza implícita y que la protección debe centrarse en recursos, incluidos servicios y aplicaciones.
-https://csrc.nist.gov/pubs/sp/800/207/final
+Respaldo: NIST SP 800-207, Zero Trust Architecture.
 
 -->
 
@@ -354,31 +280,13 @@ Una revisión tardía puede sumar retrabajo y tensionar la fecha de liberación.
 
 <!--
 
-Notas para presentar:
+- Señalá la flecha de regreso: un hallazgo de autorización puede exigir rediseñar permisos, cambiar código y repetir pruebas cuando ya hay una fecha comprometida. No afirmes un costo fijo ni que todo pentest frene una entrega.
+- El problema es depender de la revisión final, no hacer pentests. El enfoque perimetral y la verificación tardía son limitaciones distintas que pueden coexistir; una no obliga a la otra.
+- Conectá las cuatro dimensiones con una misma regla: diseño decide quién puede consultar; implementación verifica cada solicitud; configuración acota la cuenta de servicio; operación mantiene controles y detecta anomalías. Si una falla, las otras no garantizan la protección.
+- Preguntá: «¿Qué quedaría sin resolver si solo agregáramos una herramienta?» Buscá reglas de negocio, permisos y recuperación, no nombres de productos.
+- Enlace: «Empecemos por delimitar qué incluye nuestro sistema y de qué depende».
 
-Explicá «fortaleza y foso» como un modelo que pone defensas fuertes en el borde de la red y confía en lo que queda adentro. Para las aplicaciones, reserva una revisión intensiva —por ejemplo, un pentest— cerca del lanzamiento.
-
-Señalá la flecha de regreso: si el pentest encuentra un problema que requiere cambios, el equipo vuelve a diseño o código, repite pruebas y puede tener que revisar la fecha de salida. En ciclos cortos, ese control tardío puede acumular hallazgos y competir con la entrega; no significa que todo pentest bloquee un lanzamiento ni que deba quitarse.
-
-Cerrá con la línea final: la seguridad no depende de una herramienta aislada, sino de decisiones coordinadas en cuatro dimensiones. No es una lista completa ni una receta idéntica para todos los sistemas. En diseño, modelar amenazas, flujos de datos y límites de confianza ayuda a decidir dónde ubicar controles y qué permisos hacen falta. En implementación, reglas de validación, consultas parametrizadas y verificaciones de autorización llevan esas decisiones al código. En configuración, las cuentas de servicio, los secretos y los valores predeterminados determinan la exposición concreta del despliegue. En operación, actualizar componentes, monitorear eventos y probar restauraciones mantienen la capacidad de proteger y recuperar el sistema.
-
-Los ejemplos se condicionan entre sí. Un modelo de autorización correcto en el diseño no protege si no se verifica en cada operación; una implementación adecuada puede quedar expuesta por credenciales excesivas; y los controles pueden perder efectividad si no se mantienen.
-
-Preguntá: «¿Qué parte de este sistema quedaría desprotegida si solo agregáramos una herramienta?».
-
-Transición: «Si la seguridad no la da una herramienta ni una revisión final, sino el sistema entero, empecemos por lo básico: qué incluye nuestro sistema y de qué depende».
-
-Fuentes: NIST, Secure Software Development Framework (SSDF), SP 800-218; NIST, Mitigating the Risk of Software Vulnerabilities by Adopting an SSDF (2020); NIST SP 800-160 Vol. 1 Rev. 1, Engineering Trustworthy Secure Systems; OWASP Threat Modeling, Authorization, SQL Injection Prevention, Secrets Management y Logging Cheat Sheets.
-https://csrc.nist.gov/pubs/sp/800/218/final
-https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.04232020.pdf
-https://csrc.nist.gov/pubs/sp/800/160/v1/r1/final
-https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
-https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html
-https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
-https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html
-https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
-
-PowerPoint original · diapositiva 8 · Limitaciones de la seguridad tradicional reactiva
+Respaldo: NIST SSDF y SP 800-160; guías OWASP. PPT original: diapositiva 8.
 
 -->
 
@@ -400,21 +308,12 @@ flowchart BT
 **Fuera de nuestro control no significa fuera del análisis.**
 
 <!--
-Notas para presentar:
+- Distinguí alcance de control: podemos analizar una dependencia sin administrar sus servidores. El recuadro delimita el objeto de estudio; no borra lo que puede afectarlo desde fuera.
+- Preguntá: «Si el proveedor de notificaciones no responde, ¿debería detenerse la transferencia?» En este caso buscamos separar la operación del aviso; no supongas que esa independencia existe sin diseñarla.
+- Registrá supuestos: qué servicio queremos sostener, qué datos usa, quién participa y de quién depende. Sin ese contexto, una lista de amenazas queda demasiado abstracta.
+- Enlace: «Dibujemos esas piezas y dependencias para discutirlas sobre el mismo mapa».
 
-Presentá el alcance como el objeto concreto que vamos a analizar: en nuestro caso, la app de banca y todo lo que la sostiene. Señalá el sistema protegido y después los datos, actores y componentes que lo sostienen. No alcanza con nombrar la aplicación: hay que entender qué servicio presta y de qué depende.
-
-Señalá la dependencia externa. Aunque quede fuera del control directo de la organización, puede afectar la disponibilidad, integridad o confidencialidad del servicio.
-
-NIST recomienda caracterizar el sistema y su contexto antes de evaluar el riesgo. OWASP propone entender la aplicación, sus flujos de datos y límites de confianza antes de identificar amenazas.
-
-Pregunta para el intercambio: «Si el proveedor de notificaciones deja de responder, ¿qué parte del caso se ve afectada y cuál sigue funcionando?»
-
-Transición: «Dibujemos el caso y hagamos visibles sus componentes y dependencias».
-
-Fuentes: NIST SP 800-30 Rev. 1, Guide for Conducting Risk Assessments; OWASP Threat Modeling Cheat Sheet.
-https://csrc.nist.gov/pubs/sp/800/30/r1/final
-https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
+Respaldo: NIST SP 800-30 Rev. 1; OWASP Threat Modeling.
 -->
 
 ---
@@ -452,18 +351,13 @@ flowchart TB
 </div>
 
 <!--
-Notas para presentar:
+- Este es un modelo inicial para conversar, no una arquitectura completa ni un inventario de servidores. “Servicios” resume autenticación, extractos y pagos; podremos separarlos cuando la pregunta lo requiera.
+- Señalá el recuadro y la línea punteada: alcance elegido y dependencia externa. Estar dentro del alcance no implica confianza automática; más adelante analizaremos fronteras internas.
+- Preguntá: «¿Dónde se decide si el cliente puede consultar esa cuenta?» Esperado: en los servicios, con verificación del lado servidor; la pantalla no debe ser la única barrera.
+- Si aparecen detalles de infraestructura, anotá lo pendiente sin perder el propósito: hacer visibles las relaciones que importan para la seguridad.
+- Enlace: «Ahora pongamos datos y permisos sobre esas conexiones».
 
-Leé el dibujo de arriba hacia abajo. El cliente inicia una interacción con la app; los servicios procesan la solicitud y consultan la base de datos. La app, los servicios y los datos están dentro del alcance representado. El cliente y el proveedor de notificaciones interactúan desde fuera de ese límite. Usá la columna derecha para aterrizar cada etiqueta en el caso; la misma estructura sirve para otros sistemas: cambian los nombres, no la forma de mirar.
-
-La línea punteada representa una dependencia externa: el proveedor que envía las notificaciones del caso. El esquema es un modelo inicial para conversar, no una arquitectura completa: alcanza para hacer visibles los componentes, las interacciones y los elementos que quedan fuera del control directo.
-
-Pregunta para el intercambio: «Si el proveedor de notificaciones deja de responder, ¿qué funciones del caso siguen operando?»
-
-Transición: «Ahora sigamos las conexiones y veamos qué información circula, quién la recibe y quién puede modificarla».
-
-Fuente: OWASP Threat Modeling Cheat Sheet. Recomienda usar diagramas de flujo de datos para representar procesos, almacenes de datos, flujos, entidades externas y límites de confianza.
-https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
+Respaldo: OWASP Threat Modeling.
 -->
 
 ---
@@ -500,45 +394,51 @@ flowchart TB
 </div>
 
 <!--
-Notas para presentar:
+- Seguí un dato concreto: importe y destinatario salen de la app, llegan a pagos y se registran. Preguntá: «¿Quién podría leerlos o alterarlos durante ese recorrido?» Separá capacidad técnica de permiso legítimo.
+- Una flecha no demuestra que el intercambio sea seguro: falta precisar qué viaja, con qué identidad y qué validación se aplica antes de usarlo.
+- Señalá el ramal externo: notificar no exige que todos los datos recorran primero la base y después el proveedor. No interpretes el dibujo como una secuencia temporal completa.
+- Buscá datos innecesarios en cada destino: enviar solo lo requerido reduce exposición, aunque no reemplaza controles de acceso.
+- Enlace: «Ya seguimos el dato; ahora discutamos qué confianza merece su origen».
 
-Recorré el flujo en el caso: el cliente envía credenciales o confirma una transferencia; la app solicita la operación; los servicios leen o guardan datos y pueden intercambiar información con el proveedor de notificaciones. El diagrama separa ese intercambio externo del recorrido interno: los datos no pasan necesariamente primero por el almacén y después al proveedor externo.
-
-Usá las tres tarjetas para organizar el análisis: identificar quién origina el dato, dónde llega o queda almacenado y qué identidades tienen permiso para leerlo o modificarlo. El permiso de acceso es una propiedad de seguridad que analizamos junto con el flujo.
-
-Pregunta para el intercambio: «¿Quién podría leer o alterar el importe de una transferencia durante su recorrido?»
-
-Transición: «Además de seguir los datos, tenemos que decidir qué confianza merece cada origen y cada componente».
-
-Fuentes: OWASP Threat Modeling Cheat Sheet; OWASP Secure Code Review Cheat Sheet. El modelado de amenazas recomienda hacer visibles flujos, almacenes, procesos, entidades externas y límites de confianza; la revisión de flujos identifica orígenes, procesamiento, destinos y controles en las fronteras.
-https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
-https://cheatsheetseries.owasp.org/cheatsheets/Secure_Code_Review_Cheat_Sheet.html
+Respaldo: OWASP Threat Modeling y Secure Code Review.
 -->
 
 ---
 
 # ¿En quién confiamos?
 
-No todo componente, usuario o dato merece el mismo nivel de confianza.
+**Confianza:** expectativa de que una persona o componente se comporte como esperamos, para una tarea y en un contexto concretos.
 
-<div class="mt-6 grid grid-cols-2 gap-4 text-sm">
-  <section class="card px-4 py-4"><strong>Asumir</strong><br />Aceptar identidad, datos y respuestas sin comprobarlos. Es el camino por defecto, casi invisible.</section>
-  <section class="card px-4 py-4"><strong>Verificar</strong><br />Comprobar quién envía, qué permisos tiene y si el dato es válido antes de actuar. Es una decisión de diseño.</section>
+<p class="mt-3 text-sm">No basta con asumirla: necesitamos evidencia y límites. Tres comprobaciones complementarias:</p>
+
+<div class="mt-5 grid grid-cols-3 gap-4 text-sm">
+  <section class="card px-4 py-4" aria-label="Autenticación: verificar identidad">
+    <strong class="text-lg text-cyber-cyan">Autenticación</strong>
+    <p class="mt-2">Verificar la identidad declarada.</p>
+    <p class="mt-3 border-t border-gray-400/40 pt-3">El cliente inicia sesión con sus credenciales y un segundo factor.</p>
+  </section>
+  <section class="card px-4 py-4" aria-label="Autorización: comprobar permisos">
+    <strong class="text-lg text-cyber-cyan">Autorización</strong>
+    <p class="mt-2">Comprobar el permiso para una acción sobre un recurso.</p>
+    <p class="mt-3 border-t border-gray-400/40 pt-3">Puede consultar su cuenta, no la de otro cliente.</p>
+  </section>
+  <section class="card px-4 py-4" aria-label="Validación de datos: comprobar contenido">
+    <strong class="text-lg text-cyber-cyan">Validación de datos</strong>
+    <p class="mt-2">Comprobar formato, valores y reglas de la operación.</p>
+    <p class="mt-3 border-t border-gray-400/40 pt-3">El importe de una transferencia debe ser válido, aunque el cliente ya ingresó.</p>
+  </section>
 </div>
 
+<p class="mt-5 text-center text-base"><strong>Autenticarse no da permiso para todo ni vuelve confiable cualquier dato enviado.</strong></p>
+
 <!--
-Notas para presentar:
+- La confianza no es una cualidad absoluta ni una garantía: delimitamos qué comportamiento esperamos, de quién y para qué. La evidencia permite justificar esa expectativa; hay que revisarla si cambia el contexto.
+- Autenticación aporta evidencia de identidad, no de buena intención: una cuenta robada puede superar el ingreso. Autorización comprueba el permiso sobre la acción y el recurso; validar datos no reemplaza ninguna de las dos.
+- Preguntá: «Un cliente ingresa correctamente y envía un identificador válido de una cuenta ajena: ¿qué lo debe frenar?» Esperado: autorización en el servidor. El formato correcto y la sesión válida no conceden acceso.
+- Aplica también a servicios: confiar en el proveedor para enviar avisos no lo autoriza a modificar saldos. Estar dentro de nuestra red tampoco basta. Estas comprobaciones ayudan a sostener la confianza, pero no prueban que un componente nunca fallará.
+- Enlace: «Marquemos dónde cambian esos supuestos y dónde debemos comprobarlos: las fronteras de confianza».
 
-Planteá la pregunta del título y pedí ejemplos de la experiencia del público: un correo que dice venir del banco, una notificación que pide reingresar credenciales, una respuesta inesperada del proveedor de notificaciones. En cada caso preguntá: ¿qué estamos asumiendo y qué podríamos comprobar?
-
-Contrastá las dos tarjetas: asumir no requiere ninguna decisión y por eso pasa desapercibido; verificar hay que diseñarlo. La confianza no es binaria ni gratuita: se decide a partir de lo que sabemos del origen y de las validaciones que aplicamos antes de actuar.
-
-Pregunta para el intercambio: «¿Qué validaciones hace hoy un sistema que ustedes conozcan antes de confiar en un dato?»
-
-Transición: «Si la confianza cambia según el contexto, necesitamos marcar dónde cambia: ahí aparece la frontera de confianza».
-
-Fuente: NIST SP 800-207, Zero Trust Architecture. Propone no asumir confianza por la ubicación en la red y verificar cada solicitud de forma explícita, sea cual sea su origen.
-https://csrc.nist.gov/pubs/sp/800/207/final
+Respaldo: NIST SP 800-207; OWASP Authentication, Authorization e Input Validation. Enlaces en el guion.
 -->
 
 ---
@@ -582,18 +482,13 @@ Una frontera de confianza marca el paso entre contextos con distintos niveles de
 </div>
 
 <!--
-Notas para presentar:
+- Señalá las dos flechas cian, sin volver a narrar todos los componentes. En el modelo simplificado, alcance y frontera coinciden; en un sistema real puede haber varias fronteras dentro del mismo alcance.
+- La app corre en un dispositivo que no controlamos plenamente: una validación de pantalla no reemplaza la comprobación en el servidor. También hay que verificar respuestas del proveedor externo.
+- Preguntá: «Un cliente autenticado cambia el identificador de cuenta: ¿qué comprobación falta?» Esperado: autorización sobre esa cuenta; una identidad válida y un dato bien formado no bastan.
+- Evitá sugerir que el interior es automáticamente confiable: app, servicios y base pueden requerir contextos y permisos diferentes.
+- Enlace: «Esos cruces son algunos de los lugares donde se puede influir en el sistema; veamos la superficie completa».
 
-Señalá que es el mismo diagrama que venimos usando; lo que cambia es la pregunta. El recuadro ya no marca solo el alcance: es la frontera de confianza. Dentro, los componentes comparten un contexto de confianza; fuera, el cliente y el proveedor de notificaciones están en otro.
-
-Señalá las dos flechas resaltadas: los datos que entran desde el cliente y el intercambio con el proveedor de notificaciones atraviesan la frontera. Usá la tabla de la derecha: en cada cruce validamos identidad (autenticación), permisos (autorización) y que los datos sean válidos (validación de entrada). Los flujos internos también pueden tener fronteras si los componentes tienen niveles de confianza distintos; empezamos por el borde porque es el cruce más visible.
-
-Pregunta para el intercambio: «¿Qué validaciones hace hoy una aplicación que conozcan cuando una persona envía datos?»
-
-Transición: «Cada cruce es también un lugar donde alguien puede interactuar con el sistema: esos puntos forman la superficie de ataque».
-
-Fuente: OWASP Threat Modeling Cheat Sheet. Los diagramas de flujo de datos incluyen límites de confianza como elemento explícito del modelo.
-https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
+Respaldo: OWASP Threat Modeling.
 -->
 
 ---
@@ -614,18 +509,13 @@ Son los lugares donde alguien puede interactuar con el sistema o influir en él.
 <p class="mt-6">Reducir entradas innecesarias reduce oportunidades de abuso.</p>
 
 <!--
-Notas para presentar:
+- La superficie no termina en las pantallas: una API puede invocarse directamente y una cuenta de servicio también puede usarse indebidamente. Los cruces de confianza son una parte, no el inventario completo.
+- Tener un punto expuesto no prueba que tenga una vulnerabilidad; indica dónde necesitamos analizar interacciones y controles.
+- Recuperá una función propuesta al presentar el caso, como descargar extractos: agrega rutas, archivos y permisos que revisar.
+- Preguntá: «¿Qué acceso podríamos restringir sin quitar la función legítima?» Consultar solo cuentas autorizadas reduce el abuso; ocultar un botón no protege el endpoint.
+- Enlace: «Veamos cómo estos puntos y otras debilidades se combinan en incidentes».
 
-Retomá la diapositiva anterior: los cruces de la frontera de confianza son parte de la superficie de ataque, pero la superficie incluye todo punto de interacción, visible o no. Recorré las seis fichas: cada una es un punto real de la app de banca que venimos dibujando.
-
-Cerrá con la idea de reducción: cada entrada que no se necesita es una oportunidad menos para un abuso. Cada nueva funcionalidad, API o integración amplía la superficie; por eso conviene revisar qué queda expuesto y qué puede quitarse o restringirse.
-
-Pregunta para el intercambio: «¿Qué entrada de la app de banca podría eliminarse o restringirse? Por ejemplo, ¿hace falta exponer la consulta de cualquier cuenta o solo de la propia?»
-
-Transición: «Veamos por cuáles de estos lugares suelen llegar los incidentes reales».
-
-Fuente: OWASP Attack Surface Analysis Cheat Sheet. Recomienda identificar los puntos donde el sistema recibe o expone datos y revisar qué partes de la superficie son realmente necesarias.
-https://cheatsheetseries.owasp.org/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.html
+Respaldo: OWASP Attack Surface Analysis.
 -->
 
 ---
@@ -654,18 +544,13 @@ layout: two-cols-header
 </div>
 
 <!--
-Notas para presentar:
+- No presentes las tarjetas como un ranking ni traslades frecuencias a una organización concreta. La columna izquierda mezcla eventos, fuentes y debilidades: interesa cómo se encadenan, no una taxonomía única.
+- Caso de apoyo: en 2024, cuentas de clientes de Snowflake fueron afectadas por credenciales robadas y ausencia de multifactor, según el análisis de CSA de 2025. Usalo como combinación de factores, no como prueba de una vulnerabilidad en la plataforma.
+- Microservicios, contenedores o nube no vuelven inseguro un sistema por sí mismos: agregan relaciones, identidades y configuración que gestionar. Los ejemplos financieros ilustran expansión funcional, no todos los sectores.
+- Preguntá: «¿Qué condición concreta haría más probable una de estas causas en una organización que conozcan?» Pedí evidencia o supuestos, no solo intuición.
+- Enlace: «Para responder a esos escenarios, diseñemos con principios».
 
-Presentá las causas como orígenes observados con frecuencia en incidentes, no como un ranking ni como frecuencias trasladables a cada organización. Los ejemplos de servicios digitales son del sector financiero, tomados del material original; sirven para ilustrar cómo cada nueva funcionalidad amplía la superficie, no para caracterizar a todos los sectores.
-
-Caso de apoyo: la brecha de Snowflake de 2024 combinó varias de estas causas — credenciales robadas, cuentas sin autenticación multifactor y exposición a través de un tercero. Usalo para mostrar que las causas se encadenan. Aclará que el análisis es de la Cloud Security Alliance y describe un caso particular.
-
-Pregunta para el intercambio: «¿Cuál de estas causas les parece más probable en una organización que conozcan, y por qué?»
-
-Transición: «Estas causas aprovechan entradas y debilidades concretas. Para defendernos no alcanza con enumerar casos: conviene diseñar con principios».
-
-Fuente: Cloud Security Alliance, análisis de la brecha de Snowflake (2025).
-https://cloudsecurityalliance.org/blog/2025/05/07/unpacking-the-2024-snowflake-data-breach
+Respaldo: Cloud Security Alliance, análisis de Snowflake (2025).
 -->
 
 ---
@@ -683,16 +568,13 @@ No hace falta memorizar una lista extensa. Empecemos con preguntas útiles:
 </div>
 
 <!--
-Notas para presentar:
+- Pedí elegir una decisión del caso, no repetir las preguntas: qué permisos dar a extractos, cómo responder si falla autorización o cómo evitar que un compromiso alcance pagos.
+- Los principios orientan decisiones, no garantizan seguridad ni reemplazan el análisis del contexto. Pueden requerir equilibrar protección y continuidad del servicio.
+- Preguntá: «¿Por cuál empezarían en nuestra app, y por qué?» Aceptá caminos distintos si justifican el activo y el escenario que quieren proteger.
+- Anticipá el vocabulario sin desarrollarlo: mínimo privilegio; defensa en profundidad y fallo seguro; contención del impacto.
+- Enlace: «Empecemos por los permisos que necesita cada tarea».
 
-Abrí con la idea de la primera línea: los principios de diseño seguro no son una lista para memorizar, sino preguntas que conviene hacerse mientras se diseña. Recorré las tres tarjetas y anticipá que las vamos a ver una por una: la primera pregunta abre el principio de mínimo privilegio; la segunda, la defensa en profundidad y el fallo seguro; la tercera, la contención del impacto.
-
-Pregunta para el intercambio: «¿Cuál de estas preguntas aplicarían primero a la app de banca que dibujamos?»
-
-Transición: «Empecemos por la primera: confiar lo mínimo necesario».
-
-Fuente: OWASP, Security by Design Principles. Reúne principios como mínimo privilegio, defensa en profundidad, fallo seguro y separación de funciones.
-https://owasp.org/www-project-security-by-design-principles/
+Respaldo: OWASP Security by Design Principles.
 -->
 
 ---
@@ -711,19 +593,13 @@ class: flex flex-col justify-center
 <p class="mt-8 text-center">Limitar permisos reduce lo que una cuenta comprometida puede hacer.</p>
 
 <!--
-Notas para presentar:
+- Aplicá el principio a personas y cuentas de servicio. No es quitar permisos porque sí: cada acción, recurso y duración deben justificarse por una tarea.
+- Preguntá: «Si comprometen extractos, ¿qué daño todavía podría haber aunque no pueda transferir?» Esperado: exposición de los datos que sí puede leer. Solo lectura no significa inocuo; también importa a qué cuentas accede.
+- El permiso temporal de mantenimiento necesita revocación efectiva al terminar. Tener una ventana acordada no basta si la credencial sigue funcionando después.
+- Evitá cuentas compartidas con permisos de varios servicios: dificultan acotar acciones y atribuirlas.
+- Enlace: «Acotamos permisos; ahora pensemos qué otra barrera queda si una falla».
 
-Abrí con la pregunta visible y distinguí sus dos dimensiones: el alcance (qué acciones y recursos permite un permiso) y la duración (cuánto tiempo permanece habilitado). El principio aplica tanto a personas como a cuentas de servicio y componentes.
-
-Usá los ejemplos del caso: el servicio de extractos necesita leer saldos y movimientos, no modificarlos ni iniciar transferencias; un acceso de mantenimiento a la base puede ser temporal. No es una regla de «quitar permisos porque sí»: cada permiso debe responder a una tarea concreta.
-
-Pregunta para el intercambio: «Si comprometieran el servicio de extractos, ¿qué acción no debería poder ejecutar?»
-
-Transición: «El mínimo privilegio limita lo que puede hacer cada identidad; ahora veamos por qué tampoco conviene depender de una sola barrera».
-
-Fuentes: NIST SP 800-53 Rev. 5, control AC-6 (Least Privilege); OWASP, Security by Design Principles.
-https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final
-https://owasp.org/www-project-security-by-design-principles/
+Respaldo: NIST SP 800-53, AC-6; OWASP Security by Design.
 -->
 
 ---
@@ -744,18 +620,13 @@ class: flex flex-col justify-center
 <p class="mt-8 text-center">Si un control se supera, otros todavía pueden detectar el incidente o limitar su impacto.</p>
 
 <!--
-Notas para presentar:
+- Seguí una cuenta robada: puede superar la autenticación y operar con permisos válidos. Una alerta por transferencias inusuales y la posibilidad de aislar el acceso aportan funciones distintas.
+- Preguntá: «¿Qué capa detectaría o limitaría esa actividad si la primera barrera no la frenó?» Separá prevenir de detectar: un registro sirve solo si puede analizarse y hay una respuesta prevista.
+- Varias copias de una misma comprobación defectuosa no equivalen a defensas complementarias. Buscá que un fallo no anule todas las capas a la vez.
+- Una anomalía no prueba un ataque; puede requerir revisión. Ninguna combinación garantiza evitar todos los incidentes.
+- Enlace: «También hay que diseñar la respuesta cuando un control o una dependencia falla».
 
-Retomá la pregunta visible: ningún control es infalible. La defensa en profundidad combina controles distintos para prevenir un abuso, detectar actividad que logró pasar y contener sus efectos. Las funciones se complementan; no garantizan que todo incidente se evite.
-
-Recorré las tarjetas con el caso: validar la solicitud de transferencia y exigir permisos adecuados ayuda a prevenir; registrar las operaciones y alertar ante patrones inusuales, como transferencias a destinos nuevos de madrugada, permite detectar; aislar el servicio afectado y mantener permisos acotados ayuda a contener.
-
-Pregunta para el intercambio: «Si el control de acceso no detectara una cuenta comprometida, ¿qué otra capa podría detectar o limitar su actividad?»
-
-Transición: «Y si aun así ocurre un fallo, el sistema también tiene que responder de manera segura».
-
-Fuente: OWASP, Security by Design Principles. Recomienda combinar defensas en profundidad en lugar de depender de un único control.
-https://owasp.org/www-project-security-by-design-principles/
+Respaldo: OWASP Security by Design Principles.
 -->
 
 ---
@@ -775,19 +646,13 @@ class: flex flex-col justify-center
 <p class="mt-7 text-center">Fallar seguro no es apagar todo: es limitar las acciones sensibles y conservar, cuando sea posible, las funciones independientes del componente fallido.</p>
 
 <!--
-Notas para presentar:
+- Fallar seguro depende de qué garantía se perdió, no de apagar todo. Si no podemos comprobar permisos, también deben bloquearse consultas privadas, aunque sean de solo lectura; una función independiente puede continuar si conserva sus controles.
+- Preguntá: «Si falla autorización, ¿consultar movimientos sería seguro solo porque no modifica datos?» Esperado: no; está en juego la confidencialidad.
+- Si solo falla notificaciones, queremos mantener operaciones independientes y recuperar avisos pendientes. Esa independencia debe estar diseñada; no supongas que se obtiene automáticamente.
+- Recuperar exige saber qué ocurrió: ante una respuesta perdida, verificá si la transferencia se registró antes de repetirla. Un reintento no debe duplicar el pago.
+- Enlace: «Además de responder al fallo, limitemos el alcance de un compromiso».
 
-La pregunta cubre fallos de controles internos y de dependencias externas. Usá las tarjetas como decisiones de diseño: si no se puede verificar autorización, no ejecutar una transferencia; si falla el proveedor de notificaciones, la consulta de saldo y las transferencias siguen operando y las notificaciones pendientes se recuperan después; registrar el problema y restablecer el servicio con verificación.
-
-Aclaración importante: «fallar de forma segura» no significa denegar toda solicitud ni apagar el sistema ante cualquier error. La respuesta depende de los requisitos de confidencialidad, integridad y disponibilidad. Una consulta pública segura podría continuar mientras una operación que modifica datos queda bloqueada.
-
-Pregunta para el intercambio: «Si la verificación de permisos falla temporalmente, ¿qué acciones deberían detenerse y cuáles podrían continuar?»
-
-Transición: «Incluso con controles y recuperación, puede haber un compromiso. Veamos cómo limitar cuánto puede afectar».
-
-Fuentes: NIST SP 800-53 Rev. 5, control SC-24 (Fail in Known State); OWASP, Security by Design Principles.
-https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final
-https://owasp.org/www-project-security-by-design-principles/
+Respaldo: NIST SP 800-53, SC-24; OWASP Security by Design.
 -->
 
 ---
@@ -806,19 +671,13 @@ class: flex flex-col justify-center
 <p class="mt-8 text-center">Separar permisos y componentes reduce el radio de impacto (<em>blast radius</em>).</p>
 
 <!--
-Notas para presentar:
+- Contrastá diseños posibles, sin afirmar que todo compromiso se propaga. El radio de impacto describe qué recursos y funciones podría alcanzar la identidad o el componente comprometido.
+- Separar extractos y pagos en dos procesos no alcanza si comparten una credencial con permisos amplios. La separación debe sostenerse en permisos y comunicaciones, no solo en nombres o cajas del diagrama.
+- Preguntá: «¿Qué separación impediría que una cuenta de extractos iniciara pagos?» Buscá identidades distintas y restricciones efectivas sobre acciones y recursos.
+- Acotar acceso no elimina el daño: extractos todavía podría exponer los movimientos que tiene permitidos. Contener complementa prevenir y detectar.
+- Enlace: «Cambiemos de perspectiva: ¿qué intentaría alguien con estas interfaces?»
 
-Usá las tarjetas para contrastar dos diseños posibles, no como una afirmación de que todo compromiso se propaga. Con permisos amplios y componentes muy conectados, una cuenta comprometida podría alcanzar otros servicios; con permisos acotados y separación, el acceso queda limitado a lo que esa identidad necesita.
-
-Retomá el ejemplo anterior: el servicio de extractos puede consultar saldos y movimientos, pero no modificarlos ni iniciar transferencias. Separar funciones, permisos y componentes limita el alcance del incidente. El término técnico es «radio de impacto» o blast radius.
-
-Pregunta para el intercambio: «¿Qué separación de permisos o componentes reduciría el alcance de un compromiso en la app de banca?»
-
-Transición: «Limitar el impacto reduce el daño posible; ahora cambiemos de perspectiva y pensemos cómo podrían abusar del sistema».
-
-Fuentes: NIST SP 800-53 Rev. 5, controles AC-6 (Least Privilege) y SC-7 (Boundary Protection); OWASP, Security by Design Principles.
-https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final
-https://owasp.org/www-project-security-by-design-principles/
+Respaldo: NIST SP 800-53, AC-6 y SC-7; OWASP Security by Design.
 -->
 
 ---
@@ -836,18 +695,13 @@ class: flex flex-col justify-center
 <p class="mt-8 text-center text-lg">Mirar más allá del uso esperado revela requisitos que el camino feliz no muestra.</p>
 
 <!--
-Notas para presentar:
+- El intento no demuestra que haya una vulnerabilidad: cambiar el identificador debería producir rechazo si la identidad no tiene permiso. No describas el abuso como un acceso ya logrado.
+- El atacante puede usar una cuenta propia legítima; no hace falta robar credenciales para probar una autorización defectuosa.
+- Preguntá: «¿Qué condición permitiría que ese intento tuviera éxito?» Esperado: confiar en el identificador sin verificar autorización sobre la cuenta en el servidor.
+- Pensar el abuso no es acusar a todos los clientes: revela reglas que una prueba del camino feliz, consultando solo la cuenta propia, no comprueba.
+- Enlace: «Ordenemos esa búsqueda con Threat Modeling».
 
-Usá el contraste para cambiar la perspectiva: el cliente consulta los movimientos de su cuenta; alguien modifica el identificador de la solicitud para intentar acceder a movimientos ajenos. El ejemplo describe un intento, no afirma que el acceso tenga éxito: el control de autorización debería impedirlo.
-
-Aclará que pensar desde el abuso no implica desconfiar de cada usuario. Sirve para descubrir qué reglas y controles necesita el sistema, además de los que hacen funcionar el caso legítimo.
-
-Pregunta para el intercambio: «¿Qué dato o acción de la app de banca intentaría alcanzar alguien sin autorización?»
-
-Transición: «Threat Modeling es una forma estructurada de hacer esa búsqueda antes de construir».
-
-Fuente: OWASP Threat Modeling Cheat Sheet. Recomienda identificar objetivos, actores, superficies de ataque y posibles amenazas a partir de cómo funciona el sistema.
-https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
+Respaldo: OWASP Threat Modeling.
 -->
 
 ---
@@ -869,21 +723,13 @@ class: flex flex-col justify-center
 <p class="mt-8 text-center">Threat Modeling ordena esta conversación; no requiere una herramienta específica.</p>
 
 <!--
-Notas para presentar:
+- Hacé visible que ya empezamos: el alcance, los activos, el mapa y las fronteras son insumos del modelado, no una tarea previa desconectada.
+- No se termina en enumerar amenazas: necesitamos una respuesta y una comprobación. Si cambian datos, componentes o dependencias, hay que revisar supuestos y decisiones.
+- Preguntá: «¿Qué parte ya construimos y cuál nos falta completar?» Esperado: tenemos contexto; ahora exploraremos escenarios y respuestas.
+- Antes de enseñar STRIDE, dejá que el grupo produzca amenazas por intuición. Después usaremos las categorías para buscar vacíos, no para condicionar todas las respuestas desde el inicio.
+- Enlace: «Volvamos al sistema y hagamos nosotros la etapa de análisis».
 
-Retomá lo que ya construimos sobre el caso: delimitamos la app de banca, identificamos actores y datos, seguimos flujos y marcamos fronteras de confianza. Threat Modeling ordena ese contexto para explorar amenazas y decidir qué hacer.
-
-Recorré las tres etapas de izquierda a derecha. «Entender» evita analizar un sistema abstracto; «analizar» busca escenarios posibles de abuso o fallo; «responder» traduce hallazgos en requisitos, controles y pruebas. No es necesario adoptar una herramienta para empezar, y conviene revisar el análisis si cambian componentes, datos o dependencias.
-
-Antes de presentar STRIDE, hagamos nosotros la etapa de análisis: en la próxima diapositiva volvemos al sistema del caso y preguntamos qué podría salir mal. STRIDE aparece después, como ayuda para encontrar lo que nos falte, no como una lista que haya que memorizar.
-
-Pregunta para el intercambio: «¿En cuál de estas etapas ya tenemos información suficiente y cuál necesitamos completar?»
-
-Transición: «Antes de presentar STRIDE, hagamos el trabajo nosotros: volvamos al sistema y pensemos como atacantes».
-
-Fuentes: OWASP Threat Modeling Cheat Sheet; NIST SP 800-218, Secure Software Development Framework.
-https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
-https://csrc.nist.gov/pubs/sp/800/218/final
+Respaldo: OWASP Threat Modeling; NIST SSDF.
 -->
 
 ---
@@ -929,24 +775,14 @@ flowchart TB
 <p class="mt-3 text-sm">El sistema es el mismo: cambia quién lo mira y con qué intención.</p>
 
 <!--
-Notas para presentar:
+- Actividad (5–7 min). Contexto, 1 min: señalá cruces cian y activos. Este zoom incorpora un proveedor de identidad para analizar el ingreso; no es el proveedor de notificaciones del mapa anterior. Explicitá el cambio de dependencia.
+- Parejas o tríos, 2 min: «Como atacante, ¿qué intentarías? Nombrá actor, acción y objetivo». Preparan una respuesta oral, sin necesidad de escribir.
+- Pizarrón, 2–3 min: reuní 4–8 escenarios sin descartar de entrada; agrupá repetidos y conservá la lista para las próximas diapositivas. Si alguien nombra solo “phishing” o “hackear”, pedí concretar qué identidad o dato busca alcanzar.
+- Apoyos si no arrancan: credenciales robadas, identificador de cuenta cambiado, servicio saturado, proveedor suplantado. No adelantes repudio ni elevación: reservá esos lentes para revisar vacíos con STRIDE.
+- Versión corta: contexto en 30 s y 3–4 amenazas a viva voz. Si hay tiempo, pedí una condición que permita un escenario, sin confundir intento con éxito.
+- Enlace: «La lista salió de la intuición; busquemos ahora lo que pudo faltarnos».
 
-Actividad, fases 1 a 3 (entre 5 y 7 minutos con trabajo en parejas; versión corta al final de estas notas).
-
-Fase 1 — mostrar el sistema (1 minuto): volvé al mismo diagrama de siempre, ahora con nombres concretos del caso bancario. El cliente ingresa sus credenciales en la app web; la app consulta al servicio de cuentas; el servicio lee las cuentas y los saldos y valida la identidad con el proveedor de identidad. Señalá las dos flechas cian: son los cruces de la frontera de confianza. Nombrá lo que está en juego: credenciales, saldos y movimientos, disponibilidad del servicio.
-
-Fase 2 — preguntar (2 minutos): consigna para parejas o grupos de tres: «Como atacante, ¿qué intentarías con este sistema? Nombrá actor, acción y objetivo». No hace falta anotar nada: alcanza con pensar y preparar una respuesta para compartir. Si preferís participación de toda la clase, salteá las parejas y pedí respuestas directamente con las manos levantadas.
-
-Fase 3 — recolectar (2 a 3 minutos): anotá en el pizarrón entre 4 y 8 amenazas, sin corregir ni filtrar; agrupá las repetidas y dejá la lista a la vista. Respuestas probables: usar credenciales robadas para entrar como otro cliente; modificar el identificador de cuenta para ver saldos ajenos; leer movimientos de otra persona; alterar una transferencia en curso; dejar el home banking sin servicio; hacerse pasar por el proveedor de identidad. Lo habitual es que falten dos: negar una acción realizada (repudio) y obtener permisos de más (elevación). No lo digas todavía: dejalo para STRIDE.
-
-Versión corta (si falta tiempo): contá el sistema en 30 segundos, pedí 3 o 4 amenazas a viva voz de toda la clase, anotalas en el pizarrón y saltá directo a comparar con STRIDE.
-
-Pregunta para el intercambio: «¿Cuál de estas amenazas les parece más posible en la vida real, y qué condición del sistema la permitiría?"
-
-Transición: «Nuestra lista salió de la intuición. Hay lentes que ayudan a encontrar lo que la intuición no vio: veamos STRIDE».
-
-Fuente: OWASP Threat Modeling Cheat Sheet. Recomienda identificar amenazas a partir del sistema, sus actores y sus límites de confianza.
-https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
+Respaldo: OWASP Threat Modeling.
 -->
 
 ---
@@ -967,18 +803,13 @@ class: flex flex-col justify-center
 </div>
 
 <!--
-Notas para presentar:
+- Mantené la lista del pizarrón visible: las categorías son lentes de búsqueda, pueden solaparse y no ordenan gravedad.
+- Aclaraciones que no están en las tarjetas: repudio no es simplemente negar algo, sino no contar con evidencia suficiente para atribuir la acción; elevación implica obtener capacidades superiores a las asignadas, no solo usar un permiso que ya se tenía.
+- Para repudio, pedí pensar cómo vincular una transferencia con la identidad y la operación; un log sin protección o sin contexto puede ser evidencia insuficiente.
+- Preguntá: «¿Qué amenaza de nuestra lista afecta más de una propiedad?» Buscá que no fuercen una relación uno a uno entre STRIDE y confidencialidad, integridad o disponibilidad.
+- Enlace: «Usemos estas letras para revisar qué escenarios todavía no pensamos».
 
-Con la lista de amenazas del pizarrón a la vista, presentá STRIDE como una ayuda para formular escenarios, no como una lista que haya que memorizar ni como una escala de prioridad. Las categorías pueden solaparse; después hay que valorar cada escenario según el contexto y sus consecuencias.
-
-Recorré las letras con ejemplos del caso: S, alguien usa la identidad de un cliente; T, altera el importe o el destinatario de una transferencia; R, niega haber iniciado una transferencia y no hay evidencia suficiente para atribuirla; I, accede a los movimientos de otra cuenta; D, impide que clientes legítimos consulten o transfieran; E, el servicio de extractos obtiene permisos de escritura que no necesita.
-
-Pregunta para el intercambio: «¿Cuál de estas amenazas podría afectar la confidencialidad, integridad o disponibilidad del flujo que dibujamos?»
-
-Transición: «Ahora comparemos STRIDE con la lista que armamos: ¿qué lente no usamos?».
-
-Fuente: OWASP Threat Modeling Cheat Sheet. Incluye STRIDE como una de las técnicas para identificar amenazas.
-https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
+Respaldo: OWASP Threat Modeling.
 -->
 
 ---
@@ -1001,22 +832,14 @@ class: flex flex-col justify-center
 <p class="mt-7 text-center">La letra que no aparece en la lista señala una amenaza que nadie vio.</p>
 
 <!--
-Notas para presentar:
+- Actividad (1–2 min): recorré las letras y anotá cada una junto a los escenarios del pizarrón que la cubren. Un mismo escenario puede recibir más de una letra.
+- Si falta un lente, pedí un escenario concreto: para R, negar una transferencia sin evidencia atribuible; para E, obtener permisos de escritura desde extractos. No impongas que esas dos letras deban faltar.
+- Si aparecen las seis, reconocé la cobertura, pero no declares el análisis completo: cubrir categorías no prueba que encontramos todas las amenazas.
+- La ausencia de una letra invita a revisar; no demuestra por sí sola que exista una amenaza aplicable. Documentá la razón si el grupo concluye que no aplica al escenario.
+- Versión corta: «¿Qué letra no apareció y qué escenario nos hace pensar?» La prioridad se decide después, no por la letra.
+- Enlace: «Ahora decidamos qué hacemos con lo encontrado».
 
-Actividad, fase 5 (1 a 2 minutos): con la lista de amenazas del pizarrón a la vista, recorré las seis preguntas de izquierda a derecha y pedí a la clase que diga, letra por letra, si alguna amenaza anotada la cubre. Marcá las cubiertas y dejá visibles las que no; conviene apuntar la letra junto a cada amenaza de la lista.
-
-Lo más frecuente: S, T, I y D aparecen en la lista; R y E suelen faltar. Señalá justo eso: STRIDE funcionó como detector de vacíos, no como taxonomía para memorizar. Si la clase cubrió las seis letras, celebralo: su intuición fue completa y STRIDE lo confirmó.
-
-Aclará que las letras no ordenan la prioridad: son lentes de búsqueda. La gravedad se decide después, según el activo afectado y las consecuencias.
-
-Versión corta: preguntá solo «¿cuál letra no apareció en la lista?» y pasá directamente a la amenaza elegida.
-
-Pregunta para el intercambio: «¿Qué amenaza nueva aparece con la letra que faltó, y qué evidencia dejaría?»
-
-Transición: «Ya tenemos amenazas, incluso algunas que la intuición no veía. Ahora hay que decidir qué hacemos con ellas».
-
-Fuente: OWASP Threat Modeling Cheat Sheet. Presenta STRIDE como una técnica para identificar amenazas durante el modelado.
-https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
+Respaldo: OWASP Threat Modeling.
 -->
 
 ---
@@ -1037,19 +860,13 @@ class: flex flex-col justify-center
 <p class="mt-8 text-center">La categoría de amenaza, por sí sola, no determina la prioridad.</p>
 
 <!--
-Notas para presentar:
+- Tomá un escenario del pizarrón y pedí contexto antes de elegir respuesta: activos afectados, condiciones del abuso, controles actuales y consecuencias. Una etiqueta STRIDE no alcanza para priorizar.
+- Cambiar diseño y agregar controles pueden combinarse; las tarjetas no son opciones excluyentes ni un orden fijo.
+- Aceptar no significa ignorar: hace falta una decisión de quien tiene autoridad, una justificación documentada y condiciones para revisarla. Después de mitigar también puede quedar riesgo residual.
+- Preguntá: «¿Qué dato nos falta para decidir qué hacer con este escenario?» Si responden con una herramienta, volvé a la garantía que necesitan.
+- Enlace: «Elijamos una amenaza y llevémosla hasta una comprobación concreta».
 
-Retomá STRIDE: las categorías ayudan a encontrar escenarios, pero no dicen por sí solas cuál es más urgente. Para decidir, contextualizá qué activo se afecta, qué condiciones permiten el abuso, qué controles ya existen y cuáles serían las consecuencias.
-
-Recorré las tres respuestas como opciones de diseño, no como una escala fija: cambiar el diseño puede eliminar o reducir el escenario; un control puede prevenirlo, detectarlo o limitarlo; aceptar el riesgo requiere una decisión explícita y documentada. La prioridad se basa en el escenario, su posibilidad y su impacto, no en la letra de STRIDE.
-
-Pregunta para el intercambio: «¿Qué información necesitaríamos para decidir entre cambiar el diseño, agregar un control o aceptar este riesgo?»
-
-Transición: «Elijamos ahora una de las amenazas que encontramos y sigámosla hasta la prueba».
-
-Fuentes: NIST SP 800-30 Rev. 1, Guide for Conducting Risk Assessments; OWASP Threat Modeling Cheat Sheet.
-https://csrc.nist.gov/pubs/sp/800/30/r1/final
-https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
+Respaldo: NIST SP 800-30 Rev. 1; OWASP Threat Modeling.
 -->
 
 ---
@@ -1070,25 +887,14 @@ class: flex flex-col justify-center
 <p class="mt-7 text-center">Cada paso se responde con una sola oración.</p>
 
 <!--
-Notas para presentar:
+- Actividad (2 min): elegí con la clase una amenaza concreta del pizarrón y escribí una oración por paso. Preferí consulta de saldo ajeno para mantener el hilo de las próximas diapositivas.
+- Si no avanza, usá esta cadena: atacante busca el saldo ajeno → cada consulta exige autorización sobre esa cuenta → el servidor comprueba el permiso en cada solicitud → una identidad sin permiso recibe rechazo y ningún dato.
+- No aceptes “poner seguridad” como requisito ni “hacer un test” como prueba: pedí garantía y resultado observable. El requisito no elige una biblioteca; el control ubica la verificación.
+- Preguntá: «¿Cómo sabemos que rechazó el servidor y no solo la pantalla?» Esperado: invocar directamente la API con una identidad autenticada y una cuenta ajena.
+- Versión corta (1 min): proponé la amenaza y pedí al grupo solo el requisito. Conservá la cadena a la vista para formalizarla después.
+- Enlace: «Escribamos el intento como historia de abuso: actor, acción y objetivo».
 
-Actividad, fase 6 (2 minutos): pedí a la clase que elija una amenaza de la lista del pizarrón —preferí una concreta, como consultar el saldo de otra cuenta— y completá la cadena en voz alta con participación del público, escribiendo cada respuesta junto a su paso.
-
-Recorré las preguntas: la amenaza se escribe como actor, acción y objetivo; el requisito dice qué debe garantizar siempre el sistema, sin elegir todavía una tecnología; el control dice dónde y quién verifica —en el servidor, en cada solicitud—; la prueba describe el resultado esperado cuando alguien sin permiso lo intenta.
-
-Ejemplo completo ya armado, por si la clase no avanza: amenaza «como atacante, quiero consultar el saldo de otra cuenta para obtener información ajena»; requisito «en cada consulta, el sistema verifica que la identidad autenticada esté autorizada para esa cuenta»; control «el servidor valida el permiso sobre la cuenta solicitada en cada solicitud»; prueba «una identidad autenticada pide el saldo de una cuenta ajena y recibe un rechazo, sin datos».
-
-Las próximas diapositivas muestran esta misma cadena en su versión formal: la historia de abuso, el requisito y, más adelante, la prueba con el ejemplo del saldo.
-
-Versión corta: elegí vos la amenaza del saldo y completá la cadena en un minuto, pidiendo al público solo la respuesta del requisito.
-
-Pregunta para el intercambio: «¿Qué prueba agregarían para saber que el rechazo salió del servidor y no solo de la app?»
-
-Transición: «Escribamos ahora esa amenaza como una historia de abuso, con la misma estructura de las historias de usuario».
-
-Fuentes: OWASP Threat Modeling Cheat Sheet; NIST SP 800-218, Secure Software Development Framework.
-https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
-https://csrc.nist.gov/pubs/sp/800/218/final
+Respaldo: OWASP Threat Modeling; NIST SSDF.
 -->
 
 ---
@@ -1107,18 +913,13 @@ class: flex flex-col justify-center
 <p class="mt-8 text-center">Escribir el abuso revela requisitos que el camino esperado no muestra.</p>
 
 <!--
-Notas para presentar:
+- Formalizá el escenario elegido, sin volver a leer ambas historias. El objetivo explica qué valor busca obtener quien intenta el abuso; la acción debe ser concreta para derivar una regla.
+- “Atacante” describe el rol en este escenario: puede ser un cliente con una cuenta propia. El intento no afirma que el sistema permita acceder a información ajena.
+- Preguntá: «¿Qué regla faltaría en una historia que solo dice consultar movimientos?» Esperado: precisar sobre qué cuentas está autorizada la identidad, no solo exigir que haya iniciado sesión.
+- La historia de abuso abre la conversación; todavía no sustituye requisitos detallados ni casos de prueba.
+- Enlace: «Convirtamos esa condición en una garantía comprobable».
 
-Explicá la estructura común de ambas historias: actor («como»), acción («quiero») y objetivo («para»). La historia de abuso, llamada también Evil User Story, usa esa estructura para expresar una acción no autorizada y el beneficio que buscaría quien la intenta.
-
-Aclará que es un escenario posible, no una afirmación de que el sistema permita consultar datos de otras cuentas. El objetivo es hacer visible una condición que debe impedirse. La diapositiva anterior planteó el intento; ahora lo expresamos como una historia para pasar al requisito.
-
-Pregunta para el intercambio: «¿Qué regla debería cumplir el sistema para impedir esta historia de abuso?»
-
-Transición: «Convirtamos esa condición en un requisito de seguridad que podamos comprobar».
-
-Fuente: OWASP Threat Modeling Cheat Sheet. Recomienda identificar actores, objetivos, activos y amenazas como parte del análisis.
-https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
+Respaldo: OWASP Threat Modeling.
 -->
 
 ---
@@ -1136,18 +937,13 @@ class: flex flex-col justify-center
 <p class="mt-8 text-center">El requisito define qué debe garantizarse, no cómo implementarlo.</p>
 
 <!--
-Notas para presentar:
+- Subrayá “cada consulta” y “para esa cuenta”: autenticarse no concede acceso a todos los recursos. El identificador enviado por el cliente selecciona un recurso, no demuestra permiso.
+- Requisito y control responden preguntas distintas: qué garantía necesitamos frente a cómo y dónde la hacemos efectiva. No elijas todavía una tecnología ni aceptes un botón oculto como protección.
+- Preguntá: «¿Qué prueba distinguiría autenticación de autorización?» Una identidad válida solicita una cuenta sin permiso: debe recibir rechazo sin saldo ni movimientos.
+- Sumá luego el caso permitido: la identidad autorizada sí obtiene sus datos. Denegar todo no demuestra que el servicio cumpla su propósito.
+- Enlace: «Acordemos esta garantía desde la planificación, no cuando la función ya está terminada».
 
-Retomá la historia de abuso y señalá cómo se convierte en un requisito verificable. La aplicación debe comprobar, en cada solicitud, que la identidad autenticada tiene permiso sobre la cuenta solicitada; no alcanza con confiar en el identificador enviado por el cliente.
-
-Diferenciá el requisito del control: el requisito expresa qué garantía necesita el sistema; el control describe cómo se implementa. Todavía no elegimos una biblioteca ni una tecnología.
-
-Pregunta para el intercambio: «¿Qué caso de prueba comprobaría que el requisito se cumple?»
-
-Transición: «Para que este requisito no aparezca tarde, integremos seguridad desde las historias y el diseño».
-
-Fuente: OWASP Authorization Cheat Sheet. Recomienda verificar autorización en cada solicitud y no confiar en controles del lado del cliente.
-https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html
+Respaldo: OWASP Authorization Cheat Sheet.
 -->
 
 ---
@@ -1167,18 +963,13 @@ class: flex flex-col justify-center
 <p class="mt-7 text-center">Requisitos, arquitectura y controles se deciden antes de implementar.</p>
 
 <!--
-Notas para presentar:
+- Las tres historias permiten discutir función, abuso y protección en la misma planificación. No son tres documentos obligatorios ni reemplazan criterios de aceptación y pruebas.
+- Convertí “queremos verificar permisos” en una condición de entrega: toda consulta debe comprobar autorización sobre la cuenta solicitada. Un objetivo del equipo todavía necesita una garantía verificable.
+- Preguntá: «¿Qué necesitamos acordar antes de elegir la biblioteca de acceso?» Buscá quién puede consultar qué y cómo reconoceremos un rechazo correcto.
+- Integrar temprano no congela el diseño: si cambian requisitos o dependencias, revisamos confianza y controles. Evitá leer “antes de implementar” como una secuencia irreversible.
+- Enlace: «Conectemos el escenario con el control y la prueba que lo verifica».
 
-Usá las tres historias para mostrar cómo incorporar seguridad desde la planificación: definir qué necesita hacer la persona, qué abuso se quiere impedir y qué garantía debe ofrecer el sistema. No son sustitutos de requisitos detallados ni de pruebas; son una forma de traer la seguridad a la conversación temprana.
-
-Además de las historias, en arquitectura se eligen tecnologías, modelos de confianza y controles de acceso. Estas decisiones se pueden revisar durante el ciclo si cambian los requisitos, las dependencias o el entorno.
-
-Pregunta para el intercambio: «¿Qué requisito de seguridad conviene acordar antes de elegir cómo implementar esta función?»
-
-Transición: «Sigamos un mismo escenario desde la amenaza hasta la prueba que verifica la respuesta».
-
-Fuente: NIST SP 800-218, Secure Software Development Framework (SSDF). Recomienda integrar prácticas de desarrollo seguro en cada implementación del ciclo de vida.
-https://csrc.nist.gov/pubs/sp/800/218/final
+Respaldo: NIST SSDF, SP 800-218.
 -->
 
 ---
@@ -1197,18 +988,13 @@ class: flex flex-col justify-center
 <p class="mt-8 text-center">La trazabilidad conecta el escenario con una garantía y una comprobación.</p>
 
 <!--
-Notas para presentar:
+- Compará la cadena con la que quedó en el pizarrón, en vez de leer cuatro definiciones. Buscá saltos: un requisito sin prueba queda sin comprobar; una prueba debe poder explicar qué garantía verifica.
+- Preguntá: «¿Alcanza con ver un mensaje de rechazo en la app?» No: verificá la respuesta del servidor y que no incluya saldo ni movimientos; el dato podría haberse enviado aunque la pantalla lo oculte.
+- Un caso negativo no demuestra “cada consulta”: también hay que revisar otras rutas y métodos que acceden al mismo recurso. Sumá un caso autorizado para evitar validar un servicio que rechaza todo.
+- La trazabilidad conserva la razón del control aunque cambie su implementación; facilita revisar qué pruebas deben actualizarse.
+- Enlace: «La garantía se debe sostener en el resto del ciclo, no solo en este test».
 
-Recorré la cadena usando el mismo ejemplo de autorización: es la versión formal y completa de la derivación que hicimos con la actividad a partir de la amenaza elegida. La amenaza describe el intento; el requisito define qué debe garantizarse; el control implementa la verificación en el servidor; la prueba comprueba que una identidad sin permiso no obtiene el saldo ni los movimientos.
-
-Señalá que la trazabilidad ayuda a detectar vacíos: un requisito sin prueba puede quedar sin verificar; una prueba sin requisito quizá no responda a una necesidad identificada. La implementación concreta puede variar, pero el escenario debe seguir conectado con la comprobación.
-
-Pregunta para el intercambio: «¿Qué evidencia mostraría que la prueba realmente cubre el requisito?»
-
-Transición: «Este recorrido funciona mejor cuando la seguridad está integrada en todas las etapas del ciclo».
-
-Fuente: NIST SP 800-218, Secure Software Development Framework.
-https://csrc.nist.gov/pubs/sp/800/218/final
+Respaldo: NIST SSDF; OWASP Authorization.
 -->
 
 ---
@@ -1231,20 +1017,13 @@ class: flex flex-col justify-center
 <p class="mt-8 text-center">A este enfoque se lo llama SSDLC: la seguridad acompaña todo el ciclo de vida.</p>
 
 <!--
-Notas para presentar:
+- Seguí una sola garantía: verificar autorización. Puede estar bien diseñada y aun así omitirse en una nueva ruta, perderse al construir el artefacto o debilitarse con permisos de despliegue excesivos.
+- Preguntá: «¿En qué etapa podría romperse esa decisión sin cambiar el requisito?» Pedí el mecanismo concreto, no un nombre de etapa; no hay una respuesta universal.
+- SSDLC significa Secure Software Development Lifecycle. Es seguridad integrada al ciclo, no una herramienta ni una secuencia que se ejecuta una sola vez.
+- No repases las seis tarjetas ni adelantes automatización: hoy interesa que cada etapa puede sostener o debilitar la propiedad; la próxima clase trabajará cómo verificarla.
+- Enlace: «Y el sistema sobre el que verificamos esas reglas sigue cambiando».
 
-Retomá la cadena que acabamos de construir: la amenaza de consultar movimientos ajenos se convirtió en un requisito, el requisito en un control y el control en una prueba. Esas son las propiedades que el sistema debe preservar.
-
-Ahora señalá que el diseño no las garantiza por sí solo. Cada etapa del ciclo —requisitos, diseño, código y construcción, pruebas, despliegue y operación— puede reforzarlas o debilitarlas. A este enfoque se lo llama SSDLC (Secure Software Development Lifecycle): la seguridad acompaña todo el ciclo, no es una revisión final.
-
-No entres todavía en herramientas ni en cómo se automatiza cada etapa; eso es el tema de la próxima clase.
-
-Pregunta para el intercambio: «¿En qué etapa creen que es más fácil romper una decisión de seguridad sin darse cuenta?»
-
-Transición: «Y hay algo que vuelve esto más difícil: el software no queda quieto».
-
-Fuente: NIST SP 800-218, Secure Software Development Framework (SSDF).
-https://csrc.nist.gov/pubs/sp/800/218/final
+Respaldo: NIST SSDF, SP 800-218.
 -->
 
 ---
@@ -1265,18 +1044,13 @@ class: flex flex-col justify-center
 <p class="mt-8 text-center">Cada cambio puede alterar lo que el sistema permite hacer.</p>
 
 <!--
-Notas para presentar:
+- Volvé a extractos: un permiso de despliegue más amplio puede darle escritura sin tocar su lógica. Una actualización de dependencia o una variable de configuración también puede alterar supuestos.
+- No afirmes que todo cambio rompe seguridad. Una verificación anterior aporta evidencia sobre una versión y un contexto; no garantiza automáticamente el estado actual.
+- Incluso sin cambios propios, descubrir una vulnerabilidad en una biblioteca modifica lo que sabemos y obliga a revisar la evaluación.
+- Preguntá: «¿Qué cambio reciente podría haber alterado una regla de acceso en un sistema que conocen?» Pedí conectar cambio, garantía y comprobación necesaria.
+- Enlace: «¿Cómo verificamos esas garantías mientras el sistema evoluciona?»
 
-Volvé a la app de banca. Una actualización de librería, un permiso que cambia, una variable de configuración o un servicio que se mueve a la nube pueden modificar el comportamiento sin que nadie toque la lógica de autorización que diseñamos.
-
-La idea no es que todo cambio sea peligroso, sino que el sistema que verificamos ayer no es exactamente el sistema que corre hoy. Las propiedades que diseñamos siguen siendo válidas solo si algo las vuelve a comprobar sobre el sistema actual.
-
-Pregunta para el intercambio: «¿Qué cambio reciente en un sistema que conozcan podría haber alterado una decisión de seguridad?»
-
-Transición: «Entonces la pregunta ya no es solo cómo diseñamos seguridad, sino cómo la verificamos mientras todo cambia».
-
-Fuente: NIST SP 800-218, Secure Software Development Framework.
-https://csrc.nist.gov/pubs/sp/800/218/final
+Respaldo: NIST SSDF, SP 800-218.
 -->
 
 ---
@@ -1290,14 +1064,10 @@ class: flex flex-col justify-center
 <section class="mt-8 card-strong px-6 py-5 text-center"><strong>En la próxima clase</strong><br />Shift Left or get hacked: verificar la seguridad a medida que cambian el código, las dependencias, la infraestructura y la configuración.</section>
 
 <!--
-Notas para presentar:
+- Cerrá con el hilo del caso, no con otra lista de términos: el valor de los movimientos llevó a explorar una consulta ajena, exigir autorización y definir una prueba de rechazo sin datos.
+- Lo importante que nos llevamos es una decisión justificada y comprobable, no haber memorizado STRIDE ni elegido herramientas.
+- Dejá abierta la pregunta visible: verificar una vez no basta para sostener la evidencia cuando cambian el sistema o sus dependencias.
+- No adelantes productos ni respondas cómo automatizarlo. La clase 2 retoma esa tensión: conservar las garantías mientras el software evoluciona.
 
-Cerrá la clase dejando la pregunta abierta. Diseñamos las propiedades que el sistema debe preservar: entendimos los activos, modelamos el sistema, definimos fronteras de confianza, anticipamos amenazas con STRIDE, las convertimos en requisitos y elegimos controles que se pueden probar.
-
-El software cambia, y con él cambian el código, las dependencias, la configuración y la infraestructura. La verificación no puede depender de una revisión puntual.
-
-No respondas la pregunta ni adelantes herramientas: la próxima clase, «Shift Left or get hacked», se ocupa de cómo verificar esas propiedades de forma continua a medida que el software evoluciona.
-
-Fuente: NIST SP 800-218, Secure Software Development Framework (SSDF).
-https://csrc.nist.gov/pubs/sp/800/218/final
+Respaldo: NIST SSDF, SP 800-218.
 -->

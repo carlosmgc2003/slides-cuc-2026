@@ -34,13 +34,16 @@ Guía viva para escribir y revisar las notas de exposición de la clase. Se ajus
 - Al presentar estadísticas, indicar año, población o sector y tipo de métrica; aclarar en las notas los límites del conjunto de datos.
 - Al pasar de una industria a un panorama general, usar datos transversales y separar técnicas observadas de prevalencias sectoriales; no trasladar automáticamente una frecuencia a cada organización.
 - Para explicar el impacto, priorizar consecuencias documentadas de casos reales; indicar fuente, fecha, alcance y si las cifras son estimaciones, y conectar el efecto técnico con personas, operaciones o servicios.
-- Respaldar afirmaciones técnicas con fuentes fiables y dejar los enlaces y matices en las notas.
+- Respaldar afirmaciones técnicas con fuentes fiables; conservar los matices imprescindibles y referencias breves en las notas, y los enlaces completos en el guion ampliado.
 
 ## Notas y diapositivas
 
 - Mantener cada diapositiva enfocada en una idea principal y usar texto visible breve.
 - Al profundizar cuatro dimensiones equivalentes con ejemplos técnicos, organizarlas en una matriz 2×2 y equilibrar el número y nivel de concreción de los ejemplos por sector.
-- Usar las notas para desarrollar el razonamiento, proponer preguntas al público, aportar un ejemplo, precisar límites y cerrar con una transición.
+- En la clase 1, limitar cada nota a **1.279 caracteres**, incluidos espacios y saltos de línea; es un techo, no una longitud objetivo. Dejar margen y evitar demasiados párrafos, porque el ajuste visual también depende de los saltos y del ancho del panel.
+- Omitir encabezados redundantes como «Notas para presentar» y no repetir definiciones, tarjetas o listas ya visibles.
+- Priorizar lo que la diapositiva deja implícito: razonamiento, ejemplos concretos, distinciones, límites y ayudas para conducir la actividad. Conservar solo las preguntas útiles y una transición breve.
+- Mantener el desarrollo extenso y los enlaces de la clase 1 en `guion-clase-1.md`; las notas en pantalla son una ayuda de exposición, no el texto completo del guion.
 - Cuando haya un diagrama, indicar qué aspecto señalar y qué debería observar el público.
 - Acompañar diagramas de componentes con ejemplos concretos de cada categoría cuando las etiquetas puedan resultar abstractas.
-- Incluir en las notas las fuentes que sustentan datos, definiciones o afirmaciones discutibles.
+- Identificar brevemente en las notas las fuentes que sustentan datos, definiciones o afirmaciones discutibles; no gastar el espacio de exposición en URLs largas si están disponibles en el guion.
