@@ -1,0 +1,325 @@
+:root {
+  --bg: #0b100e;
+  --surface: #151e1a;
+  --cyan: #3ec8d8;
+  --neon: #5cff8a;
+  --alert: #ff5a3a;
+  --text: #e7e9e6;
+  --muted: #9aa39c;
+  --sans: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--sans);
+  color: var(--text);
+  background:
+    radial-gradient(ellipse at 12% -10%, color-mix(in srgb, var(--cyan) 16%, transparent), transparent 46%),
+    radial-gradient(ellipse at 100% 120%, color-mix(in srgb, var(--neon) 8%, transparent), transparent 42%),
+    linear-gradient(165deg, #101814 0%, var(--bg) 48%, #080c0b 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(62, 200, 216, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(62, 200, 216, 0.045) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse at 50% 18%, #000 12%, transparent 72%);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(90deg, var(--cyan) 0%, color-mix(in srgb, var(--cyan) 20%, transparent) 48%, var(--neon) 100%);
+}
+
+.frame {
+  position: relative;
+  width: min(920px, calc(100% - 2.5rem));
+  margin: 0 auto;
+  padding: 1.75rem 0 2.5rem;
+}
+
+.top,
+.foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--text) 55%, transparent);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--neon);
+}
+
+.status i {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--neon);
+  box-shadow: 0 0 10px var(--neon);
+}
+
+main {
+  padding: 4.5rem 0 3.5rem;
+}
+
+.kicker {
+  margin: 0 0 0.85rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+h1,
+h2 {
+  font-family: var(--mono);
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 1.15;
+}
+
+h1 {
+  margin: 0;
+  max-width: 14ch;
+  font-size: clamp(2.1rem, 6vw, 3.4rem);
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 28px color-mix(in srgb, var(--cyan) 28%, transparent);
+}
+
+.lead {
+  max-width: 38rem;
+  margin: 1.1rem 0 0;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--text) 88%, var(--muted));
+}
+
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem 0.7rem;
+  margin: 1.6rem 0 0;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.flow span {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--text) 22%, transparent);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+}
+
+.flow .arrow {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+}
+
+.flow .here {
+  color: var(--bg);
+  background: var(--cyan);
+  border-color: var(--cyan);
+  font-weight: 600;
+}
+
+.decks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 2.25rem;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  min-height: 100%;
+  padding: 1.2rem 1.25rem 1.15rem;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 6px;
+  border: 1px solid color-mix(in srgb, var(--cyan) 38%, transparent);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.35),
+    0 12px 28px rgba(0, 0, 0, 0.28);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.card-neon {
+  border-color: color-mix(in srgb, var(--neon) 42%, transparent);
+}
+
+.idx,
+.path,
+.go {
+  font-family: var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.idx {
+  font-size: 0.72rem;
+  color: var(--cyan);
+}
+
+.card-neon .idx,
+.card-neon .go {
+  color: var(--neon);
+}
+
+h2 {
+  margin: 0.15rem 0 0;
+  font-size: 1.02rem;
+  letter-spacing: 0.04em;
+}
+
+.card p {
+  margin: 0;
+  color: color-mix(in srgb, var(--text) 86%, var(--muted));
+  line-height: 1.45;
+}
+
+.path {
+  margin-top: auto;
+  font-size: 0.68rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+.go {
+  margin-top: 0.85rem;
+  font-size: 0.68rem;
+}
+
+.card:hover {
+  border-color: var(--cyan);
+  background: color-mix(in srgb, var(--surface) 92%, var(--cyan));
+}
+
+.card-neon:hover {
+  border-color: var(--neon);
+  background: color-mix(in srgb, var(--surface) 92%, var(--neon));
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+.card-neon:focus-visible {
+  outline-color: var(--neon);
+}
+
+.foot {
+  border-top: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+  padding-top: 1rem;
+}
+
+.miss h1 {
+  max-width: 16ch;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-top: 1.75rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.actions a {
+  color: var(--cyan);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--cyan) 45%, transparent);
+}
+
+.actions a:hover,
+.actions a:focus-visible {
+  color: var(--text);
+  border-bottom-color: var(--neon);
+}
+
+@media (max-width: 720px) {
+  .decks {
+    grid-template-columns: 1fr;
+  }
+
+  main {
+    padding: 3rem 0 2.5rem;
+  }
+
+  .top,
+  .foot {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  h1 {
+    text-shadow: none;
+  }
+
+  .status i {
+    box-shadow: none;
+  }
+}

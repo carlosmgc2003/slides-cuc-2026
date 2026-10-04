@@ -22,11 +22,19 @@ npm run dev:clase-2
 ## Build y exportación
 
 ```sh
-npm run build                 # compila ambas clases
+npm run build                 # índice + ambas clases, listo para Pages
 npm run build:clase-1
 npm run build:clase-2
 npm run export:clase-1        # genera PDF
 npm run export:clase-2
 ```
+
+`npm run build` deja el sitio en `dist/`: un índice y cada deck en `dist/clase-1/` y `dist/clase-2/`. Para previsualizarlo, `BASE_PATH=/slides-cuc-2026 npm run build` usa la misma base que GitHub Pages.
+
+## Publicación
+
+En cada push a `master`, [`.github/workflows/pages.yml`](./.github/workflows/pages.yml) construye el sitio y lo publica en GitHub Pages. En el repositorio hay que elegir **GitHub Actions** como origen: Settings → Pages → Build and deployment.
+
+El sitio queda en `https://carlosmgc2003.github.io/slides-cuc-2026/`. La raíz es un índice con el tema del deck; las clases están en `/clase-1/` y `/clase-2/`.
 
 Cada slide está separado por `---`. Las notas para quien presenta pueden agregarse como comentarios HTML dentro del slide. El detalle de estándares y conceptos avanzados se mantiene fuera del recorrido principal para no sobrecargar el nivel introductorio.

@@ -8,7 +8,7 @@
     "dev:clase-2": "slidev slides-clase-2.md",
     "start": "slidev slides-clase-1.md --host 0.0.0.0",
     "start:clase-2": "slidev slides-clase-2.md --host 0.0.0.0",
-    "build": "slidev build slides-clase-1.md && slidev build slides-clase-2.md",
+    "build": "node scripts/build-site.mjs",
     "build:clase-1": "slidev build slides-clase-1.md",
     "build:clase-2": "slidev build slides-clase-2.md",
     "export:clase-1": "slidev export slides-clase-1.md",
