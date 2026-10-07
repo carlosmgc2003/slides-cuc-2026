@@ -5,8 +5,9 @@
 > **Cómo usar este guion.** Acompaña a `slides-clase-1.md` y sigue el orden de las diapositivas.
 > Cada sección corresponde a una diapositiva y conserva el desarrollo ampliado de referencia:
 > qué decir, qué señalar, la pregunta para el intercambio, la transición y las fuentes.
-> Para exponer, usá las notas revisadas de `slides-clase-1.md`: son ayudas breves de hasta
-> 1.279 caracteres, no una copia de este texto. Los enlaces completos se consultan aquí.
+> Para exponer, usá las notas revisadas de `slides-clase-1.md`: son parlamentos en primera persona,
+> listos para leer en voz alta, de hasta 2.558 caracteres por diapositiva. Amplían la exposición
+> sin copiar todo este texto. Los enlaces completos se consultan aquí.
 > Las etiquetas en negrita (**Transición**, **Pregunta para el intercambio**, **Fuentes**) son
 > señales para quien expone, no texto para leer en voz alta.
 
