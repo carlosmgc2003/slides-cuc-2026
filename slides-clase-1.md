@@ -46,12 +46,30 @@ Una debilidad en un sistema, sus procedimientos, controles o implementación que
 <div class="mt-6 text-sm font-semibold">Puede estar en cualquier artefacto del SDLC:</div>
 
 <div class="mt-3 grid grid-cols-3 gap-3 text-center text-sm" role="img" aria-label="Artefactos del ciclo de vida del software que pueden contener vulnerabilidades: requisitos, diseño, código y dependencias, build y release, configuración e infraestructura, software en operación">
-  <div class="card px-3 py-4">Requisitos e historias</div>
-  <div class="card px-3 py-4">Diseño y arquitectura</div>
-  <div class="card px-3 py-4">Código y dependencias</div>
-  <div class="card px-3 py-4">Scripts, pipeline y build</div>
-  <div class="card px-3 py-4">Configuración e infraestructura</div>
-  <div class="card px-3 py-4">Software en operación</div>
+  <div class="card flex flex-col items-center gap-2 px-3 py-4">
+    <carbon-document class="text-2xl text-cyber-cyan" />
+    <span>Requisitos e historias</span>
+  </div>
+  <div class="card flex flex-col items-center gap-2 px-3 py-4">
+    <carbon-flow class="text-2xl text-cyber-cyan" />
+    <span>Diseño y arquitectura</span>
+  </div>
+  <div class="card flex flex-col items-center gap-2 px-3 py-4">
+    <carbon-code class="text-2xl text-cyber-cyan" />
+    <span>Código y dependencias</span>
+  </div>
+  <div class="card flex flex-col items-center gap-2 px-3 py-4">
+    <carbon-terminal class="text-2xl text-cyber-cyan" />
+    <span>Scripts, pipeline y build</span>
+  </div>
+  <div class="card flex flex-col items-center gap-2 px-3 py-4">
+    <carbon-settings class="text-2xl text-cyber-cyan" />
+    <span>Configuración e infraestructura</span>
+  </div>
+  <div class="card flex flex-col items-center gap-2 px-3 py-4">
+    <carbon-cloud class="text-2xl text-cyber-cyan" />
+    <span>Software en operación</span>
+  </div>
 </div>
 
 <p class="mt-4 text-center text-sm opacity-70">Una vulnerabilidad no está limitada al código fuente.</p>
@@ -73,9 +91,9 @@ Respaldo: NIST (vulnerabilidad, SSDF y DevSecOps); CISA KEV.
 <p class="mt-4 text-lg">Un mismo sistema nos acompañará toda la clase: autenticarse, consultar y transferir.</p>
 
 <div class="mt-6 grid grid-cols-3 gap-4 text-center" role="img" aria-label="Tres viajes del cliente en la app de banca: autenticarse, consultar saldo y movimientos, iniciar una transferencia">
-  <section class="card px-4 py-6"><strong>Autenticarse</strong><p class="mt-2 text-sm">El cliente ingresa con su cuenta y verifica su identidad.</p></section>
-  <section class="card px-4 py-6"><strong>Consultar</strong><p class="mt-2 text-sm">Mira el saldo y los movimientos de su cuenta.</p></section>
-  <section class="card px-4 py-6"><strong>Transferir</strong><p class="mt-2 text-sm">Inicia una transferencia a otra cuenta.</p></section>
+  <section class="card flex flex-col items-center px-4 py-5"><carbon-user-identification class="text-3xl text-cyber-cyan" /><strong class="mt-2">Autenticarse</strong><p class="mt-2 text-sm">El cliente ingresa con su cuenta y verifica su identidad.</p></section>
+  <section class="card flex flex-col items-center px-4 py-5"><carbon-view class="text-3xl text-cyber-cyan" /><strong class="mt-2">Consultar</strong><p class="mt-2 text-sm">Mira el saldo y los movimientos de su cuenta.</p></section>
+  <section class="card flex flex-col items-center px-4 py-5"><carbon-send-alt class="text-3xl text-cyber-cyan" /><strong class="mt-2">Transferir</strong><p class="mt-2 text-sm">Inicia una transferencia a otra cuenta.</p></section>
 </div>
 
 <p class="mt-5 text-center text-sm opacity-70">Detrás de la app hay servicios, una base de datos y un proveedor externo de notificaciones.</p>
@@ -94,19 +112,33 @@ Respaldo: NIST (vulnerabilidad, SSDF y DevSecOps); CISA KEV.
 **Activo:** algo que tiene valor para una persona u organización.
 **En la app de banca:** los datos de clientes, el registro de movimientos y la disponibilidad del servicio.
 
-<div class="mt-5 grid grid-cols-3 gap-3 text-center text-sm">
-  <section class="card px-4 py-4" aria-label="Confidencialidad">
-    <strong>Confidencialidad</strong>
-    <p class="mt-2">El saldo y los movimientos solo son visibles para el titular de la cuenta.</p>
-  </section>
-  <section class="card px-4 py-4" aria-label="Integridad">
-    <strong>Integridad</strong>
-    <p class="mt-2">El importe y el destinatario de una transferencia permanecen correctos.</p>
-  </section>
-  <section class="card px-4 py-4" aria-label="Disponibilidad">
-    <strong>Disponibilidad</strong>
-    <p class="mt-2">La app responde cuando el cliente necesita hacer una transferencia.</p>
-  </section>
+<div class="mt-4 grid grid-cols-[auto_1fr] items-center gap-6">
+  <svg viewBox="0 0 460 350" class="mx-auto h-64" role="img" aria-label="Tríada CIA: confidencialidad, integridad y disponibilidad como propiedades que sostienen el valor de los activos">
+    <polygon points="230,80 50,300 410,300" fill="none" stroke="#3EC8D8" stroke-width="2" opacity="0.7" />
+    <circle cx="230" cy="80" r="15" fill="#3EC8D8" />
+    <text x="230" y="86" text-anchor="middle" fill="#0B100E" style="font-size: 20px; font-weight: 700">C</text>
+    <text x="230" y="52" text-anchor="middle" fill="#E7E9E6" style="font-size: 22px; font-weight: 600">Confidencialidad</text>
+    <circle cx="50" cy="300" r="15" fill="#3EC8D8" />
+    <text x="50" y="306" text-anchor="middle" fill="#0B100E" style="font-size: 20px; font-weight: 700">I</text>
+    <text x="20" y="336" text-anchor="start" fill="#E7E9E6" style="font-size: 22px; font-weight: 600">Integridad</text>
+    <circle cx="410" cy="300" r="15" fill="#3EC8D8" />
+    <text x="410" y="306" text-anchor="middle" fill="#0B100E" style="font-size: 20px; font-weight: 700">A</text>
+    <text x="440" y="336" text-anchor="end" fill="#E7E9E6" style="font-size: 22px; font-weight: 600">Disponibilidad</text>
+  </svg>
+  <div class="grid gap-3 text-sm">
+    <section class="card px-4 py-3" aria-label="Confidencialidad">
+      <strong>Confidencialidad</strong>
+      <p class="mt-1">El saldo y los movimientos solo son visibles para el titular de la cuenta.</p>
+    </section>
+    <section class="card px-4 py-3" aria-label="Integridad">
+      <strong>Integridad</strong>
+      <p class="mt-1">El importe y el destinatario de una transferencia permanecen correctos.</p>
+    </section>
+    <section class="card px-4 py-3" aria-label="Disponibilidad">
+      <strong>Disponibilidad</strong>
+      <p class="mt-1">La app responde cuando el cliente necesita hacer una transferencia.</p>
+    </section>
+  </div>
 </div>
 
 <p class="mt-5 text-center text-sm opacity-70">Primero identificamos el valor y las propiedades que lo sostienen; después, qué podría ponerlo en riesgo.</p>
@@ -205,14 +237,42 @@ Fuentes: Verizon DBIR 2026; NAO (NHS); GAO (Colonial); NIST SP 800-30. Enlaces e
 Una amenaza es un escenario con potencial de daño. El riesgo valora si ese escenario puede concretarse en **este** sistema y cuánto afectaría.
 
 <div class="mt-4 grid grid-cols-3 gap-3 text-center text-sm" role="img" aria-label="Tres piezas: la amenaza define el escenario; la vulnerabilidad y la exposición deciden si puede concretarse; los controles reducen probabilidad e impacto">
-  <section class="card px-3 py-4"><strong>Amenaza</strong><p class="mt-2">El escenario: qué podría pasar y quién o qué podría provocarlo.</p></section>
-  <section class="card px-3 py-4"><strong>Vulnerabilidad y exposición</strong><p class="mt-2">Deciden si el escenario puede concretarse: una debilidad y un punto de contacto que la alcance.</p></section>
-  <section class="card px-3 py-4"><strong>Controles</strong><p class="mt-2">Reducen la probabilidad de que ocurra, el impacto si ocurre, o ambos.</p></section>
+  <section class="card px-3 py-3"><strong>Amenaza</strong><p style="margin: 0.5rem 0 0">El escenario: qué podría pasar y quién o qué podría provocarlo.</p></section>
+  <section class="card px-3 py-3"><strong>Vulnerabilidad y exposición</strong><p style="margin: 0.5rem 0 0">Deciden si el escenario puede concretarse: una debilidad y un punto de contacto que la alcance.</p></section>
+  <section class="card px-3 py-3"><strong>Controles</strong><p style="margin: 0.5rem 0 0">Reducen la probabilidad de que ocurra, el impacto si ocurre, o ambos.</p></section>
 </div>
 
-<div class="mt-4 card px-4 py-4 text-center" role="img" aria-label="Aproximación simple del riesgo: combina probabilidad e impacto">
-  <strong>Riesgo ≈ probabilidad × impacto</strong>
-  <p class="mt-1 text-sm">¿Qué tan probable es aquí, y cuánto afectaría? Una aproximación para ordenar la conversación, no una fórmula.</p>
+<div class="mt-4 card grid grid-cols-[auto_1fr] items-center gap-5 px-4 py-3">
+  <svg viewBox="0 0 340 230" class="h-40" role="img" aria-label="Matriz de riesgo: el mismo escenario cae en probabilidad e impacto altos sin controles (A) y se desplaza a valores bajos con controles (B)">
+    <rect x="50" y="16" width="76" height="53" fill="#B58A2B" opacity="0.45" />
+    <rect x="126" y="16" width="76" height="53" fill="#C2622B" opacity="0.5" />
+    <rect x="202" y="16" width="76" height="53" fill="#FF5A3A" opacity="0.55" />
+    <rect x="50" y="69" width="76" height="53" fill="#1F7A4D" opacity="0.4" />
+    <rect x="126" y="69" width="76" height="53" fill="#B58A2B" opacity="0.45" />
+    <rect x="202" y="69" width="76" height="53" fill="#C2622B" opacity="0.5" />
+    <rect x="50" y="122" width="76" height="53" fill="#1F7A4D" opacity="0.3" />
+    <rect x="126" y="122" width="76" height="53" fill="#1F7A4D" opacity="0.4" />
+    <rect x="202" y="122" width="76" height="53" fill="#B58A2B" opacity="0.45" />
+    <g stroke="#E7E9E6" stroke-opacity="0.15" stroke-width="1">
+      <line x1="126" y1="16" x2="126" y2="175" />
+      <line x1="202" y1="16" x2="202" y2="175" />
+      <line x1="50" y1="69" x2="278" y2="69" />
+      <line x1="50" y1="122" x2="278" y2="122" />
+    </g>
+    <rect x="50" y="16" width="228" height="159" fill="none" stroke="#9AA39C" stroke-width="1.5" />
+    <line x1="240" y1="43" x2="88" y2="149" stroke="#3EC8D8" stroke-width="2" stroke-dasharray="6 5" />
+    <circle cx="240" cy="43" r="11" fill="#FF5A3A" />
+    <text x="240" y="43" text-anchor="middle" dominant-baseline="central" fill="#0B100E" style="font-size: 18px; font-weight: 700">A</text>
+    <circle cx="88" cy="149" r="11" fill="#5CFF8A" />
+    <text x="88" y="149" text-anchor="middle" dominant-baseline="central" fill="#0B100E" style="font-size: 18px; font-weight: 700">B</text>
+    <text x="164" y="205" text-anchor="middle" fill="#9AA39C" style="font-size: 20px">Impacto →</text>
+    <text x="24" y="95" text-anchor="middle" fill="#9AA39C" style="font-size: 20px" transform="rotate(-90 24 95)">Probabilidad →</text>
+  </svg>
+  <div class="text-sm">
+    <strong class="text-base">Riesgo ≈ probabilidad × impacto</strong>
+    <p class="mt-1">¿Qué tan probable es aquí, y cuánto afectaría? Una aproximación para ordenar la conversación, no una fórmula.</p>
+    <p class="mt-2"><span class="font-semibold text-cyber-alert">A</span> sin controles · <span class="font-semibold text-cyber-neon">B</span> con controles: el mismo escenario se desplaza.</p>
+  </div>
 </div>
 
 <p class="mt-4 text-center text-sm">La misma amenaza puede dar riesgos distintos: cambian las vulnerabilidades, la exposición y los controles.</p>
@@ -231,7 +291,7 @@ Respaldo: NIST, Risk, Threat y Vulnerability; SP 800-30 Rev. 1.
 
 # El software moderno está conectado
 
-```mermaid
+```mermaid {theme: 'base', flowchart: {nodeSpacing: 12, rankSpacing: 40, padding: 20}}
 flowchart LR
   U[Cliente] -->|usa| A[App de banca]
   A -->|invoca| S[Servicios]
@@ -263,20 +323,26 @@ Respaldo: NIST SP 800-207, Zero Trust Architecture.
 -->
 
 ---
+layout: default
+---
 
 # El límite de la seguridad reactiva
 
 El modelo de **fortaleza y foso** concentra la defensa en la red y deja la seguridad de la aplicación para una revisión antes del lanzamiento.
 
-```mermaid
+```mermaid {theme: 'base', flowchart: {nodeSpacing: 16, rankSpacing: 24, padding: 12}}
 flowchart LR
-  R[Requisitos] --> D[Diseño] --> C[Código] --> B[Build y pruebas] --> P[Pentest final] --> L[Lanzamiento]
+  R[Requisitos] --> D[Diseño] --> C[Código] --> B["Build y<br/>pruebas"] --> P["Pentest<br/>final"] --> L[Lanzamiento]
   P -.hallazgos para corregir.-> D
 ```
 
-Una revisión tardía puede sumar retrabajo y tensionar la fecha de liberación.
-
-<p class="mt-4 text-center text-sm">La seguridad no depende de una herramienta aislada: es una <strong>propiedad del sistema</strong>, sostenida por decisiones coordinadas en <strong>diseño, implementación, configuración y operación</strong>.</p>
+<div class="mt-4 grid grid-cols-2 items-center gap-6">
+  <div class="text-base">
+    <p style="margin: 0 0 1rem">Una revisión tardía puede sumar retrabajo y tensionar la fecha de liberación.</p>
+    <p style="margin: 0">La seguridad no depende de una herramienta aislada: es una <strong>propiedad del sistema</strong>, sostenida por decisiones coordinadas en <strong>diseño, implementación, configuración y operación</strong>.</p>
+  </div>
+  <img src="/pptx-images/image16.png" alt="Viñeta: una persona construye un muro de ladrillos alrededor del escritorio de un colega; la seguridad no es una barrera personal" class="mx-auto max-h-48 max-w-full rounded-lg bg-white p-2 object-contain" />
+</div>
 
 <!--
 
@@ -498,12 +564,12 @@ Respaldo: OWASP Threat Modeling.
 Son los lugares donde alguien puede interactuar con el sistema o influir en él.
 
 <div class="mt-6 grid grid-cols-3 gap-3 text-center text-sm" role="img" aria-label="Superficie de ataque: entradas, cuentas, APIs, archivos, interfaces y servicios externos">
-  <section class="card px-3 py-3"><strong>Entradas</strong><br />formulario de transferencia</section>
-  <section class="card px-3 py-3"><strong>Cuentas</strong><br />credenciales de clientes</section>
-  <section class="card px-3 py-3"><strong>APIs</strong><br />endpoints de saldo y pagos</section>
-  <section class="card px-3 py-3"><strong>Archivos</strong><br />extractos descargables</section>
-  <section class="card px-3 py-3"><strong>Interfaces</strong><br />pantallas de la app</section>
-  <section class="card px-3 py-3"><strong>Servicios externos</strong><br />proveedor de notificaciones</section>
+  <section class="card flex flex-col items-center gap-1 px-3 py-3"><carbon-edit class="text-2xl text-cyber-cyan" /><strong>Entradas</strong><span class="opacity-80">formulario de transferencia</span></section>
+  <section class="card flex flex-col items-center gap-1 px-3 py-3"><carbon-user class="text-2xl text-cyber-cyan" /><strong>Cuentas</strong><span class="opacity-80">credenciales de clientes</span></section>
+  <section class="card flex flex-col items-center gap-1 px-3 py-3"><carbon-api class="text-2xl text-cyber-cyan" /><strong>APIs</strong><span class="opacity-80">endpoints de saldo y pagos</span></section>
+  <section class="card flex flex-col items-center gap-1 px-3 py-3"><carbon-document class="text-2xl text-cyber-cyan" /><strong>Archivos</strong><span class="opacity-80">extractos descargables</span></section>
+  <section class="card flex flex-col items-center gap-1 px-3 py-3"><carbon-mobile class="text-2xl text-cyber-cyan" /><strong>Interfaces</strong><span class="opacity-80">pantallas de la app</span></section>
+  <section class="card flex flex-col items-center gap-1 px-3 py-3"><carbon-cloud-services class="text-2xl text-cyber-cyan" /><strong>Servicios externos</strong><span class="opacity-80">proveedor de notificaciones</span></section>
 </div>
 
 <p class="mt-6">Reducir entradas innecesarias reduce oportunidades de abuso.</p>
@@ -519,28 +585,42 @@ Respaldo: OWASP Attack Surface Analysis.
 -->
 
 ---
-layout: two-cols-header
+layout: default
 ---
 
 # ¿De dónde vienen las brechas?
 
-::left::
-
-### Causas frecuentes
-
-<div class="mt-4 grid grid-cols-1 gap-3 text-sm">
-  <section class="card px-3 py-3"><strong>Phishing y amenazas internas</strong><br />Intencionadas o accidentales.</section>
-  <section class="card px-3 py-3"><strong>Software de terceros</strong><br />Vulnerable o sin parches.</section>
-  <section class="card px-3 py-3"><strong>Configuración incorrecta</strong><br />Especialmente en la nube.</section>
-</div>
-
-::right::
-
-### La superficie se expande
-
-<div class="mt-4 grid grid-cols-1 gap-3 text-sm">
-  <section class="card px-3 py-3"><strong>Nuevos servicios digitales</strong><br />En banca, por ejemplo: home banking, onboarding digital, pagos instantáneos.</section>
-  <section class="card px-3 py-3"><strong>Arquitecturas modernas</strong><br />Microservicios, contenedores y nube suman dependencias.</section>
+<div class="mt-8 grid grid-cols-2 gap-6">
+  <section class="card min-h-80 flex flex-col px-5 py-5" aria-labelledby="brechas-causas">
+    <h3 id="brechas-causas" style="margin: 0 0 1rem">Causas frecuentes</h3>
+    <div class="grid flex-1 grid-rows-3 text-base">
+      <div class="flex items-center gap-3 border-b border-cyber-cyan/15 py-4">
+        <carbon-user class="shrink-0 text-2xl text-cyber-cyan" aria-hidden="true" />
+        <div><strong class="block">Phishing y amenazas internas</strong><span class="mt-1 block text-sm opacity-80">Intencionadas o accidentales.</span></div>
+      </div>
+      <div class="flex items-center gap-3 border-b border-cyber-cyan/15 py-4">
+        <carbon-code class="shrink-0 text-2xl text-cyber-cyan" aria-hidden="true" />
+        <div><strong class="block">Software de terceros</strong><span class="mt-1 block text-sm opacity-80">Vulnerable o sin parches.</span></div>
+      </div>
+      <div class="flex items-center gap-3 py-4">
+        <carbon-settings class="shrink-0 text-2xl text-cyber-cyan" aria-hidden="true" />
+        <div><strong class="block">Configuración incorrecta</strong><span class="mt-1 block text-sm opacity-80">Especialmente en la nube.</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="card min-h-80 flex flex-col px-5 py-5" aria-labelledby="brechas-superficie">
+    <h3 id="brechas-superficie" style="margin: 0 0 1rem">La superficie se expande</h3>
+    <div class="grid flex-1 grid-rows-2 text-base">
+      <div class="flex items-center gap-3 border-b border-cyber-cyan/15 py-4">
+        <carbon-mobile class="shrink-0 text-2xl text-cyber-cyan" aria-hidden="true" />
+        <div><strong class="block">Nuevos servicios digitales</strong><span class="mt-1 block text-sm opacity-80">En banca, por ejemplo: home banking, onboarding digital, pagos instantáneos.</span></div>
+      </div>
+      <div class="flex items-center gap-3 py-4">
+        <carbon-cloud-services class="shrink-0 text-2xl text-cyber-cyan" aria-hidden="true" />
+        <div><strong class="block">Arquitecturas modernas</strong><span class="mt-1 block text-sm opacity-80">Microservicios, contenedores y nube suman dependencias.</span></div>
+      </div>
+    </div>
+  </section>
 </div>
 
 <!--
@@ -562,9 +642,9 @@ class: flex flex-col justify-center
 No hace falta memorizar una lista extensa. Empecemos con preguntas útiles:
 
 <div class="mt-10 grid grid-cols-3 gap-5 text-center" role="img" aria-label="Tres preguntas de diseño seguro: quién necesita este acceso, qué pasa si una defensa falla y cómo limitamos el daño">
-  <section class="card-strong px-5 py-10"><strong class="text-xl">¿Quién necesita este acceso?</strong><p class="mt-3 text-sm opacity-80">Confiar lo mínimo necesario.</p></section>
-  <section class="card-strong px-5 py-10"><strong class="text-xl">¿Qué pasa si una defensa falla?</strong><p class="mt-3 text-sm opacity-80">Varias defensas; fallar de forma segura.</p></section>
-  <section class="card-strong px-5 py-10"><strong class="text-xl">¿Cómo limitamos el daño?</strong><p class="mt-3 text-sm opacity-80">Separar y contener.</p></section>
+  <section class="card-strong flex flex-col items-center px-5 py-8"><carbon-user-access class="text-4xl text-cyber-cyan" /><strong class="mt-3 text-xl">¿Quién necesita este acceso?</strong><p class="mt-3 text-sm opacity-80">Confiar lo mínimo necesario.</p></section>
+  <section class="card-strong flex flex-col items-center px-5 py-8"><carbon-warning-alt class="text-4xl text-cyber-cyan" /><strong class="mt-3 text-xl">¿Qué pasa si una defensa falla?</strong><p class="mt-3 text-sm opacity-80">Varias defensas; fallar de forma segura.</p></section>
+  <section class="card-strong flex flex-col items-center px-5 py-8"><carbon-security class="text-4xl text-cyber-cyan" /><strong class="mt-3 text-xl">¿Cómo limitamos el daño?</strong><p class="mt-3 text-sm opacity-80">Separar y contener.</p></section>
 </div>
 
 <!--
@@ -586,8 +666,8 @@ class: flex flex-col justify-center
 <p class="mt-6 text-xl">¿Qué permisos necesita cada identidad para su tarea, y por cuánto tiempo?</p>
 
 <div class="mt-8 grid grid-cols-2 gap-5 text-center">
-  <section class="card-strong px-6 py-8"><strong class="text-xl">Alcance</strong><p class="mt-3 text-base">El servicio de extractos consulta saldos y movimientos, pero no puede iniciar transferencias.</p></section>
-  <section class="card-strong px-6 py-8"><strong class="text-xl">Duración</strong><p class="mt-3 text-base">El acceso de mantenimiento a la base de datos se habilita por ventana y se revoca al terminar.</p></section>
+  <section class="card-strong flex flex-col items-center px-6 py-7"><carbon-locked class="text-4xl text-cyber-cyan" /><strong class="mt-3 text-xl">Alcance</strong><p class="mt-3 text-base">El servicio de extractos consulta saldos y movimientos, pero no puede iniciar transferencias.</p></section>
+  <section class="card-strong flex flex-col items-center px-6 py-7"><carbon-time class="text-4xl text-cyber-cyan" /><strong class="mt-3 text-xl">Duración</strong><p class="mt-3 text-base">El acceso de mantenimiento a la base de datos se habilita por ventana y se revoca al terminar.</p></section>
 </div>
 
 <p class="mt-8 text-center">Limitar permisos reduce lo que una cuenta comprometida puede hacer.</p>
@@ -612,9 +692,9 @@ class: flex flex-col justify-center
 <p class="mt-2 text-center opacity-80">La defensa en profundidad combina controles complementarios.</p>
 
 <div class="mt-8 grid grid-cols-3 gap-5 text-center" role="img" aria-label="Defensa en profundidad: prevenir, detectar y contener">
-  <section class="card-strong px-5 py-8"><strong class="text-xl">Prevenir</strong><p class="mt-3 text-base">Validar entradas y limitar accesos.</p></section>
-  <section class="card-strong px-5 py-8"><strong class="text-xl">Detectar</strong><p class="mt-3 text-base">Registrar actividad y alertar ante anomalías.</p></section>
-  <section class="card-strong px-5 py-8"><strong class="text-xl">Contener</strong><p class="mt-3 text-base">Aislar componentes y acotar permisos.</p></section>
+  <section class="card-strong flex flex-col items-center px-5 py-7"><carbon-security class="text-4xl text-cyber-cyan" /><strong class="mt-3 text-xl">Prevenir</strong><p class="mt-3 text-base">Validar entradas y limitar accesos.</p></section>
+  <section class="card-strong flex flex-col items-center px-5 py-7"><carbon-view class="text-4xl text-cyber-cyan" /><strong class="mt-3 text-xl">Detectar</strong><p class="mt-3 text-base">Registrar actividad y alertar ante anomalías.</p></section>
+  <section class="card-strong flex flex-col items-center px-5 py-7"><carbon-locked class="text-4xl text-cyber-cyan" /><strong class="mt-3 text-xl">Contener</strong><p class="mt-3 text-base">Aislar componentes y acotar permisos.</p></section>
 </div>
 
 <p class="mt-8 text-center">Si un control se supera, otros todavía pueden detectar el incidente o limitar su impacto.</p>
@@ -638,9 +718,9 @@ class: flex flex-col justify-center
 <p class="mt-4 text-center text-2xl font-semibold">Si un control o una dependencia falla, ¿cómo debería responder el sistema?</p>
 
 <div class="mt-8 grid grid-cols-3 gap-5 text-center" role="img" aria-label="Respuestas ante un fallo: proteger, degradar y recuperar">
-  <section class="card-strong px-5 py-8"><strong class="text-xl">Proteger</strong><p class="mt-3 text-base">Sin poder verificar autorización, no ejecutar transferencias.</p></section>
-  <section class="card-strong px-5 py-8"><strong class="text-xl">Degradar</strong><p class="mt-3 text-base">Sin notificaciones, seguir consultando y transfiriendo.</p></section>
-  <section class="card-strong px-5 py-8"><strong class="text-xl">Recuperar</strong><p class="mt-3 text-base">Registrar el fallo y restablecer el servicio de forma controlada.</p></section>
+  <section class="card-strong flex flex-col items-center px-5 py-7"><carbon-locked class="text-4xl text-cyber-cyan" /><strong class="mt-3 text-xl">Proteger</strong><p class="mt-3 text-base">Sin poder verificar autorización, no ejecutar transferencias.</p></section>
+  <section class="card-strong flex flex-col items-center px-5 py-7"><carbon-warning-alt class="text-4xl text-cyber-cyan" /><strong class="mt-3 text-xl">Degradar</strong><p class="mt-3 text-base">Sin notificaciones, seguir consultando y transfiriendo.</p></section>
+  <section class="card-strong flex flex-col items-center px-5 py-7"><carbon-restart class="text-4xl text-cyber-cyan" /><strong class="mt-3 text-xl">Recuperar</strong><p class="mt-3 text-base">Registrar el fallo y restablecer el servicio de forma controlada.</p></section>
 </div>
 
 <p class="mt-7 text-center">Fallar seguro no es apagar todo: es limitar las acciones sensibles y conservar, cuando sea posible, las funciones independientes del componente fallido.</p>
@@ -664,8 +744,8 @@ class: flex flex-col justify-center
 <p class="mt-4 text-center text-2xl font-semibold">Si se compromete una cuenta, ¿hasta dónde puede llegar?</p>
 
 <div class="mt-8 grid grid-cols-2 gap-5 text-center">
-  <section class="card-strong px-6 py-8"><strong class="text-xl">Alcance amplio</strong><p class="mt-3 text-base">Una cuenta con permisos amplios puede leer movimientos, iniciar transferencias y administrar usuarios.</p></section>
-  <section class="card-strong px-6 py-8"><strong class="text-xl">Acceso acotado</strong><p class="mt-3 text-base">El servicio de extractos solo lee; el de pagos escribe transferencias; administración usa permisos separados.</p></section>
+  <section class="card-strong flex flex-col items-center px-6 py-7"><carbon-warning-alt class="text-4xl text-cyber-alert" /><strong class="mt-3 text-xl">Alcance amplio</strong><p class="mt-3 text-base">Una cuenta con permisos amplios puede leer movimientos, iniciar transferencias y administrar usuarios.</p></section>
+  <section class="card-strong flex flex-col items-center px-6 py-7"><carbon-checkmark class="text-4xl text-cyber-neon" /><strong class="mt-3 text-xl">Acceso acotado</strong><p class="mt-3 text-base">El servicio de extractos solo lee; el de pagos escribe transferencias; administración usa permisos separados.</p></section>
 </div>
 
 <p class="mt-8 text-center">Separar permisos y componentes reduce el radio de impacto (<em>blast radius</em>).</p>
@@ -713,11 +793,11 @@ class: flex flex-col justify-center
 <p class="mt-4 text-center text-2xl font-semibold">¿Qué protegemos, qué podría salir mal y cómo respondemos?</p>
 
 <div class="mt-8 grid grid-cols-[1fr_auto_1fr_auto_1fr] gap-3 text-center" role="img" aria-label="Threat Modeling: entender el sistema, analizar abusos posibles y responder con requisitos, controles y pruebas">
-  <section class="card-strong px-4 py-8"><strong class="text-xl">Entender</strong><p class="mt-3 text-base">Actores, datos, componentes y flujos.</p></section>
+  <section class="card-strong flex flex-col items-center px-4 py-7"><carbon-view class="text-4xl text-cyber-cyan" /><strong class="mt-3 text-xl">Entender</strong><p class="mt-3 text-base">Actores, datos, componentes y flujos.</p></section>
   <span class="self-center text-3xl opacity-60" aria-hidden="true">→</span>
-  <section class="card-strong px-4 py-8"><strong class="text-xl">Analizar</strong><p class="mt-3 text-base">Posibles abusos y fallos.</p></section>
+  <section class="card-strong flex flex-col items-center px-4 py-7"><carbon-search class="text-4xl text-cyber-cyan" /><strong class="mt-3 text-xl">Analizar</strong><p class="mt-3 text-base">Posibles abusos y fallos.</p></section>
   <span class="self-center text-3xl opacity-60" aria-hidden="true">→</span>
-  <section class="card-strong px-4 py-8"><strong class="text-xl">Responder</strong><p class="mt-3 text-base">Requisitos, controles y pruebas.</p></section>
+  <section class="card-strong flex flex-col items-center px-4 py-7"><carbon-tools class="text-4xl text-cyber-cyan" /><strong class="mt-3 text-xl">Responder</strong><p class="mt-3 text-base">Requisitos, controles y pruebas.</p></section>
 </div>
 
 <p class="mt-8 text-center">Threat Modeling ordena esta conversación; no requiere una herramienta específica.</p>
@@ -786,21 +866,14 @@ Respaldo: OWASP Threat Modeling.
 -->
 
 ---
-class: flex flex-col justify-center
+layout: default
 ---
 
 # STRIDE: seis tipos de amenaza
 
 <p class="mt-3 text-center text-lg">Seis lentes para explorar posibles abusos en actores, flujos y componentes.</p>
 
-<div class="mt-7 grid grid-cols-3 gap-3 text-sm" role="img" aria-label="STRIDE: suplantación, manipulación, repudio, exposición de información, denegación de servicio y elevación de privilegios">
-  <section class="flex gap-3 card-strong px-4 py-5 text-left"><strong class="text-2xl text-cyber-cyan">S</strong><div><strong class="text-base">Suplantación</strong><p class="mt-1">Usar una identidad ajena.</p></div></section>
-  <section class="flex gap-3 card-strong px-4 py-5 text-left"><strong class="text-2xl text-cyber-cyan">T</strong><div><strong class="text-base">Manipulación</strong><p class="mt-1">Alterar el importe o el destinatario de una transferencia.</p></div></section>
-  <section class="flex gap-3 card-strong px-4 py-5 text-left"><strong class="text-2xl text-cyber-cyan">R</strong><div><strong class="text-base">Repudio</strong><p class="mt-1">Negar una acción sin evidencia trazable.</p></div></section>
-  <section class="flex gap-3 card-strong px-4 py-5 text-left"><strong class="text-2xl text-cyber-cyan">I</strong><div><strong class="text-base">Exposición de información</strong><p class="mt-1">Leer movimientos de otra cuenta.</p></div></section>
-  <section class="flex gap-3 card-strong px-4 py-5 text-left"><strong class="text-2xl text-cyber-cyan">D</strong><div><strong class="text-base">Denegación de servicio</strong><p class="mt-1">Impedir consultas legítimas.</p></div></section>
-  <section class="flex gap-3 card-strong px-4 py-5 text-left"><strong class="text-2xl text-cyber-cyan">E</strong><div><strong class="text-base">Elevación de privilegios</strong><p class="mt-1">Obtener permisos mayores a los asignados.</p></div></section>
-</div>
+<StrideGrid />
 
 <!--
 - Mantené la lista del pizarrón visible: las categorías son lentes de búsqueda, pueden solaparse y no ordenan gravedad.
@@ -813,23 +886,16 @@ Respaldo: OWASP Threat Modeling.
 -->
 
 ---
-class: flex flex-col justify-center
+layout: default
 ---
 
 # ¿Qué lente nos faltó?
 
 <p class="mt-3 text-center text-lg">Cada letra es una pregunta para revisar la lista de amenazas, no un orden de gravedad.</p>
 
-<div class="mt-7 grid grid-cols-3 gap-3 text-sm" role="img" aria-label="STRIDE como preguntas de revisión sobre la lista de amenazas">
-  <section class="card-strong px-4 py-5"><strong class="text-lg text-cyber-cyan">S</strong><p class="mt-2">¿Alguien puede actuar con una identidad ajena?</p></section>
-  <section class="card-strong px-4 py-5"><strong class="text-lg text-cyber-cyan">T</strong><p class="mt-2">¿Alguien puede alterar una solicitud o un registro?</p></section>
-  <section class="card-strong px-4 py-5"><strong class="text-lg text-cyber-cyan">R</strong><p class="mt-2">¿Alguien puede negar una acción sin evidencia?</p></section>
-  <section class="card-strong px-4 py-5"><strong class="text-lg text-cyber-cyan">I</strong><p class="mt-2">¿Alguien puede leer datos de otra cuenta?</p></section>
-  <section class="card-strong px-4 py-5"><strong class="text-lg text-cyber-cyan">D</strong><p class="mt-2">¿Alguien puede impedir el servicio legítimo?</p></section>
-  <section class="card-strong px-4 py-5"><strong class="text-lg text-cyber-cyan">E</strong><p class="mt-2">¿Alguien puede obtener permisos de más?</p></section>
-</div>
+<StrideGrid mode="questions" />
 
-<p class="mt-7 text-center">La letra que no aparece en la lista señala una amenaza que nadie vio.</p>
+<p class="mt-4 text-center text-sm">La letra que no aparece en la lista señala una amenaza que nadie vio.</p>
 
 <!--
 - Actividad (1–2 min): recorré las letras y anotá cada una junto a los escenarios del pizarrón que la cubren. Un mismo escenario puede recibir más de una letra.
@@ -852,9 +918,9 @@ class: flex flex-col justify-center
 <p class="mt-2 text-center text-lg">La respuesta depende del escenario y de lo que está en juego.</p>
 
 <div class="mt-8 grid grid-cols-3 gap-5 text-center">
-  <section class="card-strong px-5 py-8"><strong class="text-xl">Cambiar el diseño</strong><p class="mt-3 text-base">Eliminar o reducir el escenario de abuso.</p></section>
-  <section class="card-strong px-5 py-8"><strong class="text-xl">Agregar un control</strong><p class="mt-3 text-base">Prevenir, detectar o limitar el impacto.</p></section>
-  <section class="card-strong px-5 py-8"><strong class="text-xl">Aceptar conscientemente</strong><p class="mt-3 text-base">Documentar por qué el riesgo es tolerable.</p></section>
+  <section class="card-strong flex flex-col items-center px-5 py-7"><carbon-edit class="text-4xl text-cyber-cyan" /><strong class="mt-3 text-xl">Cambiar el diseño</strong><p class="mt-3 text-base">Eliminar o reducir el escenario de abuso.</p></section>
+  <section class="card-strong flex flex-col items-center px-5 py-7"><carbon-add-alt class="text-4xl text-cyber-cyan" /><strong class="mt-3 text-xl">Agregar un control</strong><p class="mt-3 text-base">Prevenir, detectar o limitar el impacto.</p></section>
+  <section class="card-strong flex flex-col items-center px-5 py-7"><carbon-document class="text-4xl text-cyber-cyan" /><strong class="mt-3 text-xl">Aceptar conscientemente</strong><p class="mt-3 text-base">Documentar por qué el riesgo es tolerable.</p></section>
 </div>
 
 <p class="mt-8 text-center">La categoría de amenaza, por sí sola, no determina la prioridad.</p>
@@ -954,11 +1020,11 @@ class: flex flex-col justify-center
 
 <p class="mt-3 text-center text-lg">La seguridad se considera junto con las necesidades funcionales, no al final.</p>
 
-<div class="mt-7 grid grid-cols-3 gap-4 text-center text-sm">
-  <section class="card-strong px-4 py-6"><strong class="text-lg">Historia de usuario</strong><p class="mt-3">Como cliente, quiero consultar mis movimientos para administrar mi cuenta.</p></section>
-  <section class="card-strong px-4 py-6"><strong class="text-lg">Historia de abuso</strong><p class="mt-3">Como atacante, quiero consultar movimientos ajenos para obtener información privada.</p></section>
-  <section class="card-strong px-4 py-6"><strong class="text-lg">Historia de seguridad</strong><p class="mt-3">Como equipo, queremos verificar los permisos en cada consulta para proteger los datos.</p></section>
+<div class="mt-5" role="img" aria-label="Tres tipos de historia que conviven en la planificación: historia de usuario, historia de abuso e historia de seguridad">
+  <img src="/pptx-images/image8.png" alt="Historia de usuario, historia de abuso e historia de seguridad, cada una con su plantilla" class="mx-auto max-h-60 rounded-lg bg-white p-2 object-contain" />
 </div>
+
+<p class="mt-3 text-center text-sm opacity-80">Historia de usuario · Historia de abuso · Historia de seguridad: las tres se discuten en la misma planificación.</p>
 
 <p class="mt-7 text-center">Requisitos, arquitectura y controles se deciden antes de implementar.</p>
 
