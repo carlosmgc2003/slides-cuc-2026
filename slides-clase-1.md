@@ -1140,3 +1140,25 @@ Ahora sé que el código, las dependencias, los permisos y la infraestructura pu
 
 No voy a responderla hoy con una lista de herramientas. En la próxima clase, Shift Left or get hacked, vamos a retomar justamente esa tensión: cómo conservar evidencia sobre nuestras garantías a medida que el sistema cambia. Hoy llegamos hasta una decisión justificada y comprobable; ese va a ser nuestro punto de partida.
 -->
+
+---
+class: flex flex-col justify-center
+---
+
+# Cuestionario de la clase
+
+<p class="mt-3 text-center text-lg">Escaneá el código para responder el cuestionario de comprensión.</p>
+
+<div class="mt-5 flex justify-center">
+  <img src="/pptx-images/qr-clase-1.png" alt="Código QR para responder el cuestionario de comprensión de la clase 1" class="max-h-64 rounded-lg bg-white p-3 object-contain" />
+</div>
+
+<p class="mt-5 text-center text-sm opacity-80">Diez preguntas de opción múltiple sobre el caso de la app de banca.</p>
+
+<!--
+Cerrá la clase con el cuestionario. Pedí que lo respondan de forma individual y sin mirar el material: la idea es comprobar si quedaron claras las ideas del recorrido, no si memorizaron definiciones. Diez preguntas de opción múltiple, un punto cada una, sobre el mismo caso de la app de banca.
+
+Mencioná que está en Google Forms y que conviene responderlo dentro de la clase, mientras la discusión todavía está fresca. No publiques la clave ni comentes las respuestas correctas en el momento: la retroalimentación está cargada en el formulario.
+
+Si el grupo es numeroso y el tiempo aprieta, el cuestionario también sirve como tarea corta para la casa. En cualquiera de los dos casos, el QR es el mismo: la pantalla queda proyectada hasta que todos terminen.
+-->
