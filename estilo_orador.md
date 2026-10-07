@@ -40,10 +40,11 @@ Guía viva para escribir y revisar las notas de exposición de la clase. Se ajus
 
 - Mantener cada diapositiva enfocada en una idea principal y usar texto visible breve.
 - Al profundizar cuatro dimensiones equivalentes con ejemplos técnicos, organizarlas en una matriz 2×2 y equilibrar el número y nivel de concreción de los ejemplos por sector.
-- En la clase 1, limitar cada nota a **1.279 caracteres**, incluidos espacios y saltos de línea; es un techo, no una longitud objetivo. Dejar margen y evitar demasiados párrafos, porque el ajuste visual también depende de los saltos y del ancho del panel.
+- En la clase 1, limitar cada nota a **2.558 caracteres**, incluidos espacios y saltos de línea; es un techo, no una longitud objetivo. Dejar margen y evitar demasiados párrafos, porque el ajuste visual también depende de los saltos y del ancho del panel.
+- En la clase 1, escribir las notas como parlamentos listos para leer en voz alta, en primera persona y con tono conversacional. Transformar las indicaciones de facilitación en diálogo: «Voy a seguir esta flecha», «Les propongo…», «¿Qué cambiarían?». No incluir órdenes para quien expone, etiquetas de transición ni acotaciones que haya que reinterpretar al leer.
 - Omitir encabezados redundantes como «Notas para presentar» y no repetir definiciones, tarjetas o listas ya visibles.
 - Priorizar lo que la diapositiva deja implícito: razonamiento, ejemplos concretos, distinciones, límites y ayudas para conducir la actividad. Conservar solo las preguntas útiles y una transición breve.
-- Mantener el desarrollo extenso y los enlaces de la clase 1 en `guion-clase-1.md`; las notas en pantalla son una ayuda de exposición, no el texto completo del guion.
+- Mantener el desarrollo extenso y los enlaces de la clase 1 en `guion-clase-1.md`; las notas en pantalla son una versión oral ampliada, no una copia completa del guion.
 - Cuando haya un diagrama, indicar qué aspecto señalar y qué debería observar el público.
 - Acompañar diagramas de componentes con ejemplos concretos de cada categoría cuando las etiquetas puedan resultar abstractas.
-- Identificar brevemente en las notas las fuentes que sustentan datos, definiciones o afirmaciones discutibles; no gastar el espacio de exposición en URLs largas si están disponibles en el guion.
+- Identificar brevemente en las notas las fuentes que sustentan datos, definiciones o afirmaciones discutibles; no gastar el espacio de exposición en URLs largas si están disponibles en el guion. En la clase 1, incorporar esas referencias en frases que también puedan leerse en voz alta.
