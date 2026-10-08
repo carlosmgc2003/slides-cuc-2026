@@ -1,0 +1,44 @@
+CLASE 1 — SOFTWARE SEGURO DESDE EL DISEÑO
+
+FUENTES CITADAS EN EL GUION (30 enlaces únicos)
+Extraídas de guion-clase-1.md, sin duplicados.
+
+https://www.nist.gov/publications/secure-software-development-framework-ssdf-version-11-recommendations-mitigating-risk
+https://csrc.nist.gov/glossary/term/vulnerability
+https://csrc.nist.gov/pubs/sp/800/218/final
+https://pages.nist.gov/nccoe-devsecops/notational-reference-model.html
+https://www.cisa.gov/known-exploited-vulnerabilities-catalog
+https://csrc.nist.gov/glossary/term/asset
+https://csrc.nist.gov/glossary/term/information_security
+https://csrc.nist.gov/glossary/term/threat
+https://csrc.nist.gov/glossary/term/adversary
+https://csrc.nist.gov/pubs/sp/800/30/r1/final
+https://www.verizon.com/business/resources/reports/dbir/
+https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape
+https://www.nao.org.uk/reports/investigation-wannacry-cyber-attack-and-the-nhs/
+https://www.gao.gov/blog/colonial-pipeline-cyberattack-highlights-need-better-federal-and-private-sector-preparedness-infographic
+https://csrc.nist.gov/glossary/term/risk
+https://csrc.nist.gov/pubs/sp/800/207/final
+https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.04232020.pdf
+https://csrc.nist.gov/pubs/sp/800/160/v1/r1/final
+https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
+https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html
+https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
+https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html
+https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
+https://cheatsheetseries.owasp.org/cheatsheets/Secure_Code_Review_Cheat_Sheet.html
+https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html
+https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+https://cheatsheetseries.owasp.org/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.html
+https://cloudsecurityalliance.org/blog/2025/05/07/unpacking-the-2024-snowflake-data-breach
+https://owasp.org/www-project-security-by-design-principles/
+https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final
+
+ENLACES DE EXÁMENES
+Incluidos en slides-clase-1.md; no son fuentes bibliográficas.
+
+Examen Taller:
+https://docs.google.com/forms/d/e/1FAIpQLSfLOo4ylmRlF5QU2Jk-lJZXcQpYvg2S-8-acJ4bW3rEiywHkA/viewform?usp=header
+
+Examen CUC:
+https://docs.google.com/forms/d/e/1FAIpQLSerp4A-Kn_ZIcQenzQmUUCsBGX6ohvZyzC-RC5RTaglD95EcA/viewform?usp=header
