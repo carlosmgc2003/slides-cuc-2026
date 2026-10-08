@@ -1142,23 +1142,130 @@ No voy a responderla hoy con una lista de herramientas. En la próxima clase, Sh
 -->
 
 ---
-class: flex flex-col justify-center
+class: exam-slide
 ---
 
-# Cuestionario de la clase
+# Examen de la clase
 
-<p class="mt-3 text-center text-lg">Escaneá el código para responder el cuestionario de comprensión.</p>
+<p class="exam-intro">Escaneá el QR o abrí el enlace que corresponda a tu comisión.</p>
 
-<div class="mt-5 flex justify-center">
-  <img src="/pptx-images/qr-clase-1.png" alt="Código QR para responder el cuestionario de comprensión de la clase 1" class="max-h-64 rounded-lg bg-white p-3 object-contain" />
+<div class="exam-codes">
+  <section class="card-strong exam-code">
+    <h3>QR Examen Taller</h3>
+    <img src="/pptx-images/qr-examen-taller.png" alt="Código QR del examen para la comisión Taller" />
+    <a class="exam-link" href="https://docs.google.com/forms/d/e/1FAIpQLSfLOo4ylmRlF5QU2Jk-lJZXcQpYvg2S-8-acJ4bW3rEiywHkA/viewform?usp=header" target="_blank" rel="noopener noreferrer">Abrir Examen Taller</a>
+  </section>
+  <section class="card-strong exam-code">
+    <h3>QR Examen CUC</h3>
+    <img src="/pptx-images/qr-examen-cuc.png" alt="Código QR del examen para la comisión CUC" />
+    <a class="exam-link" href="https://docs.google.com/forms/d/e/1FAIpQLSerp4A-Kn_ZIcQenzQmUUCsBGX6ohvZyzC-RC5RTaglD95EcA/viewform?usp=header" target="_blank" rel="noopener noreferrer">Abrir Examen CUC</a>
+  </section>
 </div>
 
-<p class="mt-5 text-center text-sm opacity-80">Diez preguntas de opción múltiple sobre el caso de la app de banca.</p>
+<section class="card-strong exam-schedule">
+  <p class="exam-schedule-title">Disponibilidad para ambos exámenes</p>
+  <div class="exam-dates">
+    <div class="exam-date">
+      <p class="exam-date-label">Se habilita</p>
+      <p class="exam-date-value">Viernes 9 de octubre</p>
+      <p>08:00 GMT-3</p>
+    </div>
+    <div class="exam-date">
+      <p class="exam-date-label">Se deshabilita (termina)</p>
+      <p class="exam-date-value">Sábado 10 de octubre</p>
+      <p>08:00 GMT-3</p>
+    </div>
+  </div>
+</section>
+
+<style scoped>
+.exam-slide {
+  padding: 24px 48px;
+  text-align: center;
+}
+.exam-slide h1,
+.exam-slide h3,
+.exam-slide p {
+  margin: 0;
+}
+.exam-intro {
+  margin-top: 8px !important;
+  font-size: 18px;
+  line-height: 24px;
+}
+.exam-codes,
+.exam-dates {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.exam-codes {
+  margin-top: 16px;
+}
+.exam-code {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+}
+.exam-code h3 {
+  font-size: 18px;
+  line-height: 24px;
+}
+.exam-link {
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--slidev-theme-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.exam-link:hover,
+.exam-link:focus-visible {
+  color: var(--slidev-theme-success);
+}
+.exam-code img {
+  width: 192px;
+  height: 192px;
+  padding: 8px;
+  background: white;
+  border-radius: 8px;
+  object-fit: contain;
+}
+.exam-schedule {
+  margin-top: 16px;
+  padding: 10px 16px;
+}
+.exam-schedule-title {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--slidev-theme-primary);
+}
+.exam-dates {
+  margin-top: 6px;
+}
+.exam-date {
+  font-size: 16px;
+  line-height: 22px;
+}
+.exam-date-label {
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+.exam-date-value {
+  font-size: 18px;
+  font-weight: 600;
+}
+</style>
 
 <!--
-Cerrá la clase con el cuestionario. Pedí que lo respondan de forma individual y sin mirar el material: la idea es comprobar si quedaron claras las ideas del recorrido, no si memorizaron definiciones. Diez preguntas de opción múltiple, un punto cada una, sobre el mismo caso de la app de banca.
+Cerrá la clase con el examen. Aclarales que cada comisión tiene su propio enlace: Taller escanea el QR de la izquierda y CUC el de la derecha. Pedí que verifiquen bien que el formulario abierto corresponda a su comisión antes de empezar.
 
-Mencioná que está en Google Forms y que conviene responderlo dentro de la clase, mientras la discusión todavía está fresca. No publiques la clave ni comentes las respuestas correctas en el momento: la retroalimentación está cargada en el formulario.
+La ventana de disponibilidad es la misma para los dos: se habilita el viernes 9 de octubre a las 08:00 (GMT-3) y se deshabilita el sábado 10 de octubre a las 08:00 (GMT-3). Recordá que fuera de ese rango el formulario deja de aceptar respuestas, así que conviene rendirlo con margen.
 
-Si el grupo es numeroso y el tiempo aprieta, el cuestionario también sirve como tarea corta para la casa. En cualquiera de los dos casos, el QR es el mismo: la pantalla queda proyectada hasta que todos terminen.
+No publiques la clave ni comentes las respuestas correctas en el momento: la retroalimentación está cargada en el formulario. Dejá la pantalla proyectada hasta que todos ubiquen su QR.
 -->
