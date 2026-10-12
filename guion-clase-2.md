@@ -1,6 +1,6 @@
 # Guion de conducción · Clase 2 — Shift Left or Get Hacked!
 
-**DevSecOps Unlocked · FIE · Clase 2** · Duración planificada: **112 minutos de contenido + 8 de reserva = 120 min (19:00–21:00)**.
+**Software Seguro · Clase 2** · Duración planificada: **112 minutos de contenido + 8 de reserva = 120 min (19:00–21:00)**.
 
 Este guion es la conducción del docente en voseo: indica qué hacer, qué decir, qué señalar y cómo pasar de una diapositiva a la otra. Las **notas de cada slide** de `slides-clase-2.md` son el parlamento canónico en primera persona; este archivo las **amplía**, no las contradice ni las duplica de forma divergente. Para el material de estudio del estudiante: diapositivas + grabación + este guion (público). La **clave del cuestionario no se incluye aquí**: vive únicamente en `cuestionario-clase-2.md` (material docente, no se publica).
 
@@ -61,9 +61,9 @@ Principal (S01–S43, 112 min): S01 Shift Left or Get Hacked! · S02 Decisiones 
 
 ## Diapositiva 1 · S01 · Shift Left or Get Hacked!
 
-**Tiempo:** 1 min. Abrí con el puente: en la clase anterior diseñamos decisiones sobre qué proteger y cómo responder. Hoy observamos cómo sobreviven cuando el software cambia seguido. Presentá Shift Left como acercar cierto feedback a las decisiones y cambios; **no** lo definas como garantía ni como herramienta, y **no** lo reduzcas a una lista de productos. Señalá que el ciclo vuelve de la operación al próximo cambio.
+**Tiempo:** 1 min. Abrí con el puente: en la clase anterior diseñamos decisiones sobre qué proteger y cómo responder. Hoy observamos cómo sobreviven cuando el software cambia seguido. Presentá Shift Left como acercar cierto feedback a las decisiones y cambios; **no** lo definas como garantía ni como herramienta, y **no** lo reduzcas a una lista de productos. Explicá que lo aprendido en operación orienta el próximo cambio.
 
-**Ampliación:** el rótulo institucional ya está en pantalla; no hace falta anunciarlo. La tesis de la clase: acortar el ciclo de cambios también exige acortar el ciclo de aprendizaje sobre seguridad.
+**Ampliación:** la tesis de la clase: acortar el ciclo de cambios también exige acortar el ciclo de aprendizaje sobre seguridad.
 
 **Transición:** «Primero voy a mostrar qué decisiones vamos a practicar y cómo se conecta el recorrido».
 

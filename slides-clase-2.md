@@ -1,7 +1,7 @@
 ---
 theme: default
 title: Shift Left or Get Hacked!
-info: DevSecOps Unlocked · FIE · Clase 2
+info: Software Seguro · Clase 2
 colorSchema: dark
 transition: slide
 mdc: true
@@ -13,30 +13,74 @@ fonts:
 htmlAttrs:
   lang: es
 layout: default
-class: c2-slide
+class: c2-slide c2-cover
 slideId: S01
 ---
 
-<p class="mb-4 text-sm uppercase tracking-widest opacity-70">DevSecOps Unlocked · FIE · Clase 2</p>
+<p class="cover-eyebrow">Software Seguro · Clase 2</p>
 
-# Shift Left or Get Hacked!
+<h1 class="cover-title">
+  <span class="cover-title-first">Shift Left</span>
+  <span class="cover-title-second">or Get <span class="cover-title-alert">Hacked!</span></span>
+</h1>
 
-## Feedback de seguridad junto al cambio
+<p class="cover-subtitle">Seguridad desde el primer cambio</p>
 
-<div class="mt-10 mx-auto max-w-5xl" role="img" aria-label="El ciclo conecta diseño, cambios, comprobaciones y operación; el aprendizaje vuelve al próximo cambio">
-  <div class="grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-center gap-3 text-center text-lg">
-    <div class="card px-4 py-6">Diseño</div><span aria-hidden="true">→</span>
-    <div class="card-strong px-4 py-6">Cambio</div><span aria-hidden="true">→</span>
-    <div class="card px-4 py-6">Comprobar</div><span aria-hidden="true">→</span>
-    <div class="card px-4 py-6">Operar</div>
-  </div>
-  <p class="mt-5 text-center text-lg">La seguridad acompaña el trabajo; ninguna etapa promete inmunidad.</p>
-</div>
+<style scoped>
+.c2-cover {
+  padding: 56px 72px;
+}
+.cover-eyebrow {
+  margin: 0;
+  opacity: 1;
+  color: var(--slidev-theme-muted);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.cover-title {
+  margin: 76px 0 0;
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.04em;
+  text-shadow: none;
+}
+.cover-title-first,
+.cover-title-second {
+  display: block;
+}
+.cover-title-first {
+  color: var(--slidev-theme-primary);
+}
+.cover-title-second {
+  margin-top: 10px;
+  font-size: 60px;
+}
+.cover-title-alert {
+  color: var(--slidev-theme-alert);
+}
+.cover-subtitle {
+  margin: 36px 0 0;
+  opacity: 1;
+  font-size: 24px;
+  line-height: 1.4;
+}
+.cover-subtitle::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 3px;
+  margin-bottom: 20px;
+  background: var(--slidev-theme-primary);
+}
+</style>
 
 <!--
 S01 · Idea central: un ciclo de cambios más corto necesita aprendizaje de seguridad oportuno, sin prometer inmunidad. · Tiempo: 1 min
 
-La clase anterior nos dejó decisiones sobre qué proteger y cómo diseñar una respuesta. Hoy voy a seguir esas decisiones mientras el software cambia. La idea de Shift Left es acercar ciertas comprobaciones al momento en que todavía entendemos el cambio y podemos actuar; no significa que todo problema se evite ni que podamos retirar controles posteriores. En la app de banca, la pregunta será cómo sostener la autorización cuando agregamos una descarga de extractos. El ciclo de la pantalla no termina en una herramienta: lo que aprendemos al operar vuelve a orientar el próximo cambio.
+La clase anterior nos dejó decisiones sobre qué proteger y cómo diseñar una respuesta. Hoy voy a seguir esas decisiones mientras el software cambia. La idea de Shift Left es acercar ciertas comprobaciones al momento en que todavía entendemos el cambio y podemos actuar; no significa que todo problema se evite ni que podamos retirar controles posteriores. En la app de banca, la pregunta será cómo sostener la autorización cuando agregamos una descarga de extractos. El ciclo de trabajo no termina en una herramienta: lo que aprendemos al operar vuelve a orientar el próximo cambio.
 
 Fuente breve: F4, NIST SSDF SP 800-218; respalda integrar prácticas de seguridad en el ciclo de desarrollo, sin prometer inmunidad ni aportar una definición literal de Shift Left.
 
