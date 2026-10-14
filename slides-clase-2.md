@@ -1728,18 +1728,18 @@ slideId: S43
 
 # Examen de la clase
 
-<p class="exam-intro">Los QR y enlaces de cada comisión se incorporarán aquí.</p>
+<p class="exam-intro">Escaneá el QR o abrí el enlace que corresponda a tu comisión.</p>
 
 <div class="exam-codes">
   <section class="card-strong exam-code">
     <h3>QR Examen Taller</h3>
-    <div class="exam-placeholder" role="img" aria-label="Espacio reservado para el QR del examen TALLER">QR pendiente</div>
-    <span class="exam-link exam-link-pending">Enlace pendiente · Taller</span>
+    <img src="/clase-2/qr-clase2-taller.png" alt="Código QR del examen para la comisión Taller" />
+    <a class="exam-link" href="https://docs.google.com/forms/d/e/1FAIpQLScqMeAUSXVpfVmQO8FTscWpwa2OU2wKarXzha81jw5RQOoBBw/viewform?usp=header" target="_blank" rel="noopener noreferrer">Abrir Examen Taller</a>
   </section>
   <section class="card-strong exam-code">
     <h3>QR Examen CUC</h3>
-    <div class="exam-placeholder" role="img" aria-label="Espacio reservado para el QR del examen CUC">QR pendiente</div>
-    <span class="exam-link exam-link-pending">Enlace pendiente · CUC</span>
+    <img src="/clase-2/qr-clase2-cuc.png" alt="Código QR del examen para la comisión CUC" />
+    <a class="exam-link" href="https://docs.google.com/forms/d/e/1FAIpQLSd-CFefNjs2kIgYcFMh-GhFA3QjPl8WoJH_fQJ7kPY9UfVE0Q/viewform?usp=header" target="_blank" rel="noopener noreferrer">Abrir Examen CUC</a>
   </section>
 </div>
 
@@ -1863,7 +1863,7 @@ S43 · Idea central: informar la ventana del examen y reservar los accesos por c
 
 El examen de esta clase se habilita el viernes 16 de octubre de 2026 a las ocho de la mañana, GMT-3, y se deshabilita el sábado 17 a la misma hora. Es la misma ventana de disponibilidad de veinticuatro horas que figura en la clase 1 y se aplica a Taller y CUC.
 
-Cada comisión tendrá su propio formulario. Los espacios de la pantalla están reservados para los QR y enlaces de esta evaluación; todavía falta incorporarlos. Cuando estén disponibles, verifiquen que el acceso corresponda a su comisión y organicen el examen dentro de esa ventana.
+Cada comisión tiene su propio formulario. Verifiquen que el QR corresponda a su comisión y organicen el examen dentro de esa ventana. Cada comisión tiene su propio formulario. Verifiquen que el QR o enlace corresponda a su comisión y organicen el examen dentro de esa ventana.
 
 La fecha fue indicada por el equipo docente en esta conversación; los horarios y la duración de la ventana se replican de la última placa de clase 1. Fuente breve: F34. Esta placa informa el cronograma previsto; no configura ni publica formularios. Dejo la pantalla de evaluación como cierre de la clase.
 -->
