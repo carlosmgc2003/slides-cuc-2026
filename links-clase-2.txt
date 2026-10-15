@@ -1,0 +1,107 @@
+CLASE 2 — SHIFT LEFT OR GET HACKED
+
+FUENTES CITADAS EN EL GUION (34 enlaces únicos)
+Extraídas de guion-clase-2.md, sin duplicados.
+
+https://wstg.owasp.org/v4.2/2-Introduction/#test-early-and-test-often
+https://wstg.owasp.org/stable/3-The_OWASP_Testing_Framework/0-The_Web_Security_Testing_Framework/
+https://jpattonassociates.com/dont_know_what_i_want/
+https://itsadeliverything.com/revisiting-the-iterative-incremental-mona-lisa
+https://agilemanifesto.org/iso/es/manifesto.html
+https://agilemanifesto.org/iso/es/principles.html
+https://martinfowler.com/articles/continuousIntegration.html
+https://docs.github.com/en/repositories/creating-and-managing-repositories/about-repositories
+https://docs.github.com/en/actions/get-started/understand-github-actions
+https://www.atlassian.com/devops
+https://learn.microsoft.com/en-us/devops/develop/shift-left-make-testing-fast-reliable
+https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/testing
+https://dora.dev/capabilities/pervasive-security/
+https://docs.astral.sh/ruff/
+https://docs.pytest.org/en/stable/getting-started.html
+https://docs.semgrep.dev/semgrep-code/overview
+https://github.com/gitleaks/gitleaks
+https://github.com/pypa/pip-audit
+https://www.zaproxy.org/docs/automate/automation-framework/
+https://www.atlassian.com/devops/devops-tools/devsecops-tools
+https://securitychampions.owasp.org/
+https://securitychampions.owasp.org/principles/01_Be_passionate_about_security/
+https://securitychampions.owasp.org/principles/03_Secure_management_support/
+https://securitychampions.owasp.org/principles/05_Trust_your_champions/
+https://securitychampions.owasp.org/principles/09_Invest_in_your_champions/
+https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html
+https://dora.dev/capabilities/generative-organizational-culture/
+https://www.iso.org/standard/27001
+https://www.pcisecuritystandards.org/standards/pci-dss/
+https://www.aicpa-cima.com/resources/download/2017-trust-services-criteria-with-revised-points-of-focus-2022
+https://www.pcisecuritystandards.org/document_library/?category=pcidss
+https://blog.pcisecuritystandards.org/just-published-pci-dss-v4-0-1
+https://www.aicpa-cima.com/resources/landing/system-and-organization-controls-soc-suite-of-services
+https://www.aicpa-cima.com/professional-insights/video/maintaining-high-standards-for-soc-engagements
+
+FUENTES BIBLIOGRÁFICAS COMPLEMENTARIAS (55 enlaces únicos)
+Extraídas de fuentes-clase-2.md; no aparecen en el guion.
+
+https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html
+https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
+https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
+https://committee.iso.org/files/live/sites/jtc1sc27/files/resources/ISO-IECJTC1-SC27-WG1_N3298_Auditing%20Practices%20Note%20-%20SoA.pdf
+https://community.owasp.org/Component_Analysis
+https://community.owasp.org/Source_Code_Analysis_Tools
+https://csrc.nist.gov/pubs/sp/800/204/c/final
+https://csrc.nist.gov/pubs/sp/800/204/d/final
+https://csrc.nist.gov/pubs/sp/800/218/final
+https://csrc.nist.gov/pubs/sp/800/30/r1/final
+https://cyclonedx.org/specification/overview/
+https://developer.hashicorp.com/vault/docs/what-is-vault
+https://docs.cilium.io/en/stable/security/policy/intro/
+https://docs.docker.com/build/building/secrets/
+https://docs.docker.com/build/buildkit/
+https://docs.docker.com/dhi/explore/security-concepts/digests/
+https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/
+https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-an-image/
+https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-registry/
+https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets
+https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets
+https://docs-prv.pcisecuritystandards.org/PCI%20DSS/Standard/PCI-DSS-v4_0_1.pdf
+https://docs.sigstore.dev/cosign/verifying/verify/
+https://docs.sonarsource.com/sonarqube-for-vs-code
+https://docs.sonarsource.com/sonarqube-for-vs-code/using/scan-my-project
+https://dora.dev/capabilities/
+https://falco.org/docs/concepts/
+https://falco.org/docs/concepts/rules/
+https://github.com/anchore/syft
+https://github.com/DefectDojo/django-DefectDojo
+https://goharbor.io/docs/2.14.0/administration/vulnerability-scanning/
+https://itsadeliverything.com/images/patton-incrementing-mona-lisa.jpg
+https://itsadeliverything.com/images/patton-iterating-mona-lisa.jpg
+https://kubescape.io/docs/scanning/
+https://kyverno.io/docs/introduction/
+https://martinfowler.com/bliki/ContinuousDelivery.html
+https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-30r1.pdf
+https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218.pdf
+https://opentelemetry.io/docs/what-is-opentelemetry/
+https://owasp.org/projects/security-champions-guide
+https://owasp.org/projects/top-10-cicd-security-risks
+https://owasp.org/projects/web-security-testing-guide
+https://owasp.org/www-community/Component_Analysis
+https://owasp.org/www-community/Source_Code_Analysis_Tools
+https://owasp.org/www-project-security-champions-guide/
+https://owasp.org/www-project-top-10-ci-cd-security-risks/
+https://owasp.org/www-project-web-security-testing-guide/
+https://schemathesis.readthedocs.io/en/stable/
+https://slsa.dev/spec/v1.2/
+https://spdx.dev/use/specifications/
+https://trivy.dev/docs/latest/guide/target/container_image/
+https://webstore.iec.ch/en/publication/79694
+https://www.checkov.io/1.Welcome/What%20is%20Checkov.html
+https://www.cisa.gov/resources-tools/resources/2026-minimum-elements-software-bill-materials-sbom
+https://www.cisa.gov/sites/default/files/2026-07/2026_cisa_sbom_minimum_elements_508c.pdf
+
+ENLACES DE EXÁMENES
+Incluidos en slides-clase-2.md; no son fuentes bibliográficas.
+
+Examen Taller:
+https://docs.google.com/forms/d/e/1FAIpQLScqMeAUSXVpfVmQO8FTscWpwa2OU2wKarXzha81jw5RQOoBBw/viewform?usp=header
+
+Examen CUC:
+https://docs.google.com/forms/d/e/1FAIpQLSd-CFefNjs2kIgYcFMh-GhFA3QjPl8WoJH_fQJ7kPY9UfVE0Q/viewform?usp=header
