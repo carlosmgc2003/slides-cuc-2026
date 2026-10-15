@@ -1754,7 +1754,7 @@ slideId: S43
     <div class="exam-date">
       <p class="exam-date-label">Se deshabilita (termina)</p>
       <p class="exam-date-value">Sábado 17 de octubre</p>
-      <p>08:00 GMT-3</p>
+      <p>20:00 GMT-3</p>
     </div>
   </div>
 </section>
